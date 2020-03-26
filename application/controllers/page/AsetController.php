@@ -59,9 +59,9 @@ class AsetController extends CI_Controller{
         	'
         		<button 
 					type="button" 
-					class="modalihat btn btn-block btn-outline-primary btn-xs"  
+					class="btnViewAset btn btn-block btn-outline-primary btn-xs"  
 					data-toggle="modal" 
-					data-target="#modal-lihat"
+					data-target="#viewAsetModal"
 					data-idkontrak="'.$key_aset->id_id_kontrak.'"
 					data-iduser="'.$key_aset->dibuat_kontrak.'"
 					data-idsummary="'.$key_aset->id_summary.'"
@@ -96,10 +96,10 @@ class AsetController extends CI_Controller{
         	$action_edit = 
         	'
         		<button 
-        			type="button" 
-        			class="modaedit btn btn-block btn-outline-info btn-xs"  
+					type="button" 
+        			class="btnEditAset btn btn-block btn-outline-info btn-xs"  
         			data-toggle="modal" 
-        			data-target="#modal-edit" 
+        			data-target="#editAsetModal" 
         			data-backdrop="static"
         			data-keyboard="false"
         			data-idkontrak="'.$key_aset->id_id_kontrak.'"
@@ -107,7 +107,9 @@ class AsetController extends CI_Controller{
         			data-namapt="'.$key_aset->nama_pt.'" 
         			data-nomorkontrak="'.$key_aset->nomor_kontrak.'"
         			data-vendor="'.$key_aset->vendor.'"
-        			data-jenissewa="'.$key_aset->jenis_sewa.'"
+					data-jenissewa="'.$key_aset->jenis_sewa.'"
+					data-serialnumber="'.$key_aset->serial_number.'"
+					data-pageinpdf="'.$key_aset->page_in_pdf.'"
         			data-nsa="'.$key_aset->ns_a.'"
         			data-nsb="'.$key_aset->ns_b.'"
         			data-nsc="'.$key_aset->ns_c1.'"

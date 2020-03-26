@@ -184,10 +184,6 @@
 	<script type="text/javascript">
 		$('#aset_list').hide();
 
-		// USER MANAGEMENT
-			
-		// End
-
 		// Halaman List Aset
 			<?php if ($title == 'List Aset'):?>
 
@@ -229,21 +225,11 @@
 					document.getElementById("submit_form").style.display = "none";
 					var currentTab = 0; // Current tab is set to be the first tab (0)
 					showTab(currentTab); // Display the current tab
-					// $('#add_aset').on('click',function(){
-					// 	showTab(currentTab);
-					// 	$('#addAsetModal').modal("show");
-					// 	$('#addAsetModal').modal({backdrop: 'static', keyboard: false});
-					// });
 
-					// $('#addAsetModal').on('hidden.bs.modal', function (e) {
-					//   $(this)
-					//     .find("input,textarea,select")
-					//        .val('')
-					//        .end()
-					//     .find("input[type=checkbox], input[type=radio]")
-					//        .prop("checked", "")
-					//        .end();
-					// });
+				// EDIT ASET
+					document.getElementById("submit_form_edit").style.display = "none";
+					var currentTab = 0; // Current tab is set to be the first tab (0)
+					showTab(currentTab); // Display the current tab
 
 					function showTab(n) {
 					  // This function will display the specified tab of the form ...
@@ -319,6 +305,14 @@
 					  }
 					});
 
+					$('#edit_modal_aset').on('keyup keypress', function(e) {
+					  var keyCode = e.keyCode || e.which;
+					  if (keyCode === 13) { 
+					    e.preventDefault();
+					    return false;
+					  }
+					});
+
 					$('#add_modal_aset').submit(function(e){
 					  var formData = new FormData(this);
 					  e.preventDefault();
@@ -356,16 +350,140 @@
 						$('#addAsetModal').modal("show");
 					});
 
-					// $('#close-modal-tambah').on('click',function(){
-					// 	document.getElementById("add_modal_aset").reset();
-					// 	$("#title_add_aset").val("");
-					// 	$("#id_kontrak").val('');
-					// 	nextPrev(-8);
-					// 	$('#addAsetModal').modal("hide");
-					// });
+					$('.btnEditAset').on('click', function(){
+						// var idKontrak = document.getElementById("id_kontraks").val();
+						$('#addPlusAsetModal').modal('hide');
+						$("#title_add_aset").val("Add Plus New Aset");
+						$("#id_kontrak").val(idKontrak);
+						nextPrev(-8);
+						// document.getElementById("close-modal").id = 'close-modal-tambah';
+						document.getElementById("nextBtn").style.display = "inline";
+					  	document.getElementById("submit_form").style.display = "none";
+						$('#editAsetModal').modal("show");
+					});
+
+					$('.btnViewAset').on('click', function(){
+						$('#viewAsetModal').modal("show");
+					});
 				// end
 			<?php endif; ?>
 		// End
 	</script>
+	<script type="text/javascript">
+		$(document).on("click", ".btnEditAset", function () {
+			var idkontrak = $(this).data('idkontrak');
+		var idsummary = $(this).data('idsummary');
+		var namapt = $(this).data('namapt');
+		var nomorkontrak = $(this).data('nomorkontrak');
+		var vendor = $(this).data('vendor');
+		var jenissewa = $(this).data('jenissewa');
+		var serialnumber = $(this).data('serialnumber');
+		var pageinpdf = $(this).data('pageinpdf');
+		var nsa = $(this).data('nsa');
+		var nsb = $(this).data('nsb');
+		var nsc = $(this).data('nsc1');
+		var nsc2 = $(this).data('nsc2');
+		var nsd1 = $(this).data('nsd1');
+		var nsd2 = $(this).data('nsd2');
+		var is1 = $(this).data('is1');
+		var is2 = $(this).data('is2');
+		var is3 = $(this).data('is3');
+		var is4 = $(this).data('is4');
+		var is5 = $(this).data('is5');
+		var is6 = $(this).data('is6');
+		var is7 = $(this).data('is7');
+		var komponen = $(this).data('komponen');
+		var lokasi = $(this).data('lokasi');
+		var startdate = $(this).data('startdate');
+		var enddate = $(this).data('enddate');
+		var nilaikontrak = $(this).data('nilaikontrak');
+		var dr = $(this).data('dr');
+		var pat = $(this).data('pat');
+		var top = $(this).data('top');
+		var awak = $(this).data('awak');
+		var frekuensi = $(this).data('frekuensi');
+		var pd = $(this).data('pd');
+		var prepaid = $(this).data('prepaid');
+		var status_ppn = $(this).data('status_ppn');
+		var ppn = $(this).data('ppn');
+		var jumlah_unit = $(this).data('jumlah_unit');
+		var satuan = $(this).data('satuan');
+		var nilai_asumsi_perpanjangan = $(this).data('nilai_asumsi_perpanjangan');
+		var tgl_perpanjangan = $(this).data('tgl_perpanjangan');
+		$("#idkontrak").val(idkontrak);
+		$("#eidsummary").val(idsummary);
+		$("#enamapt").val(namapt);
+		$("#enomorkontrak").val(nomorkontrak);
+		$("#evendor").val(vendor);
+		$("#ejenissewa").val(jenissewa);
+		$("#eserialnumber").val(serialnumber);
+		$("#epageinpdf").val(pageinpdf);
+		$("#ensa").val(nsa);
+		$("#ensb").val(nsb);
+		$("#ensc").val(nsc1);
+		$("#ensc2").val(nsc2);
+		$("#ensd1").val(nsd1);
+		$("#ensd2").val(nsd2);
+		$("#eis1").val(is1);
+		$("#eis2").val(is2);
+		$("#eis3").val(is3);
+		$("#eis4").val(is4);
+		$("#eis5").val(is5);
+		$("#eis6").val(is6);
+		$("#eis7").val(is7);
+		$("#ekomponen").val(komponen);
+		$("#elokasi").val(lokasi);
+		$("#estartdate").val(startdate);
+		$("#eenddate").val(enddate);
+		$("#enilaikontrak").val(nilaikontrak);
+		$("#edr").val(dr);
+		$("#epat").val(pat);
+		$("#etop").val(top);
+		$("#eawak").val(awak);
+		$("#efrekuensi").val(frekuensi);
+		$("#epd").val(pd);
+		$("#eprepaid").val(prepaid);
+		$("#estatus_ppn").val(status_ppn);
+		$("#eppn").val(ppn);
+		$("#ejumlah_unit").val(jumlah_unit);
+		$("#esatuan").val(satuan);
+		$("#enilai_asumsi_perpanjangan").val(nilai_asumsi_perpanjangan);
+		$("#etgl_perpanjangan").val(tgl_perpanjangan);
+		});	
+		</script>
+		<script type="text/javascript">
+			function reverseNumber(input) {
+				return [].map.call(input, function(x) {
+					return x;
+				}).reverse().join('');
+			}
+
+			function plainNumber(number) {
+				return number.split('.').join('');
+			}
+
+			function splitInDots(input) {
+
+				var value = input.value,
+					plain = plainNumber(value),
+					reversed = reverseNumber(plain),
+					reversedWithDots = reversed.match(/.{1,3}/g).join('.'),
+					normal = reverseNumber(reversedWithDots);
+
+				console.log(plain, reversed, reversedWithDots, normal);
+				input.value = normal;
+			}
+
+			function oneDot(input) {
+				var value = input.value,
+					value = plainNumber(value);
+
+				if (value.length > 3) {
+					value = value.substring(0, value.length - 3) + '.' + value.substring(value.length - 3, value.length);
+				}
+				console.log(value);
+				input.value = value;
+			}
+		</script>
 </body>
 </html>

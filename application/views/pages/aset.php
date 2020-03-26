@@ -57,6 +57,14 @@
   <?php $this->load->view('modal/addAset'); ?>
   <!--/ .Modal Tambah -->
 
+  <!-- Modal Ubah -->
+  <?php $this->load->view('modal/editAset'); ?>
+  <!--/ .Modal Ubah -->
+
+  <!-- Modal Ubah -->
+  <?php $this->load->view('modal/viewAset'); ?>
+  <!--/ .Modal Ubah -->
+
   <!-- Modal Tambah Plus Confirm -->
   <?php $this->load->view('modal/addPlusAset'); ?>
   <!--/ .Modal Tambah Plus Confirm -->
