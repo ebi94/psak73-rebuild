@@ -21,26 +21,50 @@
 						<p>List Aset</p>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="<?php echo base_url('export'); ?>" class="nav-link <?php if($title == 'Export'): ?> active <?php endif; ?>">
+						<i class="nav-icon fas fa-file-excel"></i>
+						<p>Export .xls</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="<?php echo base_url('schedule'); ?>" class="nav-link <?php if($title == 'Schedule'): ?> active <?php endif; ?>">
+						<i class="nav-icon far fa-calendar-alt"></i>
+						<p>Schedule</p>
+					</a>
+				</li>
 				<?php if($this->session->userdata('level') == 0) { ?>
-				  <li class="nav-item has-treeview">
+				  <!-- <li class="nav-item has-treeview">
 				  	<a href="#" class="nav-link <?php if($title == 'Config'): ?> active <?php endif; ?>">
 				  		<i class="nav-icon fas fa-cog"></i>
 				  		<p>Config<i class="right fas fa-angle-left"></i></p>
 				  	</a>
 				  	<ul class="nav nav-treeview" style="display: none;">
 				  		<li class="nav-item">
-				  			<a href="#" class="nav-link">
+				  			<a href="<?php echo base_url('perusahaan'); ?>" class="nav-link">
 				  				<i class="nav-icon far fa-building"></i>
 				  				<p>Perusahaan</p>
 				  			</a>
 				  		</li>
 				  		<li class="nav-item">
-				  			<a href="#" class="nav-link">
-				  				<i class="nav-icon fas fa-calnedar-week"></i>
+				  			<a href="<?php echo base_url('top'); ?>" class="nav-link">
+				  				<i class="nav-icon fas fa-calendar-week"></i>
 				  				<p>Term of Payment (TOP)</p>
 				  			</a>
 				  		</li>
+				  		<li class="nav-item">
+				  			<a href="#" class="nav-link">
+				  				<i class="nav-icon fas fa-calendar-day"></i>
+				  				<p>Tanggal Acuan</p>
+				  			</a>
+				  		</li>
 				  	</ul>
+				  </li> -->
+				  <li class="nav-item">
+				  	<a href="<?php echo base_url('config'); ?>" class="nav-link <?php if($title == 'Config'): ?> active <?php endif; ?>">
+				  		<i class="nav-icon fas fa-cog"></i>
+				  		<p>Config</p>
+				  	</a>
 				  </li>
 				<?php } ?>
 			</ul>

@@ -13,9 +13,10 @@ class AsetModel extends CI_Model{
 
     function aset_get_all($param= array()) {
         $user = "WHERE k.created_by != 0";
-        if (isset($param['user']) && $param['user'] != 'ALL') {
+        if (isset($param['user']) && $param['user'] != '') {
         // if ($param['user'] != 'ALL') {
-            $user = "WHERE k.created_by = ".$param['user']."";
+            // $user = "WHERE k.created_by = ".$param['user']."";
+            $user = "WHERE k.created_by IN (".$param['user'].")";
         }
 
         $nama_pt = "";
@@ -272,7 +273,7 @@ class AsetModel extends CI_Model{
         $param_check_aset = array('id_summary' => $id_aset);
 
         $check_aset = $this->aset_only_check($param_check_aset)->row();
-        $id_kontrak = $check->id_kontrak;
+        $id_kontrak = $check_aset->id_kontrak;
 
         $param_check_count_aset = array('id_kontrak' => $id_kontrak);
         $check_kontrak = $this->aset_only_check($param_check_count_aset)->num_rows();
