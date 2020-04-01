@@ -42,6 +42,10 @@
     	  display: none;
     	}
 
+		.tab_step_edit {
+    	  display: none;
+    	}
+
     	/* Make circles that indicate the steps of the form: */
     	.step {
     	  height: 36px;
@@ -213,7 +217,7 @@
 				$('#search_aset').on('click',function(){
 					var pt = $('#pt').val();
 					var kontrak = $('#kontrak').val();
-					var vendor = $('#vendor').val();
+					var vendor = $('#searchVendor').val();
 					var dibuat_oleh = $('#dibuat_oleh').val();
 
 					$('#aset_list').DataTable().destroy();
@@ -223,11 +227,6 @@
 
 				// ADD ASET
 					document.getElementById("submit_form").style.display = "none";
-					var currentTab = 0; // Current tab is set to be the first tab (0)
-					showTab(currentTab); // Display the current tab
-
-				// EDIT ASET
-					document.getElementById("submit_form_edit").style.display = "none";
 					var currentTab = 0; // Current tab is set to be the first tab (0)
 					showTab(currentTab); // Display the current tab
 
@@ -297,6 +296,79 @@
 					  return valid; // return the valid status
 					}
 
+					// Edit ASET
+					document.getElementById("submit_form_edit").style.display = "none";
+					var currentTab = 0; // Current tab is set to be the first tab (0)
+					showTabEdit(currentTab); // Display the current tab
+
+					function showTabEdit(n) {
+					  // This function will display the specified tab of the form ...
+					  var x = document.getElementsByClassName("tab_step_edit");
+					  x[n].style.display = "block";
+					  // ... and fix the Previous/Next buttons:
+					  if (n == 0) {
+					    document.getElementById("prevBtnEdit").style.display = "none";
+					  } else {
+					    document.getElementById("prevBtnEdit").style.display = "inline";
+					  }
+					  if (n == (x.length - 1)) {
+					  	// alert('akhir');
+					  	document.getElementById("nextBtnEdit").style.display = "none";
+					  	document.getElementById("submit_form_edit").style.display = "inline";
+					  } else {
+					    document.getElementById("nextBtnEdit").innerHTML = "Selanjutnya";
+					  }
+
+					  document.getElementById("jumlahEdit").innerHTML = x.length;
+					  // ... and run a function that displays the correct step indicator:
+					  // fixStepIndicator(n)
+					}
+
+					function nextPrevEdit(n) {
+					  // This function will figure out which tab to display
+					  var x = document.getElementsByClassName("tab_step_edit");
+					  var val = document.getElementById("stepEdit").innerHTML;
+					  // Exit the function if any field in the current tab is invalid:
+					  if (n == 1 && !validateFormEdit()) return false;
+					  // Hide the current tab:
+					  x[currentTab].style.display = "none";
+					  // Increase or decrease the current tab by 1:
+					  currentTab = currentTab + n;
+					  document.getElementById("stepEdit").innerHTML = parseInt(val) + n;
+					  if (n == -1) {
+					  	document.getElementById("nextBtnEdit").style.display = "inline";
+					  	document.getElementById("submit_form_edit").style.display = "none";
+					  }
+				  	  // Otherwise, display the correct tab:
+				  	  // alert(currentTab);
+				  	  showTabEdit(currentTab);
+					}
+
+					function validateFormEdit() {
+					  // This function deals with validation of the form fields
+					  var x, y, i, valid = true;
+					  x = document.getElementsByClassName("tab_step_edit");
+					  // y = x[currentTab].getElementsByTagName("input");
+					  y = x[currentTab].getElementsByClassName("wajib");
+					  // A loop that checks every input field in the current tab:
+					  for (i = 0; i < y.length; i++) {
+					    // If a field is empty...
+					    if (y[i].value == "") {
+					      // add an "invalid" class to the field:
+					      y[i].className += " invalid";
+					      // and set the current valid status to false:
+					      valid = false;
+					    }
+					  }
+					  // If the valid status is true, mark the step as finished and valid:
+					  // if (valid) {
+					    // document.getElementsByClassName("step")[currentTab].className += " finish";
+					  // }
+					  return valid; // return the valid status
+					}
+
+					// Edit Tab step
+
 					$('#add_modal_aset').on('keyup keypress', function(e) {
 					  var keyCode = e.keyCode || e.which;
 					  if (keyCode === 13) { 
@@ -336,6 +408,50 @@
 					  return false;
 					});
 
+					$('#btnPlusAset').on('click', function(){
+						var idKontrak = $("#vIdKon").val();
+						var namapt = $("#vNamapt").val();
+						var nomorkontrak = $("#vNomorKontrak").val();
+						var vendor = $("#vVendor").val();
+						$('#viewAsetModal').modal('hide');
+						$('#addAsetModal').modal('show');
+						$("#title_add_aset").val("Add Plus New Aset");
+						$("#id_kontrak").val(idKontrak);
+						$("#namapt").val(namapt);
+						$("#nomorkontrak").val(nomorkontrak);
+						$("#vendor").val(vendor);
+						document.getElementById("namapt").disabled = true;
+						document.getElementById("nomorkontrak").disabled = true;
+						document.getElementById("vendor").disabled = true;
+						document.getElementById("customFile").disabled = true;
+						document.getElementById("nextBtn").style.display = "inline";
+					  	document.getElementById("submit_form").style.display = "none";
+					});
+
+					$('#edit_modal_aset').submit(function(e){
+					  var formData = new FormData(this);
+					  e.preventDefault();
+					  $.ajax({
+					      type : "POST",
+					      url  : "<?php echo site_url('aset/do/edit')?>",
+					      data : formData,
+					      processData:false,
+					      contentType:false,
+					      cache:false,
+					      async:false,
+					      success: function(data){
+						      	document.getElementById("edit_modal_aset").reset();
+						      	$('#editAsetModal').modal("hide");
+								$('#search_aset').click();
+						      	// $('.inputan').html(data);
+						      	// $('#editPlusAsetModal').modal({backdrop: 'static', keyboard: false});
+						      	// document.getElementById("no_kontrak_plus").innerHTML = data;
+						      	// $('#addPlusAsetModal').modal('show');
+					      },
+					  });
+					  return false;
+					});
+
 					$('#addPlusAset').on('click', function(){
 						// var idKontrak = document.getElementById("id_kontraks").val();
 						var idKontrak = $("#id_kontraks").val();
@@ -351,12 +467,6 @@
 					});
 
 					$('.btnEditAset').on('click', function(){
-						// var idKontrak = document.getElementById("id_kontraks").val();
-						$('#addPlusAsetModal').modal('hide');
-						$("#title_add_aset").val("Add Plus New Aset");
-						$("#id_kontrak").val(idKontrak);
-						nextPrev(-8);
-						// document.getElementById("close-modal").id = 'close-modal-tambah';
 						document.getElementById("nextBtn").style.display = "inline";
 					  	document.getElementById("submit_form").style.display = "none";
 						$('#editAsetModal').modal("show");
@@ -365,6 +475,38 @@
 					$('.btnViewAset').on('click', function(){
 						$('#viewAsetModal').modal("show");
 					});
+
+					$('#close-modal-add').on('click', function(){
+						$('#confirmCloseModal').modal("show");
+					});
+
+					$('#confirmYes').on('click', function(){
+						$('#confirmCloseModal').modal("hide");
+						$('#addAsetModal').modal("hide");
+						document.getElementById("namapt").disabled = false;
+						document.getElementById("nomorkontrak").disabled = false;
+						document.getElementById("vendor").disabled = false;
+						document.getElementById("customFile").disabled = false;
+						document.getElementById("add_modal_aset").reset();
+					});
+
+					$('#deleteYes').on('click', function(){
+						var idSummary = $('#deleteId').val();
+						$.ajax({
+							type : "POST",
+							url  : "<?php echo site_url('aset/do/delete')?>",
+							dataType: "JSON",
+							data: {
+								idSummary: idSummary
+							},
+							success: function(data){
+									$('#deleteAsetModal').modal("hide");
+									alert('data berhasil di hapus');
+							},
+						});
+						return false;
+					});
+
 				// end
 			<?php endif; ?>
 		// End
@@ -372,84 +514,194 @@
 	<script type="text/javascript">
 		$(document).on("click", ".btnEditAset", function () {
 			var idkontrak = $(this).data('idkontrak');
-		var idsummary = $(this).data('idsummary');
-		var namapt = $(this).data('namapt');
-		var nomorkontrak = $(this).data('nomorkontrak');
-		var vendor = $(this).data('vendor');
-		var jenissewa = $(this).data('jenissewa');
-		var serialnumber = $(this).data('serialnumber');
-		var pageinpdf = $(this).data('pageinpdf');
-		var nsa = $(this).data('nsa');
-		var nsb = $(this).data('nsb');
-		var nsc = $(this).data('nsc1');
-		var nsc2 = $(this).data('nsc2');
-		var nsd1 = $(this).data('nsd1');
-		var nsd2 = $(this).data('nsd2');
-		var is1 = $(this).data('is1');
-		var is2 = $(this).data('is2');
-		var is3 = $(this).data('is3');
-		var is4 = $(this).data('is4');
-		var is5 = $(this).data('is5');
-		var is6 = $(this).data('is6');
-		var is7 = $(this).data('is7');
-		var komponen = $(this).data('komponen');
-		var lokasi = $(this).data('lokasi');
-		var startdate = $(this).data('startdate');
-		var enddate = $(this).data('enddate');
-		var nilaikontrak = $(this).data('nilaikontrak');
-		var dr = $(this).data('dr');
-		var pat = $(this).data('pat');
-		var top = $(this).data('top');
-		var awak = $(this).data('awak');
-		var frekuensi = $(this).data('frekuensi');
-		var pd = $(this).data('pd');
-		var prepaid = $(this).data('prepaid');
-		var status_ppn = $(this).data('status_ppn');
-		var ppn = $(this).data('ppn');
-		var jumlah_unit = $(this).data('jumlah_unit');
-		var satuan = $(this).data('satuan');
-		var nilai_asumsi_perpanjangan = $(this).data('nilai_asumsi_perpanjangan');
-		var tgl_perpanjangan = $(this).data('tgl_perpanjangan');
-		$("#idkontrak").val(idkontrak);
-		$("#eidsummary").val(idsummary);
-		$("#enamapt").val(namapt);
-		$("#enomorkontrak").val(nomorkontrak);
-		$("#evendor").val(vendor);
-		$("#ejenissewa").val(jenissewa);
-		$("#eserialnumber").val(serialnumber);
-		$("#epageinpdf").val(pageinpdf);
-		$("#ensa").val(nsa);
-		$("#ensb").val(nsb);
-		$("#ensc").val(nsc1);
-		$("#ensc2").val(nsc2);
-		$("#ensd1").val(nsd1);
-		$("#ensd2").val(nsd2);
-		$("#eis1").val(is1);
-		$("#eis2").val(is2);
-		$("#eis3").val(is3);
-		$("#eis4").val(is4);
-		$("#eis5").val(is5);
-		$("#eis6").val(is6);
-		$("#eis7").val(is7);
-		$("#ekomponen").val(komponen);
-		$("#elokasi").val(lokasi);
-		$("#estartdate").val(startdate);
-		$("#eenddate").val(enddate);
-		$("#enilaikontrak").val(nilaikontrak);
-		$("#edr").val(dr);
-		$("#epat").val(pat);
-		$("#etop").val(top);
-		$("#eawak").val(awak);
-		$("#efrekuensi").val(frekuensi);
-		$("#epd").val(pd);
-		$("#eprepaid").val(prepaid);
-		$("#estatus_ppn").val(status_ppn);
-		$("#eppn").val(ppn);
-		$("#ejumlah_unit").val(jumlah_unit);
-		$("#esatuan").val(satuan);
-		$("#enilai_asumsi_perpanjangan").val(nilai_asumsi_perpanjangan);
-		$("#etgl_perpanjangan").val(tgl_perpanjangan);
+			var idcalculation = $(this).data('idcalculation');
+			var idsummary = $(this).data('idsummary');
+			var namapt = $(this).data('namapt');
+			var nomorkontrak = $(this).data('nomorkontrak');
+			var vendor = $(this).data('vendor');
+			var jenissewa = $(this).data('jenissewa');
+			var serialnumber = $(this).data('serialnumber');
+			var pageinpdf = $(this).data('pageinpdf');
+			var nsa = $(this).data('nsa');
+			var nsb = $(this).data('nsb');
+			var nsc = $(this).data('nsc1');
+			var nsc2 = $(this).data('nsc2');
+			var nsd1 = $(this).data('nsd1');
+			var nsd2 = $(this).data('nsd2');
+			var is1 = $(this).data('is1');
+			var is2 = $(this).data('is2');
+			var is3 = $(this).data('is3');
+			var is4 = $(this).data('is4');
+			var is5 = $(this).data('is5');
+			var is6 = $(this).data('is6');
+			var is7 = $(this).data('is7');
+			var ks1 = $(this).data('ks1');
+			var ks2 = $(this).data('ks2');
+			var ks3 = $(this).data('ks3');
+			var ks4 = $(this).data('ks4');
+			var ks5 = $(this).data('ks5');
+			var lokasi = $(this).data('lokasi');
+			var startdate = $(this).data('startdate');
+			var enddate = $(this).data('enddate');
+			var nilaikontrak = $(this).data('nilaikontrak');
+			var dr = $(this).data('dr');
+			var pat = $(this).data('pat');
+			var top = $(this).data('top');
+			var awak = $(this).data('awak');
+			var frekuensi = $(this).data('frekuensi');
+			var pd = $(this).data('pd');
+			var prepaid = $(this).data('prepaid');
+			var status_ppn = $(this).data('status_ppn');
+			var ppn = $(this).data('ppn');
+			var jumlah_unit = $(this).data('jumlah_unit');
+			var satuan = $(this).data('satuan');
+			var nilai_asumsi_perpanjangan = $(this).data('nilai_asumsi_perpanjangan');
+			var tgl_perpanjangan = $(this).data('tgl_perpanjangan');
+			$("#id_ekontrak").val(idkontrak);
+			$("#id_ecalculation").val(idcalculation);
+			$("#id_esummary").val(idsummary);
+			$("#enamapt").val(namapt);
+			$("#enomorkontrak").val(nomorkontrak);
+			$("#evendor").val(vendor);
+			$("#ejenissewa").val(jenissewa);
+			$("#eserialnumber").val(serialnumber);
+			$("#epageinpdf").val(pageinpdf);
+			$("#ensa").val(nsa);
+			$("#ensb").val(nsb);
+			$("#ensc").val(nsc1);
+			$("#ensc2").val(nsc2);
+			$("#ensd1").val(nsd1);
+			$("#ensd2").val(nsd2);
+			$("#eis1").val(is1);
+			$("#eis2").val(is2);
+			$("#eis3").val(is3);
+			$("#eis4").val(is4);
+			$("#eis5").val(is5);
+			$("#eis6").val(is6);
+			$("#eis7").val(is7);
+			$("#eks1").val(ks1);
+			$("#eks2").val(ks2);
+			$("#eks3").val(ks3);
+			$("#eks4").val(ks4);
+			$("#eks5").val(ks5);
+			$("#elokasi").val(lokasi);
+			$("#estartdate").val(startdate);
+			$("#eenddate").val(enddate);
+			$("#enilaikontrak").val(nilaikontrak);
+			$("#edr").val(dr);
+			$("#epat").val(pat);
+			$("#etop").val(top);
+			$("#eawak").val(awak);
+			$("#efrekuensi").val(frekuensi);
+			$("#epd").val(pd);
+			$("#eprepaid").val(prepaid);
+			$("#estatus_ppn").val(status_ppn);
+			$("#eppn").val(ppn);
+			$("#ejumlah_unit").val(jumlah_unit);
+			$("#esatuan").val(satuan);
+			$("#enilai_asumsi_perpanjangan").val(nilai_asumsi_perpanjangan);
+			$("#etgl_perpanjangan").val(tgl_perpanjangan);
 		});	
+
+		$(document).on("click", ".btnViewAset", function () {
+			var idkontrak = $(this).data('idkontrak');
+			var idsummary = $(this).data('idsummary');
+			var namapt = $(this).data('namapt');
+			var nomorkontrak = $(this).data('nomorkontrak');
+			var vendor = $(this).data('vendor');
+			var jenissewa = $(this).data('jenissewa');
+			var serialnumber = $(this).data('serialnumber');
+			var pageinpdf = $(this).data('pageinpdf');
+			var nsa = $(this).data('nsa');
+			var nsb = $(this).data('nsb');
+			var nsc = $(this).data('nsc1');
+			var nsc2 = $(this).data('nsc2');
+			var nsd1 = $(this).data('nsd1');
+			var nsd2 = $(this).data('nsd2');
+			var is1 = $(this).data('is1');
+			var is2 = $(this).data('is2');
+			var is3 = $(this).data('is3');
+			var is4 = $(this).data('is4');
+			var is5 = $(this).data('is5');
+			var is6 = $(this).data('is6');
+			var is7 = $(this).data('is7');
+			var ks1 = $(this).data('ks1');
+			var ks2 = $(this).data('ks2');
+			var ks3 = $(this).data('ks3');
+			var ks4 = $(this).data('ks4');
+			var ks5 = $(this).data('ks5');
+			var lokasi = $(this).data('lokasi');
+			var startdate = $(this).data('startdate');
+			var enddate = $(this).data('enddate');
+			var nilaikontrak = $(this).data('nilaikontrak');
+			var dr = $(this).data('dr');
+			var pat = $(this).data('pat');
+			var top = $(this).data('top');
+			var awak = $(this).data('awak');
+			var frekuensi = $(this).data('frekuensi');
+			var pd = $(this).data('pd');
+			var prepaid = $(this).data('prepaid');
+			var status_ppn = $(this).data('status_ppn');
+			var ppn = $(this).data('ppn');
+			var jumlah_unit = $(this).data('jumlah_unit');
+			var satuan = $(this).data('satuan');
+			var nilai_asumsi_perpanjangan = $(this).data('nilai_asumsi_perpanjangan');
+			var tgl_perpanjangan = $(this).data('tgl_perpanjangan');
+			$("#idkontrak").val(idkontrak);
+			$("#vIdKon").val(idkontrak);
+			$("#vidsummary").html(idsummary);
+			$("#vnamapt").html(namapt);
+			$("#vnomorkontrak").html(nomorkontrak);
+			$("#vvendor").html(vendor);
+			$("#vjenissewa").html(jenissewa);
+			$("#vserialnumber").html(serialnumber);
+			$("#vpageinpdf").html(pageinpdf);
+			$("#vnsa").html(nsa);
+			$("#vnsb").html(nsb);
+			$("#vnsc").html(nsc1);
+			$("#vnsc2").html(nsc2);
+			$("#vnsd1").html(nsd1);
+			$("#vnsd2").html(nsd2);
+			$("#vis1").html(is1);
+			$("#vis2").html(is2);
+			$("#vis3").html(is3);
+			$("#vis4").html(is4);
+			$("#vis5").html(is5);
+			$("#vis6").html(is6);
+			$("#vis7").html(is7);
+			$("#vks1").html(ks1);
+			$("#vks2").html(ks2);
+			$("#vks3").html(ks3);
+			$("#vks4").html(ks4);
+			$("#vks5").html(ks5);
+			$("#vlokasi").html(lokasi);
+			$("#vstartdate").html(startdate);
+			$("#venddate").html(enddate);
+			$("#vnilaikontrak").html(nilaikontrak);
+			$("#vdr").html(dr);
+			$("#vpat").html(pat);
+			$("#vtop").html(top);
+			$("#vawak").html(awak);
+			$("#vfrekuensi").html(frekuensi);
+			$("#vpd").html(pd);
+			$("#vprepaid").html(prepaid);
+			$("#vstatus_ppn").html(status_ppn);
+			$("#vppn").html(ppn);
+			$("#vjumlah_unit").html(jumlah_unit);
+			$("#vsatuan").html(satuan);
+			$("#vnilai_asumsi_perpanjangan").html(nilai_asumsi_perpanjangan);
+			$("#vtgl_perpanjangan").html(tgl_perpanjangan);
+			// Data on Add Plus Aset Button
+			$("#vNamapt").val(namapt);
+			$("#vNomorKontrak").val(nomorkontrak);
+			$("#vVendor").val(vendor);
+		});	
+
+		$(document).on("click", ".btnDeleteAset", function () {
+			var idSummary = $(this).data('deleteid');
+			$("#deleteId").val(idSummary);
+		});	
+		
 		</script>
 		<script type="text/javascript">
 			function reverseNumber(input) {

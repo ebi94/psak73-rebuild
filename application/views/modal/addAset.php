@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Tambah Aset</h4>
-				<button type="button" class="close" id="close-modal" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close" id="close-modal-add" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -26,7 +26,7 @@
 					 	            <div class="col-md-8">
 					 	                <div class="form-group">
 					 	                    <label>Nama Perusahaan / PT *</label>
-					 	                    <input class="form-control wajib" type="text" name="nama_pt" id="namapt" oninput="this.className = 'form-control wajib'">
+					 	                    <input class="form-control wajib read-only" type="text" name="nama_pt" id="namapt" oninput="this.className = 'form-control wajib'">
 					 	                </div>
 					 	            </div>
 					 	            <div class="col-md-4">
@@ -400,14 +400,14 @@
 						    		<div class="row">
 						    		    <div class="col-md-12">
 						    		        <label>Discount Rate</label>
-						    		        <input class="form-control" type="text" name="dr" id="dr">
+						    		        <input class="form-control" type="text" name="dr" id="dr" value="0">
 						    		    </div>
 						    		</div>
 						    		<div class="row">
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>Payment Amount Term</label>
-						    		            <input class="form-control" onkeyup="splitInDots(this)" type="text" name="pat" id="pat">
+						    		            <input class="form-control" onkeyup="splitInDots(this)" type="text" name="pat" id="pat" value="0">
 						    		        </div>
 						    		    </div>
 						    		</div>
@@ -439,7 +439,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>Frekuensi Pembayaran</label>
-						    		            <input type="number" class="form-control" name="frekuensi" id="frekuensi">
+						    		            <input type="number" class="form-control" name="frekuensi" id="frekuensi" value="0">
 						    		        </div>
 						    		    </div>
 						    		</div>
@@ -447,7 +447,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>Payment Date</label>
-						    		            <input class="form-control" name="pd" type="date" id="pd">
+						    		            <input class="form-control" name="pd" type="date" id="pd" value="0">
 						    		        </div>
 						    		    </div>
 						    		</div>
@@ -487,7 +487,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>PPN %</label>
-						    		            <input class="form-control" type="text" name="ppn" id="ppn">
+						    		            <input class="form-control" type="text" name="ppn" id="ppn" value="0">
 						    		        </div>
 						    		    </div>
 						    		</div>
@@ -495,7 +495,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>Jumlah Unit</label>
-						    		            <input class="form-control" type="text" name="jumlah_unit" id="jumlah_unit">
+						    		            <input class="form-control" type="text" name="jumlah_unit" id="jumlah_unit" value="0">
 						    		        </div>
 						    		    </div>
 						    		</div>
@@ -523,7 +523,7 @@
 						            <div class="col-md-12">
 						                <div class="form-group">
 						                    <label>Nilai Asumsi Perpanjang</label>
-						                    <input class="form-control" type="text" onkeyup="splitInDots(this)" name="nilai_asumsi_perpanjangan" id="nilai_asumsi_perpanjangan">
+						                    <input class="form-control" type="text" onkeyup="splitInDots(this)" name="nilai_asumsi_perpanjangan" id="nilai_asumsi_perpanjangan" value="0">
 						                </div>
 						            </div>
 						        </div>

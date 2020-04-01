@@ -14,7 +14,7 @@
             <input type="text" name="kontrak" id="kontrak" class="form-control" placeholder="No. Kontrak">
           </div>
           <div style="margin-right: 1%;">
-            <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Vendor">
+            <input type="text" name="vendor" id="searchVendor" class="form-control" placeholder="Vendor">
           </div>
 
           <?php if($this->session->userdata('level') == 0):?>
@@ -68,5 +68,13 @@
   <!-- Modal Tambah Plus Confirm -->
   <?php $this->load->view('modal/addPlusAset'); ?>
   <!--/ .Modal Tambah Plus Confirm -->
+
+  <!-- Modal Confirm Close Add -->
+  <?php $this->load->view('modal/confirmClose'); ?>
+  <!--/ .Modal Confirm Close Add -->
+
+  <!-- Modal Delete Aset -->
+  <?php $this->load->view('modal/deleteAset'); ?>
+  <!--/ .Modal Delete Aset -->
 
 </div>

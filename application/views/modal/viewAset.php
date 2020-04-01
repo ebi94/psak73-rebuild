@@ -10,11 +10,11 @@
 					</button>
 				</div>
 				<!-- <form id="add_modal_aset" name="form" role="form" method="POST" enctype="multipart/form-data" action="<?php echo site_url('aset/do/add');?>"> -->
-				<form id="edit_modal_aset" name="form" role="form">
+				<form id="vdit_modal_aset" name="form" role="form">
 					<div class="modal-body">
 						<!-- One "tab" for each step in the form: -->
 						<!-- CONTRACT FORM -->
-						<div class="tab_step">
+						<div class="">
 							<div class="card card-secondary">
 								<div class="card-header">
 									<h3 class="card-title">Contract Form</h3>
@@ -22,40 +22,26 @@
 								<!-- /.card-header -->
 								<div class="card-body">
 									<div class="row">
-										<div class="col-md-8">
+										<div class="col-md-12">
 											<div class="form-group">
-												<label>Nama Perusahaan / PT *</label>
-												<input class="form-control wajib" type="text" name="nama_pt"
-													id="enamapt" oninput="this.className = 'form-control wajib'">
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="exampleInputFile">Upload file</label>
-												<div class="custom-file">
-													<input type="file" class="custom-file-input" id="customFile"
-														name="file">
-													<label class="custom-file-label" for="customFile">Choose
-														file</label>
-												</div>
+												<label>Nama Perusahaan / PT</label></br>
+												<span id="vnamapt"></span>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>Nomor Kontrak *</label>
-												<input class="form-control wajib" type="text" name="nomor_kontrak"
-													id="enomorkontrak" oninput="this.className = 'form-control wajib'">
+												<label>Nomor Kontrak</label></br>
+												<span id="vnomorkontrak"></span>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>Vendor *</label>
-												<input class="form-control wajib" type="text" name="vendor" id="evendor"
-													oninput="this.className = 'form-control wajib'">
+												<label>Vendor</label></br>
+												<span id="vvendor"></span>
 											</div>
 										</div>
 									</div>
@@ -69,32 +55,29 @@
 						<div class="">
 							<div class="card card-secondary">
 								<div class="card-header">
-									<h3 class="card-title">Jenis Sewa *</h3>
+									<h3 class="card-title">Jenis Sewa</h3>
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-8">
 											<div class="form-group">
-												<label>Jenis Sewa</label>
-												<input class="form-control wajib" name="jenis_sewa" type="text"
-													id="ejenissewa" oninput="this.className = 'form-control wajib'">
+												<label>Jenis Sewa</label></br>
+												<span id="vjenissewa"></span>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label>Halaman di dalam PDF ?</label>
-												<input class="form-control" name="pageinpdf" type="number"
-													id="epageinpdf" oninput="this.className = 'form-control wajib'">
+												<label>Halaman di dalam PDF</label></br>
+												<span id="vpageinpdf"></span>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>Serial Number / Nomor Polisi</label>
-												<input class="form-control" name="serialnumber" type="text"
-													id="eserialnumber">
+												<label>Serial Number / Nomor Polisi</label></br>
+												<span id="vserialnumber"></span>
 											</div>
 										</div>
 									</div>
@@ -115,11 +98,8 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>a. Apakah terdapat modifikasi ?</label>
-												<select class="form-control" name="nsa" id="nsa">
-													<option value="Yes">Yes</option>
-													<option value="No">No</option>
-												</select>
+												<label>a. Apakah terdapat modifikasi ?</label></br>
+												<span id="vnsa"></span>
 											</div>
 										</div>
 									</div>
@@ -127,8 +107,8 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>a. 1. Tuliskan nomor kontrak original ?</label>
-												<input class="form-control" type="text" name="nsa1" id="ensa1">
+												<label>a. 1. Tuliskan nomor kontrak original ?</label></br>
+												<span id="vnsa1"></span>
 											</div>
 										</div>
 									</div>
@@ -136,22 +116,16 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>b. Apakah kontrak dinegosiasikan dengan kontrak lain ?</label>
-												<select class="form-control" name="nsb" id="ensb">
-													<option value="Yes">Yes</option>
-													<option value="No">No</option>
-												</select>
+												<label>b. Apakah kontrak dinegosiasikan dengan kontrak lain ?</label></br>
+												<span id="vnsb"></span>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>c. 1. Apakah kontrak mengandung opsi perpanjangan ?</label>
-												<select class="form-control" name="nsc1" id="ensc1">
-													<option value="Yes">Yes</option>
-													<option value="No">No</option>
-												</select>
+												<label>c. 1. Apakah kontrak mengandung opsi perpanjangan ?</label></br>
+												<span id="vnsc1"></span>
 											</div>
 										</div>
 									</div>
@@ -159,19 +133,16 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label>c. 2. Penyewa cukup pasti untuk mengeksekusi Opsi tersebut
-													?</label>
-												<input class="form-control" type="text" name="ns_c2" id="ensc2">
+													?</label></br>
+												<span id="vnsc2"></span>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>d. 1. Apakah kontrak mengandung Opsi terminasi ?</label>
-												<select class="form-control" name="nsd1" id="ensd1">
-													<option value="Yes">Yes</option>
-													<option value="No">No</option>
-												</select>
+												<label>d. 1. Apakah kontrak mengandung Opsi terminasi ?</label></br>
+												<span id="vnsd1"></span>
 											</div>
 										</div>
 									</div>
@@ -179,8 +150,8 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label>d. 2. Penyewa cukup pasti untuk tidak mengeksekusi Opsi tersebut
-													?</label>
-												<input class="form-control" type="text" name="ns_d2" id="ensd2">
+													?</label></br>
+												<span id="vnsd2"></span>
 											</div>
 										</div>
 									</div>
@@ -202,77 +173,56 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<label>1. Certain Asset ? *</label>
-													<select class="form-control" name="is_1" id="eis1">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>1. Certain Asset ? </label></br>
+													<span id="vis1"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<label>2. Right to Operate ? *</label>
-													<select class="form-control" name="is_2" id="eis2">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>2. Right to Operate ? </label></br>
+													<span id="vis2"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<label>3. Control of the Output or other utility ? *</label>
-													<select class="form-control" name="is_3" id="eis3">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>3. Control of the Output or other utility ? </label></br>
+													<span id="vis3"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<label>4. Control Physical Asset ? *</label>
-													<select class="form-control" name="is_4" id="eis4">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>4. Control Physical Asset ? </label></br>
+													<span id="vis4"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<label>5. Contract Price ? *</label>
-													<select class="form-control" name="is_5" id="eis5">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>5. Contract Price ? </label></br>
+													<span id="vis5"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<label>6. Output used by third party ? *</label>
-													<select class="form-control" name=is_6 id=eis6>
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>6. Output used by third party ? </label></br>
+													<span id=vis6></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<label>7. Right to control the use of Asset ? *</label>
-													<select class="form-control" name="is_7" id="eis7">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>7. Right to control the use of Asset ? </label></br>
+													<span id="vis7"></span>
 												</div>
 											</div>
 										</div>
@@ -297,33 +247,24 @@
 												<div class="form-group">
 													<label>1. Kontrak terdiri dari beberapa komponen (lease dan
 														nonlease)
-														?</label>
-													<select class="form-control" name="kontrak_dari_beberapa_komponen"
-														id="ekontrak_dari_beberapa_komponen">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+														?</label></br>
+													<span id="vks1"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>2. Tuliskan komponen dalam kontrak ?</label>
-													<input class="form-control" type="text"
-														name="komponen_dalam_kontrak" id="ekomponen_dalam_kontrak">
+													<label>2. Tuliskan komponen dalam kontrak ?</label></br>
+													<span id="vks2"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>3. Komponen merupakan sewa ?</label>
-													<select class="form-control" name="komponen_merupakan_sewa"
-														id="ekomponen_merupakan_sewa">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+													<label>3. Komponen merupakan sewa ?</label></br>
+													<span id="vks3"></span>
 												</div>
 											</div>
 										</div>
@@ -334,12 +275,8 @@
 														secara
 														terpisah atau bersamaan dengan sumber daya lain yang tersedia
 														untuk
-														penyewa ?</label>
-													<select class="form-control" name="penyewa_mendapat_manfaat"
-														id="epenyewa_mendapat_manfaat">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+														penyewa ?</label></br>
+													<span id="vks4"></span>
 												</div>
 											</div>
 										</div>
@@ -349,11 +286,8 @@
 													<label>5. Aset pendasar tersebut tidak memiliki ketergantungan yang
 														tinggi dengan, maupun memiliki interelasi yang tinggi dengan,
 														aset
-														pendasar lainnya dalam kontrak ?</label>
-													<select class="form-control" name="aset_dasar" id="easet_dasar">
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
-													</select>
+														pendasar lainnya dalam kontrak ?</label></br>
+													<span id="vks5"></span>
 												</div>
 											</div>
 										</div>
@@ -376,41 +310,33 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Lokasi sewa ? *</label>
-													<input class="form-control wajib" type="text" name="lokasi"
-														id="elokasi" oninput="this.className = 'form-control wajib'">
+													<label>Lokasi sewa ? </label></br>
+													<span id="vlokasi"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
-											<label>Panjang Kontrak</label>
+											<label>Panjang Kontrak</label></br>
 										</div>
 										<div class="row">
 											<div class="col">
 												<div class="form-group">
-													<label>Start Date *</label>
-													<input class="form-control wajib" type="date" placeholder="01/01/20"
-														name="start_date" id="estartdate"
-														oninput="this.className = 'form-control wajib'">
+													<label>Start Date </label></br>
+													<span id="vstartdate"></span>
 												</div>
 											</div>
 											<div class="col">
 												<div class="form-group">
-													<label>End Date *</label>
-													<input class="form-control wajib" type="date" placeholder="01/01/20"
-														name="end_date" id="eenddate"
-														oninput="this.className = 'form-control wajib'">
+													<label>End Date </label></br>
+													<span id="venddate"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Besar nilai kontrak ? *</label>
-													<input class="form-control wajib" type="text"
-														onkeyup="splitInDots(this)" name="nilai_kontrak"
-														id="enilaikontrak"
-														oninput="this.className = 'form-control wajib'">
+													<label>Besar nilai kontrak ? </label></br>
+													<span id="vnilaikontrak"></span>
 												</div>
 											</div>
 										</div>
@@ -429,66 +355,55 @@
 									<div class="col">
 										<div class="row">
 											<div class="col-md-12">
-												<label>Discount Rate</label>
-												<input class="form-control" type="text" name="dr" id="edr">
+												<label>Discount Rate</label></br>
+												<span id="vdr"></span>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Payment Amount Term</label>
-													<input class="form-control" onkeyup="splitInDots(this)" type="text"
-														name="pat" id="epat">
+													<label>Payment Amount Term</label></br>
+													<span id="vpat"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Term of Payment</label>
-													<select class="form-control" name="top" id="etop">
-														<option value="1">1 (Tahunan)</option>
-														<option value="2">2 (Semester)</option>
-														<option value="4">4 (Kuartal)</option>
-														<option value="12">12 (Bulanan)</option>
-													</select>
+													<label>Term of Payment</label></br>
+													<span id="vtop"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Awal Bulan / Akhir Bulan</label>
-													<select class="form-control" name="awak" id="eawak">
-														<option value="1">Awal Bulan</option>
-														<option value="0">Akhir Bulan</option>
-													</select>
+													<label>Awal Bulan / Akhir Bulan</label></br>
+													<span id="vawak"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Frekuensi Pembayaran</label>
-													<input type="number" class="form-control" name="frekuensi"
-														id="efrekuensi">
+													<label>Frekuensi Pembayaran</label></br>
+													<span id="vfrekuensi"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Payment Date</label>
-													<input class="form-control" name="pd" type="date" id="epd">
+													<label>Payment Date</label></br>
+													<span id="vpd"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Prepaid</label>
-													<input class="form-control" onkeyup="splitInDots(this)"
-														name="prepaid" type="text" id="eprepaid">
+													<label>Prepaid</label></br>
+													<span id="vprepaid"></span>
 												</div>
 											</div>
 										</div>
@@ -508,36 +423,32 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Status PPN</label>
-													<select class="form-control" name="status_ppn" id="estatus_ppn">
-														<option value="0">Belum Termasuk PPN</option>
-														<option value="1">Sudah Termasuk PPN</option>
-													</select>
+													<label>Status PPN</label></br>
+													<span id="vstatus_ppn"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>PPN %</label>
-													<input class="form-control" type="text" name="ppn" id="eppn">
+													<label>PPN %</label></br>
+													<span id="vppn"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Jumlah Unit</label>
-													<input class="form-control" type="text" name="jumlah_unit"
-														id="ejumlah_unit">
+													<label>Jumlah Unit</label></br>
+													<span id="vjumlah_unit"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label>Satuan</label>
-													<input class="form-control" name="satuan" type="text" id="esatuan">
+													<label>Satuan</label></br>
+													<span id="vsatuan"></span>
 												</div>
 											</div>
 										</div>
@@ -556,18 +467,16 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>Nilai Asumsi Perpanjang</label>
-												<input class="form-control" type="text" onkeyup="splitInDots(this)"
-													name="nilai_asumsi_perpanjangan" id="enilai_asumsi_perpanjangan">
+												<label>Nilai Asumsi Perpanjang</label></br>
+												<span id="vnilai_asumsi_perpanjangan"></span>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<label>Tanggal Perpanjang</label>
-												<input class="form-control" type="date" name="tgl_perpanjangan"
-													id="etgl_perpanjangan">
+												<label>Tanggal Perpanjang</label></br>
+												<span id="vtgl_perpanjangan"></span>
 											</div>
 										</div>
 									</div>
@@ -577,33 +486,19 @@
 								</div>
 							</div>
 						</div>
-						<!-- <div style="text-align:center;margin-top:1%;margin-bottom: 5%;" class="float-right"> -->
-						<!-- Form <span id="step">1</span>/<span id="jumlah"></span> -->
-						<!-- <span class="step">1</span> -->
-						<!-- <span class="step">2</span> -->
-						<!-- <span class="step">3</span> -->
-						<!-- <span class="step">4</span> -->
-						<!-- <span class="step">5</span> -->
-						<!-- </div> -->
-						<input type="hidden" id="logsesid" value="<?php echo $this->session->userdata('ses_id'); ?>" />
 					</div>
 					<div class="modal-footer">
 						<div class="col">
 							<div class="row">
-								<div class="ml-auto">
-									<strong><span>Form</span> <span id="step"> 1</span>/<span
-											id="jumlah"></span></strong>
-								</div>
 							</div>
 							<div class="row">
-								<div class="ml-auto">
-									<button type="button" class="btn btn-light" id="prevBtn"
-										onclick="nextPrev(-1)">Sebelumnya</button>
-									<button type="button" class="btn btn-primary" id="nextBtn"
-										onclick="nextPrev(1)">Selanjutnya</button>
-									<button type="submit" class="btn btn-danger" id="submit_form_edit">Submit</button>
-									<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button> -->
-								</div>
+								<input type="hidden" id="vIdSum">
+								<input type="hidden" id="vIdCal">
+								<input type="hidden" id="vIdKon">
+								<input type="hidden" id="vNamapt">
+								<input type="hidden" id="vNomorKontrak">
+								<input type="hidden" id="vVendor">
+								<button type="button" class="btn btn-primary float-right" data-backdrop="static" data-keyboard="false" id="btnPlusAset">Tambah Aset</button>
 							</div>
 						</div>
 					</div>
@@ -614,7 +509,7 @@
 	</section>
 	<section class="content col-lg-6 connectedSortable">
 		<div class="container-fluid">
-			<?php $this->load->view('admin/showpdf'); ?>
+			<?php $this->load->view('component/showpdf'); ?>
 		</div>
 	</section>
 	<!-- /.modal-dialog -->

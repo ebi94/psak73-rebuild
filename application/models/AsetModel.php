@@ -59,11 +59,11 @@ class AsetModel extends CI_Model{
                     sum.is_5 As is_5,
                     sum.is_6 AS is_6,
                     sum.is_7 AS is_7,
-                    sum.k_1 AS komponen,
-                    sum.k_2 AS komponen_dalam_kontrak,
-                    sum.k_3 AS komponen_sewa,
-                    sum.k_4 AS penyewa_dapat_manfaat,
-                    sum.k_5 AS ketergantungan_tinggi_asset,
+                    sum.k_1 AS ks1,
+                    sum.k_2 AS ks2,
+                    sum.k_3 AS ks3,
+                    sum.k_4 AS ks4,
+                    sum.k_5 AS ks5,
                     sum.lokasi AS lokasi,
                     sum.start_date AS start_date,
                     sum.end_date AS end_date,
@@ -71,6 +71,7 @@ class AsetModel extends CI_Model{
                     sum.periode_kontrak AS periode_kontrak,
                     sum.page_in_pdf AS page_in_pdf,
                     k.created_by AS dibuat_kontrak,
+                    c.id AS id_calculation,
                     c.dr AS dr,
                     c.pat AS pat,
                     c.top AS top,
@@ -246,8 +247,86 @@ class AsetModel extends CI_Model{
         return $id_kontrak_new;
     }
 
+    function aset_edit_batch($diff,$nama_pt,$nomor_kontrak,$vendor,$created_by,$pageinpdf,$jenis_sewa,$serialnumber,$ns_a,$ns_a1,$ns_b,$ns_c1,$ns_c2,$ns_d1,$ns_d2,$is_1,$is_2,$is_3,$is_4,$is_5,$is_6,$is_7,$k_1,$k_2,$k_3,$k_4,$k_5,$lokasi,$start_date,$end_date,$kontrak_int,$dr,$pat,$top,$awak,$pd,$prepaid,$status_ppn,$ppn,$jumlah_unit,$satuan,$nilai_asumsi_perpanjangan,$tgl_perpanjangan,$frekuensi_pembayaran,$idCalculation,$idSummary,$idKontrak) {
+
+              $this->db->trans_begin();
+              // edit kontrak
+              $kontrak_edit_data = array(
+                    'nama_pt' => $nama_pt,
+                    'nomor_kontrak' => $nomor_kontrak,
+                    'vendor' => $vendor,
+                    'created_by' => $this->session->userdata('ses_id')
+              );
+              $this->KontrakModel->kontrak_edit($idKontrak, $kontrak_edit_data);
+
+              // edit summary/aset
+              $aset_edit_data = array(
+                    'page_in_pdf' => $pageinpdf,
+                    'jenis_sewa' => $jenis_sewa,
+                    'serialnumber' => $serialnumber,
+                    'ns_a' => $ns_a,
+                    'ns_a1' => $ns_a1,
+                    'ns_b' => $ns_b,
+                    'ns_c1' => $ns_c1,
+                    'ns_c2' => $ns_c2,
+                    'ns_d1' => $ns_d1,
+                    'ns_d2' => $ns_d2,
+                    'is_1' => $is_1,
+                    'is_2' => $is_2,
+                    'is_3' => $is_3,
+                    'is_4' => $is_4,
+                    'is_5' => $is_5,
+                    'is_6' => $is_6,
+                    'is_7' => $is_7,
+                    'k_1' => $k_1,
+                    'k_2' => $k_2,
+                    'k_3' => $k_3,
+                    'k_4' => $k_4,
+                    'k_5' => $k_5,
+                    'lokasi' => $lokasi,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                    'nilai_kontrak' => $kontrak_int,
+                    'periode_kontrak' => $diff
+              );
+              $this->aset_edit($idSummary, $aset_edit_data);
+
+              // edit calculation
+              $calculaion_edit_data = array(
+                    'dr' => $dr,
+                    'pat' => $pat,
+                    'top' => $top,
+                    'awak' => $awak,
+                    'pd' => $pd,
+                    'prepaid' => $prepaid,
+                    'status_ppn' => $status_ppn,
+                    'ppn' => $ppn,
+                    'jumlah_unit' => $jumlah_unit,
+                    'satuan' => $satuan,
+                    'nilai_asumsi_perpanjangan' => $nilai_asumsi_perpanjangan,
+                    'tgl_perpanjangan' => $tgl_perpanjangan,
+                    'frekuensi_pembayaran' => $frekuensi_pembayaran
+              );
+              $this->CalculationModel->calculation_edit($idCalculation, $calculaion_edit_data);
+
+              if ($this->db->trans_status() === FALSE)
+              {
+                $this->db->trans_rollback();
+              }
+              else
+              {
+                $this->db->trans_commit();
+              }
+        return true;
+    }
+
     function aset_add($aset_add_data) {
         return $this->db->insert('abm_summary', $aset_add_data);
+    }
+
+    function aset_edit($idSummary, $aset_add_data) {
+        $this->db->where('id', $idSummary);
+        return $this->db->update('abm_summary', $aset_add_data);
     }
 
     function aset_only_check($param = array()) {
@@ -274,7 +353,7 @@ class AsetModel extends CI_Model{
         $param_check_aset = array('id_summary' => $id_aset);
 
         $check_aset = $this->aset_only_check($param_check_aset)->row();
-        $id_kontrak = $check->id_kontrak;
+        $id_kontrak = $check_aset->id_kontrak;
 
         $param_check_count_aset = array('id_kontrak' => $id_kontrak);
         $check_kontrak = $this->aset_only_check($param_check_count_aset)->num_rows();

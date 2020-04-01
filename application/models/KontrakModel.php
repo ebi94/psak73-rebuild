@@ -13,6 +13,11 @@ class KontrakModel extends CI_Model{
 
     function kontrak_add($kontrak_add_data) {
     	return $this->db->insert('t_kontrak', $kontrak_add_data);
+	}
+	
+	function kontrak_edit($idKontrak, $kontrak_add_data) {
+		$this->db->where('id', $idKontrak);
+    	return $this->db->update('t_kontrak', $kontrak_add_data);
     }
 
     function kontrak_check($param = array()) {

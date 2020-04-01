@@ -11,11 +11,12 @@
 			<!-- <form id="add_modal_aset" name="form" role="form" method="POST" enctype="multipart/form-data" action="<?php echo site_url('aset/do/add');?>"> -->
 			<form id="edit_modal_aset" name="form" role="form">
 				<div class="modal-body">
-					<input type="hidden" id="title_edit_aset" name="title" value="">
-					<input type="hidden" id="id_kontrak" name="id_kontrak" value="">
+					<input type="hidden" id="id_esummary" name="id_esummary" value="">
+					<input type="hidden" id="id_ekontrak" name="id_ekontrak" value="">
+					<input type="hidden" id="id_ecalculation" name="id_ecalculation" value="">
 					<!-- One "tab" for each step in the form: -->
 					<!-- CONTRACT FORM -->
-					<div class="tab_step">
+					<div class="tab_step_edit">
 					 	<div class="card card-secondary">
 					 	    <div class="card-header">
 					 	        <h3 class="card-title">Contract Form</h3>
@@ -62,7 +63,7 @@
 					 	</div>
 					</div>
 					<!-- JENIS SEWA FORM -->
-					<div class="">
+					<div class="tab_step_edit">
 					  <div class="card card-secondary">
 					      <div class="card-header">
 					          <h3 class="card-title">Jenis Sewa *</h3>
@@ -98,7 +99,7 @@
 					  </div>
 					</div>
 					<!-- NATURE SEWA FORM -->
-					<div class="">
+					<div class="tab_step_edit">
 					  <div class="card card-secondary">
 					      <div class="card-header">
 					          <h3 class="card-title">Nature Sewa</h3>
@@ -182,7 +183,7 @@
 					  </div>
 					</div>
 					<!-- IDENTIFIKASI SEWA FORM -->
-					<div class="">
+					<div class="tab_step_edit">
 					  <div class="card card-secondary">
 					      <div class="card-header">
 					          <h3 class="card-title">Identifikasi Sewa</h3>
@@ -275,7 +276,7 @@
 					  </div>
 					</div>
 					<!-- KOMPONEN SEWA FORM -->
-					<div class="">
+					<div class="tab_step_edit">
 						<div class="card card-secondary">
 						    <div class="card-header">
 						        <h3 class="card-title">Komponen Sewa</h3>
@@ -287,7 +288,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>1. Kontrak terdiri dari beberapa komponen (lease dan nonlease) ?</label>
-						    		            <select class="form-control" name="kontrak_dari_beberapa_komponen" id="ekontrak_dari_beberapa_komponen">
+						    		            <select class="form-control" name="kontrak_dari_beberapa_komponen" id="eks1">
 						    		                <option value="Yes">Yes</option>
 						    		                <option value="No">No</option>
 						    		            </select>
@@ -298,7 +299,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>2. Tuliskan komponen dalam kontrak ?</label>
-						    		            <input class="form-control" type="text" name="komponen_dalam_kontrak" id="ekomponen_dalam_kontrak">
+						    		            <input class="form-control" type="text" name="komponen_dalam_kontrak" id="eks2">
 						    		        </div>
 						    		    </div>
 						    		</div>
@@ -306,7 +307,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>3. Komponen merupakan sewa ?</label>
-						    		            <select class="form-control" name="komponen_merupakan_sewa" id="ekomponen_merupakan_sewa">
+						    		            <select class="form-control" name="komponen_merupakan_sewa" id="eks3">
 						    		                <option value="Yes">Yes</option>
 						    		                <option value="No">No</option>
 						    		            </select>
@@ -317,7 +318,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>4. Penyewa mendapat manfaat dari penggunaan aset pendasar secara terpisah atau bersamaan dengan sumber daya lain yang tersedia untuk penyewa ?</label>
-						    		            <select class="form-control" name="penyewa_mendapat_manfaat" id="epenyewa_mendapat_manfaat">
+						    		            <select class="form-control" name="penyewa_mendapat_manfaat" id="eks4">
 						    		                <option value="Yes">Yes</option>
 						    		                <option value="No">No</option>
 						    		            </select>
@@ -328,7 +329,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>5. Aset pendasar tersebut tidak memiliki ketergantungan yang tinggi dengan, maupun memiliki interelasi yang tinggi dengan, aset pendasar lainnya dalam kontrak ?</label>
-						    		            <select class="form-control" name="aset_dasar" id="easet_dasar">
+						    		            <select class="form-control" name="aset_dasar" id="eks5">
 						    		                <option value="Yes">Yes</option>
 						    		                <option value="No">No</option>
 						    		            </select>
@@ -343,7 +344,7 @@
 						</div>
 					</div>
 					<!-- LOKASI, PANJANG & NILAI KONTRAK FORM -->
-					<div class="">
+					<div class="tab_step_edit">
 						<div class="card card-secondary">
 						    <div class="card-header">
 						        <h3 class="card-title">Lokasi, Panjang & Nilai Kontrak</h3>
@@ -389,7 +390,7 @@
 						</div>
 					</div>
 					<!-- CALCULATION -->
-					<div class="">
+					<div class="tab_step_edit">
 						<div class="card card-secondary">
 						    <div class="card-header">
 						        <h3 class="card-title">Calculation</h3>
@@ -464,7 +465,7 @@
 						</div>
 					</div>
 					<!-- DETAIL CONTRACT FORM -->
-					<div class="">
+					<div class="tab_step_edit">
 						<div class="card card-secondary">
 						    <div class="card-header">
 						        <h3 class="card-title">Detail Contract Form</h3>
@@ -512,7 +513,7 @@
 						</div>
 					</div>
 					<!-- PERPANJANGAN -->
-					<div class="">
+					<div class="tab_step_edit">
 						<div class="card card-secondary">
 						    <div class="card-header">
 						        <h3 class="card-title">Perpanjangan</h3>
@@ -555,13 +556,13 @@
 					<div class="col">
 						<div class="row">
 							<div class="ml-auto">
-								<strong><span>Form</span> <span id="step"> 1</span>/<span id="jumlah"></span></strong>	
+								<strong><span>Form</span> <span id="stepEdit"> 1</span>/<span id="jumlahEdit"></span></strong>	
 							</div>
 						</div>
 						<div class="row">
 							<div class="ml-auto">
-								<button type="button" class="btn btn-light" id="prevBtn" onclick="nextPrev(-1)">Sebelumnya</button>
-								<button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">Selanjutnya</button>
+								<button type="button" class="btn btn-light" id="prevBtnEdit" onclick="nextPrevEdit(-1)">Sebelumnya</button>
+								<button type="button" class="btn btn-primary" id="nextBtnEdit" onclick="nextPrevEdit(1)">Selanjutnya</button>
 								<button type="submit" class="btn btn-danger" id="submit_form_edit">Submit</button>
 								<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button> -->
 							</div>
