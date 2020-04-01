@@ -18,6 +18,7 @@ class AsetController extends CI_Controller{
 	function index() {
 		$data['title'] = 'List Aset';
 		$data['view'] = 'pages/aset';
+        $data['user'] = $this->AuthModel->auth_get_all()->result();
 		$this->load->view('templates/layout', $data);
 	}
 
@@ -30,6 +31,11 @@ class AsetController extends CI_Controller{
 		$draw = intval($this->input->get("draw"));
         $start = intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
+
+        if ($dibuat_oleh != '') {
+            // $dibuat_oleh = array_map('intval', explode(',', $dibuat_oleh));
+            $dibuat_oleh = implode(",",$dibuat_oleh);
+        }
 
         if ($this->session->userdata('level') == 0) {
             $param = array('nama_pt' => $pt, 'kontrak' => $kontrak, 'vendor' => $vendor, 'user' => $dibuat_oleh);

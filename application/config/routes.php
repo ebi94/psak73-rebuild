@@ -58,9 +58,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // PAGE
 	$route['home'] 			= 'page/HomeController';
 
-	$route['aset'] 			= 'page/AsetController';
-	$route['aset/list'] 	= 'page/AsetController/get_aset_list';
-	$route['aset/do/add'] 	= 'page/AsetController/aset_do_add';
+	// ASET
+		$route['aset'] 			= 'page/AsetController';
+		$route['aset/list']		= 'page/AsetController/get_aset_list';
+		$route['aset/do/add'] 	= 'page/AsetController/aset_do_add';
+	// END
+
+	// CONFIG
+		$route['config'] 			= 'page/ConfigController';
+
+		// Perushaan
+			// $route['perusahaan'] 			= 'page/PerusahaanController';
+			$route['perusahaan/list'] 		= 'page/PerusahaanController/get_perusahaan_list';
+			$route['perusahaan/do/add'] 	= 'page/PerusahaanController/perusahaan_do_add';
+			$route['perusahaan/do/edit'] 	= 'page/PerusahaanController/perusahaan_do_edit';
+
+		// TOP
+			// $route['top'] 			= 'page/TermofpaymentController';
+			$route['top/list'] 		= 'page/TermofpaymentController/get_top_list';
+			$route['top/do/add'] 	= 'page/TermofpaymentController/top_do_add';
+			$route['top/do/edit'] 	= 'page/TermofpaymentController/top_do_edit';
+
+		// Tanggal Acuan
+			// $route['tanggal-acuan'] 			= 'page/TanggalacuanController';
+			$route['tanggal-acuan/list'] 		= 'page/TanggalacuanController/get_tanggal_acuan_list';
+			$route['tanggal-acuan/do/add'] 		= 'page/TanggalacuanController/tanggal_acuan_do_add';
+			$route['tanggal-acuan/do/edit'] 	= 'page/TanggalacuanController/tanggal_acuan_do_edit';
+	// END
+
+	// EXPORT XLSX
+		$route['export'] 				= 'export/ExportController';
+		$route['export/summary'] 		= 'export/ExportController/summary';
+		$route['export/kkp'] 		= 'export/ExportController/kkp';
+	// END
+
 // END PAGE
 
 
