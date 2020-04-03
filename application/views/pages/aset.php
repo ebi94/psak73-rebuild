@@ -16,11 +16,14 @@
           <div style="margin-right: 1%;">
             <input type="text" name="vendor" id="searchVendor" class="form-control" placeholder="Vendor">
           </div>
-
+        </form>
+        <form class="form-inline container" style="width: 100%;margin-top: 1%;">
           <?php if($this->session->userdata('level') == 0):?>
           <div style="margin-right: 1%;">
-            <select class="form-control selectpicker dibuat_oleh" data-live-search="true" name="dibuat_oleh" id="dibuat_oleh">
-                <option value="ALL">-- Semua User --</option>
+            <select class="form-control select2 dibuat_oleh" multiple="multiple" name="dibuat_oleh" id="dibuat_oleh" data-placeholder="User" style="width: auto;">
+                <?php foreach($user as $u):?>
+                  <option value="<?php echo $u->id;?>"><?php echo auth_name($u->id);?></option>
+                <?php endforeach; ?>
             </select>
           </div>
           <?php endif; ?>

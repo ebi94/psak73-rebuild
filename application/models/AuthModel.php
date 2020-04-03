@@ -30,4 +30,9 @@ class AuthModel extends CI_Model{
 		$result = $this->db->update('users', $auth_up_logout_data);
 		return $result;
 	}
+
+	function auth_get_all() {
+		$query = $this->db->query("SELECT * FROM users ORDER BY name ASC");
+		return $query;
+	}
 }

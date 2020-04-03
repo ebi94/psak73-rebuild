@@ -12,12 +12,18 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/jqvmap/jqvmap.min.css">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/sweetalert2/sweetalert2.min.css">
+    <!-- <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/sweetalert2/sweetalert2.min.css"> -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/sweetalert2-theme-bootstrap4/bootstrap-4.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/toastr/toastr.min.css">
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <!-- Toastr -->
@@ -162,8 +168,12 @@
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/jquery-ui/jquery-ui.min.js"></script>
 	<!-- Bootstrap 4-->
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Select2 -->
+	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/select2/js/select2.full.min.js"></script>
 	<!-- SweetAlert2 -->
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+	<!-- Toastr -->
+	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/toastr/toastr.min.js"></script>
 	<!-- Toastr -->
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/toastr/toastr.min.js"></script>
 	<!-- Input Mask -->
@@ -186,11 +196,54 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 	<script type="text/javascript">
-		$('#aset_list').hide();
+		$('.select2').select2();
+		function validateFormWajib() {
+		  // This function deals with validation of the form fields
+		  var y, i, valid = true;
+		  y = document.getElementsByClassName("wajib_isi");
+		  // A loop that checks every input field in the current tab:
+		  for (i = 0; i < y.length; i++) {
+		    // If a field is empty...
+		    if (y[i].value == "") {
+		      // add an "invalid" class to the field:
+		      y[i].className += " invalid";
+		      // and set the current valid status to false:
+		      valid = false;
+		    }
+		  }
+		  return valid; // return the valid status
+		}
 
-		// Halaman List Aset
-			<?php if ($title == 'List Aset'):?>
+		const Toast = Swal.mixin({
+		    toast: true,
+		    position: 'top-end',
+		    showConfirmButton: false,
+		    timer: 3000
+	    });
 
+	    function toastFire(status, message) {
+	    	Toast.fire({
+	    	    type: status,
+	    	    title: message
+	      });
+	    }
+
+	    function alerttoast(message){
+	    	toastr.error(message);
+	    }
+		// $('#aset_list').hide();
+
+		// USER MANAGEMENT
+			
+		// End
+	
+		<?php if ($title == 'List Aset'):?>
+			// Halaman List Aset
+				var pts = '';
+				var kontraks = '';
+				var vendors = '';
+				var dibuat_olehs = '';
+				fill_datatable_aset(pts,kontraks,vendors,dibuat_olehs);
 				function fill_datatable_aset(pt = '', kontrak = '', vendor = '', dibuat_oleh = ''){
 					$('#aset_list').DataTable({
 						"paging"		: true,
@@ -220,8 +273,10 @@
 					var vendor = $('#searchVendor').val();
 					var dibuat_oleh = $('#dibuat_oleh').val();
 
+					// alert(dibuat_oleh);
+
 					$('#aset_list').DataTable().destroy();
-					$('#aset_list').show();
+					// $('#aset_list').show();
 					fill_datatable_aset(pt,kontrak,vendor,dibuat_oleh);
 				});
 
@@ -508,8 +563,308 @@
 					});
 
 				// end
-			<?php endif; ?>
-		// End
+		<?php endif; ?>
+		
+		<?php if ($title == 'Config'): ?>
+			// Halaman Config
+
+				// Config Perusahaan
+					fill_datatable_perusahaan();
+					function fill_datatable_perusahaan(pt = '', alamat = ''){
+						$('#perusahaan_list').DataTable({
+							"paging"		: true,
+							"lengthChange"	: false,
+							"searching"		: false,
+							"ordering"		: false,
+							"info"			: true,
+							"autoWidth"		: false,
+							"scrollX"		: true,
+							"scrollY"		: true,
+							"ajax"			: {
+								url		: "<?php echo base_url('perusahaan/list') ?>",
+								type	: "GET",
+								data	: {
+									pt:pt,
+									alamat:alamat
+								}
+							},
+						});
+					}
+
+					$('#search_perusahaan').on('click',function(){
+						var pt = $('#nama_pt').val();
+						var alamat = $('#alamat').val();
+
+						$('#perusahaan_list').DataTable().destroy();
+						$('#perusahaan_list').show();
+						fill_datatable_perusahaan(pt,alamat);
+					});
+
+					// ADD PERUSAHAAN
+						$('#add_perusahaan_modal').submit(function(e){
+						  if(!validateFormWajib()) return false;
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('perusahaan/do/add')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("add_perusahaan_modal").reset();
+							      	$('#addPerusahaanModal').modal("hide");
+							      	toastFire('success','Berhasil Tambah Perusahaan');
+							      	$('#search_perusahaan').click();
+						      },
+						  });
+						  return false;
+						});
+					// END
+					
+					// EDIT PERUSAHAAN
+						// $('.edit_perusahaan').on('click',function() {
+						$(document).on("click", ".edit_perusahaan", function () {
+							var idPerusahaan = $(this).data('idp');
+							var namaPerusahaan = $(this).data('namap');
+							var alamatPerusahaan = $(this).data('alamatp');
+							var teleponPerusahaan = $(this).data('teleponp');
+
+							// alert(idPerusahaan);
+
+							$('#edit_id_perusahaan').val(idPerusahaan);
+							// document.getElementById("edit_id_perusahaan").val(idPerusahaan);
+							$('#edit_nama_perusahaan').val(namaPerusahaan);
+							// document.getElementById("edit_nama_perusahaan").val(namaPerusahaan);
+							// $('#edit_alamat').val(alamatPerusahaan);
+							document.getElementById("edit_alamat").innerHTML = alamatPerusahaan;
+							$('#edit_telepon').val(teleponPerusahaan);
+							// document.getElementById("edit_telepon").val(teleponPerusahaan);
+						});
+
+						$('#edit_perusahaan_modal').submit(function(e){
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('perusahaan/do/edit')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("edit_perusahaan_modal").reset();
+							      	$('#editPerusahaanModal').modal("hide");
+							      	toastFire('success','Berhasil Ubah Data Perusahaan');
+							      	$('#search_perusahaan').click();
+						      },
+						  });
+						  return false;
+						});
+					// END
+				// End
+
+				// Config TOP
+					fill_datatable_top();
+					function fill_datatable_top(){
+						$('#top_list').DataTable({
+							"paging"		: true,
+							"lengthChange"	: false,
+							"searching"		: false,
+							"ordering"		: false,
+							"info"			: true,
+							"autoWidth"		: false,
+							"scrollX"		: true,
+							"scrollY"		: true,
+							"ajax"			: {
+								url		: "<?php echo base_url('top/list') ?>",
+								type	: "GET"
+							},
+						});
+					}
+
+					// ADD TOP
+						$('#add_top_modal').submit(function(e){
+						  if(!validateFormWajib()) return false;
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('top/do/add')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("add_top_modal").reset();
+							      	$('#addTOPModal').modal("hide");
+							      	$('#top_list').DataTable().destroy();
+							      	fill_datatable_top();
+							      	toastFire('success','Berhasil Tambah Data Term of Payment (TOP)');
+						      },
+						  });
+						  return false;
+						});
+					// END
+
+					// EDIT TOP
+						$(document).on("click", ".edit_top", function () {
+							var idTop = $(this).data('idtop');
+							var top = $(this).data('top');
+							var keteranganTop = $(this).data('keterangantop');
+
+							$('#edit_id_top').val(idTop);
+							$('#edit_top_top').val(top);
+							$('#edit_keterangan_top').val(keteranganTop);
+						});
+
+						$('#edit_top_modal').submit(function(e){
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('top/do/edit')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("edit_top_modal").reset();
+							      	$('#editTOPModal').modal("hide");
+							      	$('#top_list').DataTable().destroy();
+							      	fill_datatable_top();
+							      	toastFire('success','Berhasil Ubah Data Term of Payment (TOP)');
+						      },
+						  });
+						  return false;
+						});
+					// END
+				// End
+
+				// Config Tanggal Acuan
+					fill_datatable_tanggal_acuan();
+					function fill_datatable_tanggal_acuan(){
+						$('#tanggal_acuan_list').DataTable({
+							"paging"		: true,
+							"lengthChange"	: false,
+							"searching"		: false,
+							"ordering"		: false,
+							"info"			: true,
+							"autoWidth"		: false,
+							"scrollX"		: true,
+							"scrollY"		: true,
+							"ajax"			: {
+								url		: "<?php echo base_url('tanggal-acuan/list') ?>",
+								type	: "GET"
+							},
+						});
+					}
+
+					// ADD TANGGAL ACUAN
+						$('#add_tanggal_acuan_modal').submit(function(e){
+						  if(!validateFormWajib()) return false;
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('tanggal-acuan/do/add')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("add_tanggal_acuan_modal").reset();
+							      	$('#addTanggalAcuanModal').modal("hide");
+							      	$('#tanggal_acuan_list').DataTable().destroy();
+							      	fill_datatable_tanggal_acuan();
+							      	toastFire('success','Berhasil Tambah Tanggal Acuan');
+						      },
+						  });
+						  return false;
+						});
+					// END
+
+					// EDIT TANGGAL ACUAN
+						$(document).on("click", ".edit_tanggalacuan", function () {
+							var idTanggalAcuan = $(this).data('idtanggalacuan');
+							var tanggal_acuan = $(this).data('tanggalacuan');
+							var keterangantanggal_acuan = $(this).data('keterangantanggalacuan');
+
+							$('#edit_id_tanggal_acuan').val(idTanggalAcuan);
+							$('#edit_tanggal_acuan').val(tanggal_acuan);
+							$('#edit_keterangan_tanggal_acuan').val(keterangantanggal_acuan);
+						});
+
+						$('#edit_tanggal_acuan_modal').submit(function(e){
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('tanggal-acuan/do/edit')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("edit_tanggal_acuan_modal").reset();
+							      	$('#editTanggalAcuanModal').modal("hide");
+							      	$('#tanggal_acuan_list').DataTable().destroy();
+							      	fill_datatable_tanggal_acuan();
+							      	toastFire('success','Berhasil Ubah Data Tanggal Acuan');
+						      },
+						  });
+						  return false;
+						});
+					// END
+				// End
+
+			// End
+		<?php endif;?>
+		
+		<?php if ($title == 'Export'): ?>
+			$('#loading').modal('hide');
+			// Halaman Export .xls
+				// Summary
+					$(document).on("click", ".export_summary", function () {
+					  var pt = $('#nama_pt_export').val();
+					  var user = $('#dibuat_oleh_export').val();
+
+					  console.log(pt);
+					  console.log(user);
+
+					  if (pt.length != 0) {
+					  	window.open('export/summary?pt='+pt+'&user='+user);
+					  } else {
+					  	alerttoast('Isi Nama PT');
+					  }
+					  
+					});
+
+				// KKP
+					$(document).on("click", ".export_kkp", function () {
+					  var pt = $('#nama_pt_export').val();
+					  var user = $('#dibuat_oleh_export').val();
+
+					  console.log(pt);
+					  console.log(user);
+
+					  if (pt.length != 0) {
+					  	window.open('export/kkp?pt='+pt+'&user='+user);
+					  } else {
+					  	alerttoast('Isi Nama PT');
+					  }
+					  
+					});
+			// End
+		<?php endif ?>
+		
 	</script>
 	<script type="text/javascript">
 		$(document).on("click", ".btnEditAset", function () {

@@ -13,9 +13,10 @@ class AsetModel extends CI_Model{
 
     function aset_get_all($param= array()) {
         $user = "WHERE k.created_by != 0";
-        if (isset($param['user']) && $param['user'] != 'ALL') {
+        if (isset($param['user']) && $param['user'] != '') {
         // if ($param['user'] != 'ALL') {
-            $user = "WHERE k.created_by = ".$param['user']."";
+            // $user = "WHERE k.created_by = ".$param['user']."";
+            $user = "WHERE k.created_by IN (".$param['user'].")";
         }
 
         $nama_pt = "";

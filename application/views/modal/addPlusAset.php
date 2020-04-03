@@ -1,7 +1,7 @@
 <div class="modal fade" id="addPlusAsetModal">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
-      <div class="modal-header bg-danger">
+      <div class="modal-header bg-primary">
         <h4 class="modal-title">Tambah Aset</h4>
         </button>
       </div>
