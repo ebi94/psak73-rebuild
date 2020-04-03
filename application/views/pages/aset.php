@@ -14,7 +14,7 @@
             <input type="text" name="kontrak" id="kontrak" class="form-control" placeholder="No. Kontrak">
           </div>
           <div style="margin-right: 1%;">
-            <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Vendor">
+            <input type="text" name="vendor" id="searchVendor" class="form-control" placeholder="Vendor">
           </div>
         </form>
         <form class="form-inline container" style="width: 100%;margin-top: 1%;">
@@ -60,8 +60,24 @@
   <?php $this->load->view('modal/addAset'); ?>
   <!--/ .Modal Tambah -->
 
+  <!-- Modal Ubah -->
+  <?php $this->load->view('modal/editAset'); ?>
+  <!--/ .Modal Ubah -->
+
+  <!-- Modal Ubah -->
+  <?php $this->load->view('modal/viewAset'); ?>
+  <!--/ .Modal Ubah -->
+
   <!-- Modal Tambah Plus Confirm -->
   <?php $this->load->view('modal/addPlusAset'); ?>
   <!--/ .Modal Tambah Plus Confirm -->
+
+  <!-- Modal Confirm Close Add -->
+  <?php $this->load->view('modal/confirmClose'); ?>
+  <!--/ .Modal Confirm Close Add -->
+
+  <!-- Modal Delete Aset -->
+  <?php $this->load->view('modal/deleteAset'); ?>
+  <!--/ .Modal Delete Aset -->
 
 </div>

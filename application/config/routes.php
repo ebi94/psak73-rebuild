@@ -59,9 +59,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$route['home'] 			= 'page/HomeController';
 
 	// ASET
-		$route['aset'] 			= 'page/AsetController';
-		$route['aset/list']		= 'page/AsetController/get_aset_list';
-		$route['aset/do/add'] 	= 'page/AsetController/aset_do_add';
+	$route['aset'] 			= 'page/AsetController';
+	$route['aset/list'] 	= 'page/AsetController/get_aset_list';
+	$route['aset/do/add'] 	= 'page/AsetController/aset_do_add';
+	$route['aset/do/edit'] 	= 'page/AsetController/aset_do_edit';
+	$route['aset/do/delete'] 	= 'page/AsetController/aset_do_delete';
 	// END
 
 	// CONFIG

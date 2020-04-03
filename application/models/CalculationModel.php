@@ -14,4 +14,9 @@ class CalculationModel extends CI_Model{
     function calculation_add($calculaion_add_data) {
     	return $this->db->insert('t_calculation', $calculaion_add_data);
     }
+
+    function calculation_edit($idCalculation, $calculaion_add_data) {
+        $this->db->where('id', $idCalculation);
+    	return $this->db->update('t_calculation', $calculaion_add_data);
+    }
 }
