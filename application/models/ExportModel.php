@@ -141,14 +141,15 @@ class ExportModel extends CI_Model{
         }
         $where_pt = '';
         if (isset($param['nama_pt']) && ($param['nama_pt'] != '' || $param['nama_pt'] != null)) {
-            $array = explode(',', $param['nama_pt']);
-            $array = implode("|",$array);
-            // $where_pt = "AND kon.nama_pt IN (".$param['nama_pt'].")";
-            $where_pt = "AND kon.nama_pt REGEXP '".$array."'";
+            // $array = explode(',', $param['nama_pt']);
+            // $array = implode("|",$array);
+            $where_pt = "AND kon.nama_pt LIKE '%".$param['nama_pt']."%'";
+            // $where_pt = "AND kon.nama_pt REGEXP '".$array."'";
         }
 
         $query = $this->db->query(
             "SELECT
+                kon.nama_pt AS nama_pt,
                 kon.nomor_kontrak AS no_kontrak,
                 kon.vendor AS nama_vendor,
                 sum.jenis_sewa AS underlying_asset,
