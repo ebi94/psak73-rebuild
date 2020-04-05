@@ -8,10 +8,8 @@
 			<div class="modal-body">
 				<section class="content">
 					<div class="container-fluid">
-						<div class="inputan">
-							<strong>Apakah anda yakin menghapus data ini ?</strong>
-							<input type="hidden" id="deleteId" />
-						</div>
+						<strong>Apakah anda yakin menghapus data ini ?</strong>
+						<input type="hidden" id="deleteId" />
 					</div>
 				</section>
 			</div>

@@ -77,6 +77,29 @@
     	.step.finish {
     	  background-color: #4CAF50;
     	}
+
+		#overlay-loading {
+			position: fixed;
+			display: none;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0,0,0,0.5);
+			z-index: 99999;
+		}
+
+		#img-loading {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			font-size: 50px;
+			color: white;
+			transform: translate(-50%,-50%);
+			-ms-transform: translate(-50%,-50%);
+		}
     </style>
 </head>
 <body class="hold-transition sidebar-mini sidebar-open layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -453,9 +476,9 @@
 					      async:false,
 					      success: function(data){
 						      	document.getElementById("add_modal_aset").reset();
-						      	$('#addAsetModal').modal("hide");
+						      	$('#addAsetModal').modal('hide');
 						      	$('.inputan').html(data);
-						      	$('#addPlusAsetModal').modal({backdrop: 'static', keyboard: false});
+						      	// $('#addPlusAsetModal').modal({backdrop: 'static', keyboard: false});
 						      	// document.getElementById("no_kontrak_plus").innerHTML = data;
 						      	$('#addPlusAsetModal').modal('show');
 					      },
@@ -498,6 +521,7 @@
 						      	document.getElementById("edit_modal_aset").reset();
 						      	$('#editAsetModal').modal("hide");
 								$('#search_aset').click();
+								toastFire('success','Data Berhasil di Ubah');
 						      	// $('.inputan').html(data);
 						      	// $('#editPlusAsetModal').modal({backdrop: 'static', keyboard: false});
 						      	// document.getElementById("no_kontrak_plus").innerHTML = data;
@@ -510,7 +534,16 @@
 					$('#addPlusAset').on('click', function(){
 						// var idKontrak = document.getElementById("id_kontraks").val();
 						var idKontrak = $("#id_kontraks").val();
-						alert(idKontrak);
+						var namapt = $("#a_namapt").val();
+						var nomorkontrak = $("#a_nomorkontrak").val();
+						var vendor = $("#a_vendor").val();
+						$("#namapt").val(namapt);
+						$("#nomorkontrak").val(nomorkontrak);
+						$("#vendor").val(vendor);
+						document.getElementById("namapt").disabled = true;
+						document.getElementById("nomorkontrak").disabled = true;
+						document.getElementById("vendor").disabled = true;
+						document.getElementById("customFile").disabled = true;
 						$('#addPlusAsetModal').modal('hide');
 						$("#title_add_aset").val("Add Plus New Aset");
 						$("#id_kontrak").val(idKontrak);
@@ -518,7 +551,7 @@
 						// document.getElementById("close-modal").id = 'close-modal-tambah';
 						document.getElementById("nextBtn").style.display = "inline";
 					  	document.getElementById("submit_form").style.display = "none";
-						$('#addAsetModal').modal("show");
+						$('#addAsetModal').modal('show');
 					});
 
 					$('.btnEditAset').on('click', function(){
@@ -556,7 +589,7 @@
 							},
 							success: function(data){
 									$('#deleteAsetModal').modal("hide");
-									alert('data berhasil di hapus');
+									toastFire('success','Data Berhasil di Hapus');
 							},
 						});
 						return false;
@@ -1002,6 +1035,7 @@
 			var satuan = $(this).data('satuan');
 			var nilai_asumsi_perpanjangan = $(this).data('nilai_asumsi_perpanjangan');
 			var tgl_perpanjangan = $(this).data('tgl_perpanjangan');
+			var pdfurl = $(this).data('pdfurl');
 			$("#idkontrak").val(idkontrak);
 			$("#vIdKon").val(idkontrak);
 			$("#vidsummary").html(idsummary);
@@ -1046,11 +1080,16 @@
 			$("#vsatuan").html(satuan);
 			$("#vnilai_asumsi_perpanjangan").html(nilai_asumsi_perpanjangan);
 			$("#vtgl_perpanjangan").html(tgl_perpanjangan);
+			$("embed#pdfobject").attr('src' , 'assets/pdf/'+pdfurl);
 			// Data on Add Plus Aset Button
 			$("#vNamapt").val(namapt);
 			$("#vNomorKontrak").val(nomorkontrak);
 			$("#vVendor").val(vendor);
 		});	
+
+		$(document).on("click", "#close-modal-lihat", function() {
+			location.reload();
+		});
 
 		$(document).on("click", ".btnDeleteAset", function () {
 			var idSummary = $(this).data('deleteid');

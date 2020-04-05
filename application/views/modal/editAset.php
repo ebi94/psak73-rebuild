@@ -8,7 +8,6 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<!-- <form id="add_modal_aset" name="form" role="form" method="POST" enctype="multipart/form-data" action="<?php echo site_url('aset/do/add');?>"> -->
 			<form id="edit_modal_aset" name="form" role="form">
 				<div class="modal-body">
 					<input type="hidden" id="id_esummary" name="id_esummary" value="">
