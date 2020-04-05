@@ -8,9 +8,7 @@
 			<div class="modal-body">
 				<section class="content">
 					<div class="container-fluid">
-						<div class="inputan">
-							<span>Data yang anda masukan <b>"Tidak Tersimpan !"</b></span>
-						</div>
+						<span>Data yang anda masukan <b>"Tidak Tersimpan !"</b></span>
 					</div>
 				</section>
 			</div>

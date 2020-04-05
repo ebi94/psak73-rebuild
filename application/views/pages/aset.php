@@ -80,4 +80,8 @@
   <?php $this->load->view('modal/deleteAset'); ?>
   <!--/ .Modal Delete Aset -->
 
+  <!-- Modal Delete Aset -->
+  <?php $this->load->view('modal/loading'); ?>
+  <!--/ .Modal Delete Aset -->
+
 </div>

@@ -2,14 +2,14 @@
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header bg-primary">
-        <h4 class="modal-title">Tambah Aset</h4>
+        <h4 class="modal-title">Tambah Aset Baru</h4>
         </button>
       </div>
       <div class="modal-body">
         <section class="content">
           <div class="container-fluid">
             <div class="inputan">
-              <!-- <strong>Apakah ada penambahan aset dalam no kontrak "<b id="no_kontrak_plus"></b>" ?</strong> -->
+              <strong>Apakah ada penambahan aset dalam no kontrak "<b id="no_kontrak_plus"></b>" ?</strong>
             </div>
           </div>
         </section>

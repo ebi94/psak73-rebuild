@@ -122,7 +122,8 @@ class AsetController extends CI_Controller{
         			data-jumlah_unit="'.$key_aset->jumlah_unit.'"
         			data-satuan="'.$key_aset->satuan.'"
         			data-nilai_asumsi_perpanjangan="'.$format_nap.'"
-        			data-tgl_perpanjangan="'.$key_aset->tgl_perpanjangan.'">
+                    data-tgl_perpanjangan="'.$key_aset->tgl_perpanjangan.'"
+                    data-pdfurl="'.$key_aset->pdf_url.'">
 					Lihat
 				</button>
         	';
@@ -299,9 +300,9 @@ class AsetController extends CI_Controller{
         $end_date = $this->input->post('end_date');
 
         // CALCULATION
-        $prepaid_int = $this->input->post('prepaid');
-        $nap_int = $this->input->post('nilai_asumsi_perpanjangan');
-        $pat_int = $this->input->post('pat');
+        $prepaid_int = str_replace(".", "", $this->input->post('prepaid'));
+        $nap_int = str_replace(".", "", $this->input->post('nilai_asumsi_perpanjangan'));
+        $pat_int = str_replace(".", "", $this->input->post('pat'));
 
         $dr = $this->input->post('dr');
         $pat = $pat_int;
@@ -328,6 +329,9 @@ class AsetController extends CI_Controller{
 
         $response .= "<strong>Apakah ada penambahan aset dalam no kontrak '<b> ".$kontrak->nomor_kontrak." </b>' ?</strong>";
         $response .= "<input type='hidden' id='id_kontraks' name='id_kontraks' value='".$kontrak->id."'>";
+        $response .= "<input type='hidden' id='a_namapt' name='a_namapt' value='".$nama_pt."'>";
+        $response .= "<input type='hidden' id='a_nomorkontrak' name='a_nomorkontrak' value='".$nomor_kontrak."'>";
+        $response .= "<input type='hidden' id='a_vendor' name='a_vendor' value='".$vendor."'>";
 
         echo $response;
         exit();
@@ -393,9 +397,9 @@ class AsetController extends CI_Controller{
         $end_date = $this->input->post('end_date');
 
         // CALCULATION
-        $prepaid_int = $this->input->post('prepaid');
-        $nap_int = $this->input->post('nilai_asumsi_perpanjangan');
-        $pat_int = $this->input->post('pat');
+        $prepaid_int = str_replace(".", "", $this->input->post('prepaid'));
+        $nap_int = str_replace(".", "", $this->input->post('nilai_asumsi_perpanjangan'));
+        $pat_int = str_replace(".", "", $this->input->post('pat'));
 
         $dr = $this->input->post('dr');
         $pat = $pat_int;
