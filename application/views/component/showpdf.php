@@ -13,7 +13,7 @@ var options = {
     pdfOpenParams: { scrollbar: '1', toolbar: '1', statusbar: '1', navpanes: '1' }
 };
 
-var showurl = $('embed #pdfobject').attr('src');
+// var showurl = $('embed #pdfobject').attr('src');
 
-PDFObject.embed(showurl, "<?php echo $id_kontrak?>-pdf", option);
+// PDFObject.embed(showurl, "<?php //echo $id_kontrak?>-pdf", option);
 </script>

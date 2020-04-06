@@ -452,7 +452,7 @@
 						    		    <div class="col-md-12">
 						    		        <div class="form-group">
 						    		            <label>Payment Date</label>
-						    		            <input class="form-control" name="pd" type="date" id="pd" value="0">
+						    		            <input class="form-control" name="pd" type="date" id="pd">
 						    		        </div>
 						    		    </div>
 						    		</div>
