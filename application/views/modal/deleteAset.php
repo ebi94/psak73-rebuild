@@ -14,7 +14,7 @@
 				</section>
 			</div>
 			<div class="modal-footer justify-content-between">
-				<button type="button" id="confirmNo" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+				<button type="button" id="confirmNo" class="btn btn-warning" data-dismiss="modal">Tidak</button>
 				<button type="button" id="deleteYes" class="btn btn-primary">Iya</button>
 			</div>
 		</div>

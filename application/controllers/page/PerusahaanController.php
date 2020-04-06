@@ -42,8 +42,7 @@ class PerusahaanController extends CI_Controller{
         		$key_perusahaan->telepon,
         		'<button
         		type="button" 
-        		class="edit_perusahaan btn btn-block btn-outline-warning btn-xs" 
-        		style="color:black;" 
+        		class="edit_perusahaan btn btn-outline px-3" 
         		data-toggle="modal" 
         		data-target="#editPerusahaanModal" 
         		data-backdrop="static"
@@ -52,8 +51,18 @@ class PerusahaanController extends CI_Controller{
         		data-namap="'.$key_perusahaan->nama_perusahaan.'"
         		data-alamatp="'.$key_perusahaan->alamat.'"
         		data-teleponp="'.$key_perusahaan->telepon.'">
-        		Ubah Data
-        		</button>'
+        		<i class="fas fa-edit"></i>
+				</button>
+				<button
+        		type="button" 
+        		class="delete_perusahaan btn btn-outline px-3" 
+        		data-toggle="modal" 
+        		data-target="#deletePerusahaanModal" 
+        		data-backdrop="static"
+        		data-keyboard="false"
+        		data-idp="'.$key_perusahaan->id.'">
+        		<i class="fas fa-trash-alt"></i>
+				</button>'
         	);
         }
 
@@ -78,5 +87,10 @@ class PerusahaanController extends CI_Controller{
 		$data=$this->PerusahaanModel->perusahaan_edit();
 		echo json_encode($data);
 		exit();
+	}
+
+	function perusahaan_do_delete() {
+		$data=$this->PerusahaanModel->perusahaan_delete();
+		echo json_encode($data);
 	}
 }

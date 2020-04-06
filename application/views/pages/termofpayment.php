@@ -5,7 +5,7 @@
       TERM OF PAYMENT
       <div class="card-tools">
           <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-          <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
+          <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button> -->
       </div>
     </div>
     <div class="card-body">
@@ -17,8 +17,9 @@
       <table id="top_list" class="table table-bordered table-striped table-hover top_list" cellspacing="0" style="width: 100%;">
         <thead class="thead-light">
           <tr >
-            <th style="vertical-align: top; text-align: center; font-size: 14px;">TOP (Keterangan)</th>
-            <th style="vertical-align: top; text-align: center; font-size: 14px;"></th>
+            <th style="vertical-align: top; text-align: center; font-size: 14px; width: 70% !important">No.</th>
+            <th style="vertical-align: top; text-align: center; font-size: 14px; width: 70% !important">TOP (Keterangan)</th>
+            <th style="vertical-align: top; text-align: center; font-size: 14px; width: 30% !important">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -36,3 +37,7 @@
 <!-- Modal Edit -->
 <?php $this->load->view('modal/editTOP'); ?>
 <!--/ .Modal Edit -->
+
+<!-- Modal Delete -->
+<?php $this->load->view('modal/deleteTOP'); ?>
+<!--/ .Modal Delete -->

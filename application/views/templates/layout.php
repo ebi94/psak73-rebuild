@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/jqvmap/jqvmap.min.css">
     <!-- SweetAlert2 -->
     <!-- <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/sweetalert2/sweetalert2.min.css"> -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/sweetalert2-theme-bootstrap4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <!-- Toastr -->
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/toastr/toastr.min.css">
     <!-- Datatables -->
@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE'); ?>/plugins/daterangepicker/daterangepicker.css">
+	<!-- MDB -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/mdb'); ?>/mdb.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -99,6 +101,31 @@
 			color: white;
 			transform: translate(-50%,-50%);
 			-ms-transform: translate(-50%,-50%);
+		}
+
+		.mdb-select {
+			min-width: 100% !important;
+		}
+
+		ul#select-options-dibuat_oleh_export li.select-toggle-all span {
+			display: none !important;
+		}
+
+		ul#select-options-dibuat_oleh_export {
+			max-height: 250px !important;
+		}
+
+		.btn-list {
+			width: 100%;
+		}
+
+		.div-search {
+			justify-content: flex-end;
+    		margin-top: 20px;
+		}
+
+		#search_aset .fa-search:before {
+			margin-right: 10px
 		}
     </style>
 </head>
@@ -218,8 +245,15 @@
 	<!-- Popper.JS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
+	<!-- MDB -->
+	<script src="<?php echo base_url('assets/mdb'); ?>/mdb.js"></script>
+
 	<script type="text/javascript">
-		$('.select2').select2();
+	// Material Select Initialization
+		$(document).ready(function() {
+			$('.mdb-select').materialSelect({selectAll: false});
+		});
+
 		function validateFormWajib() {
 		  // This function deals with validation of the form fields
 		  var y, i, valid = true;
@@ -635,7 +669,8 @@
 
 					// ADD PERUSAHAAN
 						$('#add_perusahaan_modal').submit(function(e){
-						  if(!validateFormWajib()) return false;
+						//   if(!validateFormWajib()) return false;
+						//   alert('tambah');
 						  var formData = new FormData(this);
 						  e.preventDefault();
 						  $.ajax({
@@ -654,6 +689,56 @@
 						      },
 						  });
 						  return false;
+						});
+
+						// Delete Perusahaan 
+						$(document).on("click", ".delete_perusahaan", function () {
+							var id = $(this).data('idp');
+							$('#delete_id_perusahaan').val(id);
+						});
+
+							$('#deletePerusahaan').on('click', function(){
+							var id = $('#delete_id_perusahaan').val();
+							alert(id);
+							$.ajax({
+								type : "POST",
+								url  : "<?php echo site_url('perusahaan/do/delete')?>",
+								dataType: "JSON",
+								data: {
+									id: id
+								},
+								success: function(data){
+										$('#deletePerusahaanModal').modal("hide");
+										toastFire('success','Data Berhasil di Hapus');
+								},
+							});
+							return false;
+						});
+
+						// Delete Tanggal Acuan
+
+						// Delete Perusahaan 
+						$(document).on("click", ".delete_tanggalacuan", function () {
+							var id = $(this).data('idp');
+							$('#delete_id_tanggalacuan').val(id);
+						});
+
+							$('#deleteTanggalAcuan').on('click', function(){
+							var id = $('#delete_id_tanggalacuan').val();
+							alert(id);
+							$.ajax({
+								type : "POST",
+								url  : "<?php echo site_url('tanggalacuan/do/delete')?>",
+								dataType: "JSON",
+								data: {
+									id: id
+								},
+								success: function(data){
+										$('#deleteTanggalAcuanModal').modal("hide");
+										toastFire('success','Data Berhasil di Hapus');
+								},
+							});
+							return false;
 						});
 					// END
 					
@@ -721,7 +806,7 @@
 
 					// ADD TOP
 						$('#add_top_modal').submit(function(e){
-						  if(!validateFormWajib()) return false;
+						//   if(!validateFormWajib()) return false;
 						  var formData = new FormData(this);
 						  e.preventDefault();
 						  $.ajax({
@@ -800,7 +885,7 @@
 
 					// ADD TANGGAL ACUAN
 						$('#add_tanggal_acuan_modal').submit(function(e){
-						  if(!validateFormWajib()) return false;
+						//   if(!validateFormWajib()) return false;
 						  var formData = new FormData(this);
 						  e.preventDefault();
 						  $.ajax({

@@ -60,5 +60,14 @@ class PerusahaanModel extends CI_Model{
 
     	$this->db->where('id',$id_perusahaan);
     	return $this->db->update('t_perusahaan', $perusahaan_edit_data);
+	}
+	
+	function perusahaan_delete() {
+    	$id = $this->input->post('delete_id_perusahaan');
+
+		$this->db->where('id',$id);
+		if (! $this->db->delete('t_perusahaan')) {
+			return false;
+		}
     }
 }

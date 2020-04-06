@@ -74,18 +74,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$route['perusahaan/list'] 		= 'page/PerusahaanController/get_perusahaan_list';
 			$route['perusahaan/do/add'] 	= 'page/PerusahaanController/perusahaan_do_add';
 			$route['perusahaan/do/edit'] 	= 'page/PerusahaanController/perusahaan_do_edit';
+			$route['perusahaan/do/delete'] 	= 'page/PerusahaanController/perusahaan_do_delete';
 
 		// TOP
 			// $route['top'] 			= 'page/TermofpaymentController';
 			$route['top/list'] 		= 'page/TermofpaymentController/get_top_list';
 			$route['top/do/add'] 	= 'page/TermofpaymentController/top_do_add';
 			$route['top/do/edit'] 	= 'page/TermofpaymentController/top_do_edit';
+			$route['top/do/delete'] 	= 'page/TermofpaymentController/top_do_delete';
 
 		// Tanggal Acuan
 			// $route['tanggal-acuan'] 			= 'page/TanggalacuanController';
 			$route['tanggal-acuan/list'] 		= 'page/TanggalacuanController/get_tanggal_acuan_list';
 			$route['tanggal-acuan/do/add'] 		= 'page/TanggalacuanController/tanggal_acuan_do_add';
 			$route['tanggal-acuan/do/edit'] 	= 'page/TanggalacuanController/tanggal_acuan_do_edit';
+			$route['tanggal-acuan/do/delete'] 	= 'page/TanggalacuanController/tanggal_acuan_do_delete';
 	// END
 
 	// EXPORT XLSX

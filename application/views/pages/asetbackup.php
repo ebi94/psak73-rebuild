@@ -12,7 +12,7 @@
 				<form class="form-inline container" style="width: 100%;">
 					<div class="row col-sm-12">
 						<div class="col-sm-6">
-							<label class="pb-md-1"  style=" justify-content: flex-start;">Nama PT/Perusahaan</label>
+							<label class="pb-md-3">Nama PT/Perusahaan</label>
 							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="pt" id="pt">
 								<option value="" disabled selected>Silahkan pilih</option>
 								<?php foreach($perusahaan as $p):?>
@@ -21,18 +21,20 @@
 							</select>
 						</div>
 						<div class="col-sm-6">
-							<label class="pb-md-1" style=" justify-content: flex-start;">Nomor Kontrak</label>
-								<input type="text" name="kontrak" id="kontrak" class="form-control" placeholder="No. Kontrak" style="width: inherit;">
+							<label class="pb-md-3">Nomor Kontrak</label>
+							<div style="margin-right: 1%;">
+								<input type="text" name="kontrak" id="kontrak" class="form-control col-sm-6" placeholder="No. Kontrak">
+							</div>
 						</div>
 					</div>
 					<div class="row col-sm-12">
 						<div class="col-sm-6">
-							<label class="pb-md-1 pt-md-3" style=" justify-content: flex-start;">Vendor</label>
-							<input type="text" name="vendor" id="searchVendor" class="form-control" placeholder="Vendor" style="width: inherit;">
+							<label class="pb-md-3 pt-md-3">Vendor</label>
+							<input type="text" name="vendor" id="searchVendor" class="form-control col-sm-6" placeholder="Vendor">
 						</div>
 						<div class="col-sm-6">
 							<?php if($this->session->userdata('level') == 0):?>
-							<label class="form-group pb-md-1 pt-md-3" style=" justify-content: flex-start;">User</label>
+							<label class="form-group pb-md-3 pt-md-3">User</label>
 							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="dibuat_oleh"
 								id="dibuat_oleh">
 								<option value="" disabled selected>Pilih salah satu</option>
@@ -43,11 +45,10 @@
 							<?php endif; ?>
 						</div>
 					</div>
-					<div class="row col-sm-12 div-search">
 						<button class="btn btn-success search_aset" id="search_aset" type="button">
-							<span class="fa fa-search">Cari</span>
-						</button>
-					</div>
+              <span class="fa fa-search">Cari</span>
+            </button>
+					
 				</form>
 			</div>
 			<table id="aset_list" class="table table-bordered table-striped table-hover aset_list" cellspacing="0"
