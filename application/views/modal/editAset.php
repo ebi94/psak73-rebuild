@@ -26,7 +26,13 @@
 					 	            <div class="col-md-8">
 					 	                <div class="form-group">
 					 	                    <label>Nama Perusahaan / PT *</label>
-					 	                    <input class="form-control wajib" type="text" name="nama_pt" id="enamapt" oninput="this.className = 'form-control wajib'">
+					 	                    <!-- <input class="form-control wajib" type="text" name="nama_pt" id="enamapt" oninput="this.className = 'form-control wajib'"> -->
+											<select class="form-control" name="nama_pt" id="enamapt">
+												<option disabled selected="selected">Silahkan pilih salah satu</option>
+												<?php foreach($perusahaan as $p):?>
+												<option value="<?php echo $p->nama_perusahaan;?>"><?php echo $p->nama_perusahaan;?></option>
+												<?php endforeach;?>
+											</select>
 					 	                </div>
 					 	            </div>
 					 	            <div class="col-md-4">

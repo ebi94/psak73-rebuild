@@ -14,8 +14,8 @@
           </div>
         </section>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Tidak</button>
         <button type="button" type="submit" id="addPlusAset" class="btn btn-primary">Iya</button>
       </div>
     </div>

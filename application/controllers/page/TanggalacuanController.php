@@ -33,8 +33,7 @@ class TanggalacuanController extends CI_Controller{
         		$key_tanggal_acuan->tanggal_acuan.'('.$key_tanggal_acuan->keterangan.')',
         		'<button
         		type="button" 
-        		class="edit_tanggalacuan btn btn-block btn-outline-warning btn-xs" 
-        		style="color:black;" 
+        		class="edit_tanggalacuan btn btn-outline btn-xs px-3" 
         		data-toggle="modal" 
         		data-target="#editTanggalAcuanModal" 
         		data-backdrop="static"
@@ -42,8 +41,18 @@ class TanggalacuanController extends CI_Controller{
         		data-idtanggalacuan="'.$key_tanggal_acuan->id.'"
         		data-tanggalacuan="'.$key_tanggal_acuan->tanggal_acuan.'"
         		data-keterangantanggalacuan="'.$key_tanggal_acuan->keterangan.'">
-        		Ubah Data
-        		</button>'
+        		<i class="fas fa-edit"></i>
+				</button>
+				<button
+        		type="button" 
+        		class="delete_tanggalacuan btn btn-outline px-3" 
+        		data-toggle="modal" 
+        		data-target="#deleteTanggalAcuanModal" 
+        		data-backdrop="static"
+        		data-keyboard="false"
+        		data-idp="'.$key_tanggal_acuan->id.'">
+        		<i class="fas fa-trash-alt"></i>
+				</button>'
         	);
         }
 
@@ -66,6 +75,12 @@ class TanggalacuanController extends CI_Controller{
 
 	function tanggal_acuan_do_edit() {
 		$data=$this->TanggalacuanModel->tanggal_acuan_edit();
+		echo $data;
+		exit();
+	}
+
+	function tanggal_acuan_do_delete() {
+		$data=$this->TanggalacuanModel->tanggal_acuan_delete();
 		echo $data;
 		exit();
 	}

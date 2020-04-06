@@ -13,12 +13,14 @@ class AsetController extends CI_Controller{
 		$this->load->model('AuthModel');
 		$this->load->model('AsetModel');
         $this->load->model('KontrakModel');
+        $this->load->model('PerusahaanModel');
 	}
 
 	function index() {
 		$data['title'] = 'List Aset';
 		$data['view'] = 'pages/aset';
         $data['user'] = $this->AuthModel->auth_get_all()->result();
+        $data['perusahaan'] = $this->PerusahaanModel->perusahaan_get_all()->result();
 		$this->load->view('templates/layout', $data);
 	}
 
@@ -75,7 +77,7 @@ class AsetController extends CI_Controller{
         	'
         		<button 
 					type="button" 
-					class="btnViewAset btn btn-block btn-outline-primary btn-xs"  
+                    class="btnViewAset btn btn-outline-primary btn-sm btn-list"  
                     data-toggle="modal" 
                     data-backdrop="static"
 					data-target="#viewAsetModal"
@@ -132,7 +134,7 @@ class AsetController extends CI_Controller{
         	'
         		<button 
 					type="button" 
-        			class="btnEditAset btn btn-block btn-outline-info btn-xs"  
+        			class="btnEditAset btn btn-outline-info btn-sm btn-list"  
         			data-toggle="modal" 
         			data-target="#editAsetModal" 
         			data-backdrop="static"
@@ -189,7 +191,7 @@ class AsetController extends CI_Controller{
         	'
         		<button
 	        		type="button"
-	        		class="export_schedule btn btn-block btn-outline-success btn-xs"
+	        		class="export_schedule btn btn-outline-success btn-sm btn-list"
 	        		data-id="'.$key_aset->id_summary.'"
 	        		>
 	        		Export Schedule
@@ -202,7 +204,7 @@ class AsetController extends CI_Controller{
                     type="button" 
                     data-toggle="modal" 
         			data-target="#deleteAsetModal"
-                    class="btnDeleteAset btn btn-block btn-outline-danger btn-xs" data-deleteid="'.$key_aset->id_summary.'"">
+                    class="btnDeleteAset btn btn-outline-danger btn-sm btn-list" data-deleteid="'.$key_aset->id_summary.'"">
                 Hapus</button>
         	';
 

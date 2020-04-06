@@ -26,16 +26,17 @@ class TermofpaymentController extends CI_Controller{
 
         $query = $this->TermofpaymentModel->top_get_all();
 
-        $data_top = [];
+		$data_top = [];
+		$i = 1;
 
         foreach ($query->result() as $key_top) {
         	$data_top[] = array(
+				$i++,
         		$key_top->top.'('.$key_top->keterangan.')',
         		// $key_top->keterangan,
         		'<button
         		type="button" 
-        		class="edit_top btn btn-block btn-outline-warning btn-xs" 
-        		style="color:black;" 
+        		class="edit_top btn btn-outline btn-xs px-3" 
         		data-toggle="modal" 
         		data-target="#editTOPModal" 
         		data-backdrop="static"
@@ -43,8 +44,19 @@ class TermofpaymentController extends CI_Controller{
         		data-idtop="'.$key_top->id.'"
         		data-top="'.$key_top->top.'"
         		data-keterangantop="'.$key_top->keterangan.'">
-        		Ubah Data
-        		</button>'
+        			<i class="fas fa-edit"></i>
+				</button>
+				<button
+        		type="button" 
+        		class="delete_tanggalacuan btn btn-outline px-3" 
+        		data-toggle="modal" 
+        		data-target="#deleteTanggalAcuanModal" 
+        		data-backdrop="static"
+        		data-keyboard="false"
+        		data-idp="'.$key_top->id.'">
+        			<i class="fas fa-trash-alt"></i>
+				</button>
+				'
         	);
         }
 

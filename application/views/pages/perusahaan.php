@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-12 col-sm-12 col-md-12">
     <div class="card">
-      <div class="card-header bg-primary">
+      <div class="card-header bg-warning">
         PERUSAHAAN
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
+            <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button> -->
         </div>
       </div>
       <div class="card-body">
@@ -20,7 +20,7 @@
             </div>
 
             <div style="margin-right: 1%;">
-              <button class="btn btn-secondary search_perusahaan" id="search_perusahaan" type="button"><span class="fa fa-search"> Cari</span></button>
+              <button class="btn btn-success search_perusahaan" id="search_perusahaan" type="button"><span class="fa fa-search"> Cari</span></button>
             </div>
 
             <div style="margin-right: 1%;">
@@ -36,7 +36,7 @@
               <th style="vertical-align: top; text-align: center; font-size: 14px;">Nama PT/Perushaan</th>
               <th style="vertical-align: top; text-align: center; font-size: 14px;">Alamat</th>
               <th style="vertical-align: top; text-align: center; font-size: 14px;">Telepon</th>
-              <th style="vertical-align: top; text-align: center; font-size: 14px;"></th>
+              <th style="vertical-align: top; text-align: center; font-size: 14px;">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -55,4 +55,8 @@
   <!-- Modal Edit -->
   <?php $this->load->view('modal/editPerusahaan'); ?>
   <!--/ .Modal Edit -->
+
+  <!-- Modal Delete -->
+  <?php $this->load->view('modal/deletePerusahaan'); ?>
+  <!--/ .Modal Delete -->
 </div>
