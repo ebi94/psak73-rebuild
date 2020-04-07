@@ -81,7 +81,6 @@ class TanggalacuanController extends CI_Controller{
 
 	function tanggal_acuan_do_delete() {
 		$data=$this->TanggalacuanModel->tanggal_acuan_delete();
-		echo $data;
-		exit();
+		echo json_encode($data);
 	}
 }

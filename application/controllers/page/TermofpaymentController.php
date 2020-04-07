@@ -48,9 +48,9 @@ class TermofpaymentController extends CI_Controller{
 				</button>
 				<button
         		type="button" 
-        		class="delete_tanggalacuan btn btn-outline px-3" 
+        		class="delete_top btn btn-outline px-3" 
         		data-toggle="modal" 
-        		data-target="#deleteTanggalAcuanModal" 
+        		data-target="#deleteTopModal" 
         		data-backdrop="static"
         		data-keyboard="false"
         		data-idp="'.$key_top->id.'">
@@ -81,5 +81,10 @@ class TermofpaymentController extends CI_Controller{
 		$data=$this->TermofpaymentModel->top_edit();
 		echo $data;
 		exit();
+	}
+
+	function top_do_delete() {
+		$data=$this->TermofpaymentModel->top_delete();
+		echo json_encode($data);
 	}
 }

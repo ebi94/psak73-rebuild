@@ -63,8 +63,7 @@ class PerusahaanModel extends CI_Model{
 	}
 	
 	function perusahaan_delete() {
-    	$id = $this->input->post('delete_id_perusahaan');
-
+		$id = $this->input->post('id');
 		$this->db->where('id',$id);
 		if (! $this->db->delete('t_perusahaan')) {
 			return false;
