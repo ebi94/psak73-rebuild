@@ -9,7 +9,7 @@
 			</div>
 			<div class="modal-body">
 				<!-- @include('showdetail') -->
-				<?php $this->load->view('modal/ShowDetail'); ?>
+				<?php $this->load->view('modal/showDetail'); ?>
 			</div>
 			<div class="modal-footer justify-content-between">
 				<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button> -->
