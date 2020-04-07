@@ -13,7 +13,7 @@
 					<div class="row col-sm-12">
 						<div class="col-sm-6">
 							<label class="pb-md-1"  style=" justify-content: flex-start;">Nama PT/Perusahaan</label>
-							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="pt" id="pt">
+							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="pt[]" id="pt">
 								<option value="" disabled selected>Silahkan pilih</option>
 								<?php foreach($perusahaan as $p):?>
 								<option value="<?php echo $p->nama_perusahaan;?>"><?php echo $p->nama_perusahaan;?></option>
@@ -33,7 +33,7 @@
 						<div class="col-sm-6">
 							<?php if($this->session->userdata('level') == 0):?>
 							<label class="form-group pb-md-1 pt-md-3" style=" justify-content: flex-start;">User</label>
-							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="dibuat_oleh"
+							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="dibuat_oleh[]"
 								id="dibuat_oleh">
 								<option value="" disabled selected>Pilih salah satu</option>
 								<?php foreach($user as $u):?>

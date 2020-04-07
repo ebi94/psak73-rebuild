@@ -42,7 +42,7 @@ class PerusahaanController extends CI_Controller{
         		$key_perusahaan->telepon,
         		'<button
         		type="button" 
-        		class="edit_perusahaan btn btn-outline px-3" 
+        		class="edit_perusahaan btn btn-outline-warning px-3" 
         		data-toggle="modal" 
         		data-target="#editPerusahaanModal" 
         		data-backdrop="static"
@@ -55,7 +55,7 @@ class PerusahaanController extends CI_Controller{
 				</button>
 				<button
         		type="button" 
-        		class="delete_perusahaan btn btn-outline px-3" 
+        		class="delete_perusahaan btn btn-outline-danger px-3" 
         		data-toggle="modal" 
         		data-target="#deletePerusahaanModal" 
         		data-backdrop="static"
