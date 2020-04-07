@@ -624,6 +624,7 @@
 							success: function(data){
 									$('#deleteAsetModal').modal("hide");
 									toastFire('success','Data Berhasil di Hapus');
+									$('#search_aset').click();
 							},
 						});
 						return false;
@@ -814,7 +815,7 @@
 					fill_datatable_top();
 					function fill_datatable_top(){
 						$('#top_list').DataTable({
-							"paging"		: true,
+							"paging"		: false,
 							"lengthChange"	: false,
 							"searching"		: false,
 							"ordering"		: false,
@@ -893,12 +894,12 @@
 					fill_datatable_tanggal_acuan();
 					function fill_datatable_tanggal_acuan(){
 						$('#tanggal_acuan_list').DataTable({
-							"paging"		: true,
+							"paging"		: false,
 							"lengthChange"	: false,
 							"searching"		: false,
 							"ordering"		: false,
 							"info"			: true,
-							"autoWidth"		: false,
+							"autoWidth"		: true,
 							"scrollX"		: true,
 							"scrollY"		: true,
 							"ajax"			: {

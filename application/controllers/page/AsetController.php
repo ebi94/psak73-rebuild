@@ -39,6 +39,11 @@ class AsetController extends CI_Controller{
             $dibuat_oleh = implode(",",$dibuat_oleh);
         }
 
+        if ($pt != '') {
+            // $dibuat_oleh = array_map('intval', explode(',', $dibuat_oleh));
+            $pt = implode(",",$pt);
+        }
+
         if ($this->session->userdata('level') == 0) {
             $param = array('nama_pt' => $pt, 'kontrak' => $kontrak, 'vendor' => $vendor, 'user' => $dibuat_oleh);
         } else {

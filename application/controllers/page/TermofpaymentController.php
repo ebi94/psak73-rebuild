@@ -36,7 +36,7 @@ class TermofpaymentController extends CI_Controller{
         		// $key_top->keterangan,
         		'<button
         		type="button" 
-        		class="edit_top btn btn-outline btn-xs px-3" 
+        		class="edit_top btn btn-outline-warning btn-xs px-3" 
         		data-toggle="modal" 
         		data-target="#editTOPModal" 
         		data-backdrop="static"
@@ -48,7 +48,7 @@ class TermofpaymentController extends CI_Controller{
 				</button>
 				<button
         		type="button" 
-        		class="delete_top btn btn-outline px-3" 
+        		class="delete_top btn btn-outline-danger px-3" 
         		data-toggle="modal" 
         		data-target="#deleteTopModal" 
         		data-backdrop="static"

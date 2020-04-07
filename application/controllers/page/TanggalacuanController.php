@@ -33,7 +33,7 @@ class TanggalacuanController extends CI_Controller{
         		$key_tanggal_acuan->tanggal_acuan.'('.$key_tanggal_acuan->keterangan.')',
         		'<button
         		type="button" 
-        		class="edit_tanggalacuan btn btn-outline btn-xs px-3" 
+        		class="edit_tanggalacuan btn btn-outline-warning btn-xs px-3" 
         		data-toggle="modal" 
         		data-target="#editTanggalAcuanModal" 
         		data-backdrop="static"
@@ -45,7 +45,7 @@ class TanggalacuanController extends CI_Controller{
 				</button>
 				<button
         		type="button" 
-        		class="delete_tanggalacuan btn btn-outline px-3" 
+        		class="delete_tanggalacuan btn btn-outline-danger px-3" 
         		data-toggle="modal" 
         		data-target="#deleteTanggalAcuanModal" 
         		data-backdrop="static"
