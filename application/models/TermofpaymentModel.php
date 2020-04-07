@@ -39,4 +39,12 @@ class TermofpaymentModel extends CI_Model{
         $this->db->where('id', $id_top);
         return $this->db->update('t_top', $top_edit_data);
     }
+
+    function top_delete() {
+		$id = $this->input->post('id');
+		$this->db->where('id',$id);
+		if (! $this->db->delete('t_top')) {
+			return false;
+		}
+    }
 }
