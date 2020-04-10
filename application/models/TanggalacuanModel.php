@@ -39,4 +39,12 @@ class TanggalacuanModel extends CI_Model{
         $this->db->where('id', $id_tanggal_acuan);
         return $this->db->update('t_tanggal_acuan', $tanggal_acuan_edit_data);
     }
+
+    function tanggal_acuan_delete() {
+		$id = $this->input->post('id');
+		$this->db->where('id',$id);
+		if (! $this->db->delete('t_tanggal_acuan')) {
+			return false;
+		}
+    }
 }

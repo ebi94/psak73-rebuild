@@ -19,10 +19,8 @@ class AsetModel extends CI_Model{
             $user = "WHERE k.created_by IN (".$param['user'].")";
         }
 
-        $nama_pt = "";
+        $nama_pt = '';
         if (isset($param['nama_pt']) && ($param['nama_pt'] != '' || $param['nama_pt'] != null)) {
-        // if ($param['nama_pt'] != '' || $param['nama_pt'] != null) {
-            // $nama_pt = "AND k.nama_pt LIKE '%".$param['nama_pt']."%'";
           $array = explode(',', $param['nama_pt']);
           $array = implode("|",$array);
           $nama_pt = "AND k.nama_pt REGEXP '".$array."'";
