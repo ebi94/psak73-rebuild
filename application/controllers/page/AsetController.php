@@ -34,6 +34,10 @@ class AsetController extends CI_Controller{
         $start = intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
 
+        if ($pt != '') {
+            $pt = implode(",", $pt);
+        }
+        
         if ($dibuat_oleh != '') {
             // $dibuat_oleh = array_map('intval', explode(',', $dibuat_oleh));
             $dibuat_oleh = implode(",",$dibuat_oleh);
