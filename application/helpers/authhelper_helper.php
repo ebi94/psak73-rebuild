@@ -18,7 +18,7 @@
 		return $val_level;
 	}
 
-	function auth_name($id_user=''){
+	function auth_name($id_user){
 		$ci =& get_instance();
 		$ci->load->database();
 		$query = $ci->db->query('SELECT name FROM users WHERE id = '.$id_user)->row();

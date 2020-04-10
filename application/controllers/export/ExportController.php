@@ -459,13 +459,189 @@ class ExportController extends CI_Controller{
 			$spreadsheet->createSheet($i);
 
 			$param = array('nama_pt'=>$array_pt[$i], 'user' => $user);
-			$data_kkp = $this->ExportModel->calculation_export($param);
+			$data_calculation = $this->ExportModel->calculation_export($param);
 
 			$creator = $this->session->userdata('ses_nama');
 			$title_excel = "Calculation IFRS16 - PSAK73";
 			$date_export = date('d/m/Y');
 
 			$nomor = 1;
+			$start_row = 7;
+			foreach ($data_calculation->result() as $key_calculation) {
+				// settingan awal
+				$spreadsheet->getProperties()->setCreator($creator)->setLastModifiedBy($creator)->setTitle($title_excel)->setSubject("Calculation IFRS16")->setDescription("Calculation")->setKeywords($title_excel);
+
+				// HEAD
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('A6', "No.");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('B6', "Serial Number / Nomor Polisi");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('C6', "Jenis Sewa");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('D6', "Vendor");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('E6', "Nomor Kontrak");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('F6', "Nilai Kontrak");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('G6', "Nilai Kontrak + Nilai Asumsi Perpanjangan");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('H6', "Start Date");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('I6', "End Date");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('J6', "Periode");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('K6', "Perpanjangan (asumsi)");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('L6', "Periode Kontrak + Asumsi Perpanjangan");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('M6', "");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('N6', "Lease / Non Lease");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('O6', "Sisa Periode Dari 31 Des 2019");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('P6', "TOP");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('Q6', "Di belakang (0), Di depan (1)");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('R6', "Payment Amount/ Term");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('S6', "Nilai Residu");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('T6', "Discount Rate");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('U6', "Effective Monthly Discount Rate");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('V6', "Effective Discount Rate");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('W6', "PV MLP");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('X6', "Prepaid");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('Y6', "Lease Liability as of 31 Dec 2019");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('Z6', "Depreciation Exp./month");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('AA6', "ROU as of 31 Dec 2019");
+					$spreadsheet->setActiveSheetindex($i)->setCellValue('AB6', "");
+				// END HEAD
+
+				// ISI
+					$y1 = date('Y',strtotime($key_calculation->tgl_perpanjangan));
+					$y2 = date('Y',strtotime($key_calculation->start_date));
+
+					$m1 = date('m',strtotime($key_calculation->tgl_perpanjangan));
+					$m2 = date('m',strtotime($key_calculation->start_date));
+
+					$periode_kontrak_plus_perpanjangan = (($y1 - $y2) * 12) + ($m1 - $m2);
+					
+					// $key_calculation->periode_kontrak - periode_kontrak_plus_perpanjangan	
+						$kosongan = $key_calculation->periode_kontrak - $periode_kontrak_plus_perpanjangan;
+
+					// if ((cal.tgl_perpanjangan - 12/31/2019--bisa berubah hardcode) / 30) <= 12 ='Position Paper' ELSE 'Lease' 
+						$lease_non_lease = "";
+						$y1_l = date('Y',strtotime($key_calculation->tgl_perpanjangan));
+						$y2_l = date('Y',strtotime('2019-12-31'));
+
+						$m1_l = date('m',strtotime($key_calculation->tgl_perpanjangan));
+						$m2_l = date('m',strtotime('2019-12-31'));
+
+						$lease_non_lease_hasil = (($y1_l - $y2_l) * 12) + ($m1_l - $m2_l);
+						if ($lease_non_lease_hasil <= 12) {
+							$lease_non_lease = 'Position Paper';
+						} else {
+							$lease_non_lease = 'Lease';
+						}
+
+					// ((cal.tgl_perpanjangan - 12/31/2019--bisa berubah hardcode) / 30)
+						$y1_sisa = date('Y',strtotime($key_calculation->tgl_perpanjangan));
+						$y2_sisa = date('Y',strtotime('2019-12-31'));
+
+						$m1_sisa = date('m',strtotime($key_calculation->tgl_perpanjangan));
+						$m2_sisa = date('m',strtotime('2019-12-31'));
+
+						$sisa_periode_31_des_2019 = (($y1_sisa - $y2_sisa) * 12) + ($m1_sisa - $m2_sisa);
+
+					// (((1+cal.dr)^(1/12))-1)
+						$effective_monthly_dr = "";
+
+						// $get_decimal = $key_calculation->discount_rate/100;
+						$replacements_dr = [
+						    "%" => "",
+						    " " => "",
+						    "," => ".",
+						];
+						$before_get_decimal = strtr($key_calculation->discount_rate, $replacements_dr);
+						// $before_get_decimal = $key_calculation->discount_rate;
+						if($before_get_decimal === null){
+							// $get_decimal = $key_calculation->discount_rate_null/100;
+							$get_decimal = 0/100;
+						}else if ($before_get_decimal === 0){
+							// $get_decimal = $key_calculation->discount_rate_null/100;
+							$get_decimal = 0/100;
+						}else if ($before_get_decimal === '0'){
+							// $get_decimal = $key_calculation->discount_rate_null/100;
+							$get_decimal = 0/100;
+						}else if ($before_get_decimal === ''){
+							// $get_decimal = $key_calculation->discount_rate_null/100;
+							$get_decimal = 0/100;
+						}else{
+						    $get_decimal = $before_get_decimal/100;
+						};
+
+						// var_dump($get_decimal);
+
+						$get_decimal_plus_1 = 1+$get_decimal;
+
+						$effective_monthly_dr_pangkat = pow($get_decimal_plus_1, 1/12);
+
+						$effective_monthly_dr = $effective_monthly_dr_pangkat - 1;
+
+					// ((1+effective_monthly_dr)^1-1)
+						$dr_dr = 1 + $effective_monthly_dr;
+
+						$effective_dr = (pow((1 + $effective_monthly_dr), 1))-1;
+
+
+					$pv_mlp = '=PV((V'.$start_row.'),O'.$start_row.',R'.$start_row.',S'.$start_row.',Q'.$start_row.')';
+
+					// ( (pv_mlp - cal.prepaid) / sisa_periode_31_des_2019)
+						// $depresiasi_exp_per_month = (($pv_mlp - $key_calculation->prepaid) / $sisa_periode_31_des_2019);
+						
+						$depresiasi_exp_per_month = '=(W'.$start_row.'-X'.$start_row.')/O'.$start_row.'';
+
+					// ((pv_mlp-cal.prepaid)+rou_as_of_31_12_2019)
+						// $kosongan_dua = (($pv_mlp - $key_calculation->prepaid) + $rou_as_of_31_12_2019);
+						
+					$kosongan_dua = '=(W'.$start_row.'-X'.$start_row.')+AA'.$start_row.'';
+
+					$replacements = [
+					    "," => "",
+					    "." => "",
+					];
+					$pat_nya = strtr($key_calculation->payment_amount_per_term, $replacements);
+					if (is_numeric($pat_nya)) {
+						$pat = (int)$pat_nya;
+					} else {
+						$pat = (int)0;
+					}
+
+
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('A'.$start_row, $nomor);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('B'.$start_row, $key_calculation->serial_number);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('C'.$start_row, $key_calculation->jenis_sewa);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('D'.$start_row, $key_calculation->vendor);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('E'.$start_row, $key_calculation->nomor_kontrak);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('F'.$start_row, $key_calculation->nilai_kontrak);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('G'.$start_row, $key_calculation->kontrak_plus_perpanjangan);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('H'.$start_row, $key_calculation->start_date);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('I'.$start_row, $key_calculation->end_date);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('J'.$start_row, $key_calculation->periode_kontrak);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('K'.$start_row, $key_calculation->tgl_perpanjangan);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('L'.$start_row, $periode_kontrak_plus_perpanjangan);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('M'.$start_row, $kosongan);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('N'.$start_row, $lease_non_lease);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('O'.$start_row, $sisa_periode_31_des_2019);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('P'.$start_row, $key_calculation->top);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('Q'.$start_row, $key_calculation->awal_akhir_bulan);
+					// $spreadsheet->setActiveSheetIndex($i)->setCellValue('R'.$start_row, $key_calculation->payment_amount_per_term);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('R'.$start_row, $pat);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('S'.$start_row, $key_calculation->nilai_residu);
+					// $spreadsheet->setActiveSheetIndex($i)->setCellValue('T'.$start_row, $key_calculation->discount_rate);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('T'.$start_row, $before_get_decimal);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('U'.$start_row, $effective_monthly_dr);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('V'.$start_row, $effective_dr);
+					// $spreadsheet->setActiveSheetIndex($i)->setCellValue('W'.$start_row, $pv_mlp);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('W'.$start_row, $pv_mlp);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('X'.$start_row, $key_calculation->prepaid);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('Y'.$start_row, '=W'.$start_row);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('Z'.$start_row, $depresiasi_exp_per_month);
+					// $spreadsheet->setActiveSheetIndex($i)->setCellValue('AA'.$start_row, $rou_as_of_31_12_2019);
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('AA'.$start_row, '=ABS(W'.$start_row.')');
+					$spreadsheet->setActiveSheetIndex($i)->setCellValue('AB'.$start_row, $kosongan_dua);
+				// END ISI
+
+				$nomor++;
+				$start_row++;
+				// set judul excel
+				$spreadsheet->getActiveSheet($i)->setTitle($key_calculation->nama_pt);
+			}
 
 
 			// baris terakhir
@@ -479,6 +655,256 @@ class ExportController extends CI_Controller{
 				$spreadsheet->getActiveSheet()->getStyle(''.$i_col.'6:'.$i_col.$highestRow.'')->getAlignment()->setWrapText(true);
 			}
 		}
+
+		// set row height to auto
+		$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$spreadsheet->setActiveSheetIndex(0);
+
+		// Redirect output to a client’s web browser (Xlsx)
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'.$title_excel.'.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		// If you're serving to IE over SSL, then the following may be needed
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+		header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		header('Pragma: public'); // HTTP/1.0
+
+		$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+		$writer->save('php://output');
+		exit();
+	}
+
+	function schedule() {
+		$id_summary = $this->input->get('id_summary');
+
+		$param = array('id_summary'=>$id_summary);
+		$data_calculation = $this->ExportModel->schedule_export($param);
+
+		$data_data = $data_calculation->row();
+		// var_dump($data_data);
+		// die();
+
+		$spreadsheet = new Spreadsheet();
+
+		$creator = $this->session->userdata('ses_nama');
+		$title_excel = "Schedule - PSAK73";
+		$date_export = date('d/m/Y');
+
+		// settingan awal
+		$spreadsheet->getProperties()->setCreator($creator)->setLastModifiedBy($creator)->setTitle($title_excel)->setSubject("Schedule")->setDescription("Schedule")->setKeywords($title_excel);
+
+		// HEAD
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('B2', 'No'); //isian B2 (title)
+			$spreadsheet->getActiveSheet()->getStyle('B2')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('B2')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('C2', $data_data->serial_number); //isian C2 (title)
+			$spreadsheet->getActiveSheet()->getStyle('C2')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('C2')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('B3', 'Jenis Sewa'); //isian B3 (title)
+			$spreadsheet->getActiveSheet()->getStyle('B3')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('B3')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('C3', $data_data->jenis_sewa); //isian C3 (title)
+			$spreadsheet->getActiveSheet()->getStyle('C3')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('C3')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('B4', 'No Kontrak'); //isian B4 (title)
+			$spreadsheet->getActiveSheet()->getStyle('B4')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('B4')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('C4', $data_data->nomor_kontrak); //isian C4 (title)
+			$spreadsheet->getActiveSheet()->getStyle('C4')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('C4')->getFont()->setSize(20); //set FontSize
+
+			// header tabel dimulai dari baris ke 7
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('B7', "Periode");
+			$spreadsheet->getActiveSheet()->mergeCells('B7:B8');
+			$spreadsheet->getActiveSheet()->getStyle('B7')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('B7')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('C7', "LEASE LIABILITY");
+			$spreadsheet->getActiveSheet()->mergeCells('C7:F7');
+			$spreadsheet->getActiveSheet()->getStyle('C7')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('C7')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('C8', "Beg.Balance");
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('D8', "Payment");
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('E8', "Interest");
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('F8', "End.Balance");
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('G7', "RIGHT OF USE ASSET");
+			$spreadsheet->getActiveSheet()->mergeCells('G7:I7');
+			$spreadsheet->getActiveSheet()->getStyle('G7')->getFont()->setBold(TRUE);
+			$spreadsheet->getActiveSheet()->getStyle('G7')->getFont()->setSize(20); //set FontSize
+
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('G8', "Beg.Balance");
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('H8', "Depreciation Expense");
+			$spreadsheet->setActiveSheetindex(0)->setCellValue('I8', "End.Bal");
+		// END HEAD
+
+		// ISI
+			$start_row = 9; //set isian dimulai dari baris ke 9
+			$i = 1;
+			// (((1+cal.dr)^(1/12))-1)
+				$effective_monthly_dr = "";
+
+				$get_decimal = $data_data->discount_rate/100;
+
+				$get_decimal_plus_1 = 1+$get_decimal;
+
+				$effective_monthly_dr_pangkat = pow($get_decimal_plus_1, 1/12);
+
+				$effective_monthly_dr = $effective_monthly_dr_pangkat - 1;
+
+				// var_dump($effective_monthly_dr);
+				// die();
+
+			// ((1+effective_monthly_dr)^1-1)
+				$dr_dr = 1 + $effective_monthly_dr;
+
+				$effective_dr = (pow((1 + $effective_monthly_dr), 1))-1;
+
+				// var_dump($effective_dr);
+				// die();
+
+			// ((cal.tgl_perpanjangan - 12/31/2019--bisa berubah hardcode) / 30)
+				$y1_sisa = date('Y',strtotime($data_data->tgl_perpanjangan));
+				$y2_sisa = date('Y',strtotime('2019-11-31'));
+
+				$m1_sisa = date('m',strtotime($data_data->tgl_perpanjangan));
+				$m2_sisa = date('m',strtotime('2019-11-31'));
+
+				$date1 = date_create($data_data->tgl_perpanjangan);
+				$date2 = date_create('2019-12-31');
+
+				$diff=date_diff($date1,$date2);
+				$hasil = $diff->format("%a");
+				$akhir = $hasil/30;
+				// $sisa_periode_31_des_2019 = (($y1_sisa - $y2_sisa) * 12) + ($m1_sisa - $m2_sisa);
+				$sisa_periode_31_des_2019 = floor($akhir);
+
+				// var_dump($sisa_periode_31_des_2019);
+				// die();
+
+			// ( (pv_mlp - cal.prepaid) / sisa_periode_31_des_2019)
+				$depresiasi_exp_per_month = '=(C'.$start_row.'-'.$data_data->prepaid.')/'.$sisa_periode_31_des_2019.'';
+
+				// var_dump($depresiasi_exp_per_month);
+				// die();
+
+				$replacements = [
+				    "," => "",
+				    "." => "",
+				];
+				$pat_nya = strtr($data_data->payment_amount_per_term, $replacements);
+				if (is_numeric($pat_nya)) {
+					$pat = (int)$pat_nya;
+				} else {
+					$pat = (int)0;
+				}
+
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('Z'.$start_row, $effective_dr);
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('AA'.$start_row, $sisa_periode_31_des_2019);
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('AB'.$start_row, $pat);
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('AC'.$start_row, $data_data->nilai_residu);
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('AD'.$start_row, $data_data->awal_akhir_bulan);
+
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('AE'.$start_row, $effective_monthly_dr);
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('AF'.$start_row, $depresiasi_exp_per_month);
+
+			// $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$start_row, '2020');		
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$start_row, 'January - 2020');
+
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$start_row, '=PV((Z'.$start_row.'),AA'.$start_row.',AB'.$start_row.',AC'.$start_row.',AD'.$start_row.')');
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('D'.$start_row, '=('.$pat.')*(-1)');
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('E'.$start_row, '=(C'.$start_row.')*('.$effective_monthly_dr.')');	
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('F'.$start_row, '=C'.$start_row.'-(D'.$start_row.'-E'.$start_row.')');
+
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('G'.$start_row, '=ABS(C'.$start_row.')');	
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('H'.$start_row, '=AF9');	
+			$spreadsheet->setActiveSheetIndex(0)->setCellValue('I'.$start_row, '=G'.$start_row.'+H'.$start_row.'');
+
+			// $spreadsheet->getActiveSheet()->getStyle('A'.$start_row)->applyFromArray($style_row);
+			// $spreadsheet->getActiveSheet()->getStyle('B'.$start_row)->applyFromArray($style_row);
+			$spreadsheet->getActiveSheet()->getStyle('C'.$start_row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+			$spreadsheet->getActiveSheet()->getStyle('D'.$start_row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+			$spreadsheet->getActiveSheet()->getStyle('E'.$start_row)->getNumberFormat()->setFormatCode('_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-');
+			$spreadsheet->getActiveSheet()->getStyle('F'.$start_row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+			$spreadsheet->getActiveSheet()->getStyle('G'.$start_row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+			$spreadsheet->getActiveSheet()->getStyle('H'.$start_row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+			$spreadsheet->getActiveSheet()->getStyle('I'.$start_row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+
+			$cell_f9 = $spreadsheet->getActiveSheet()->getCell('F'.$start_row)->getFormattedValue();
+			// $cell_f9 = $spreadsheet->getActiveSheet()->getCell('F'.$start_row)->getValue();
+			$sudah_nol = 0;
+			$ix=1;
+			$stop = 0;
+			$month = strtotime('2020-02-01');
+
+			do{
+				$showMonth = date('F - Y', $month);
+				$month = strtotime("+1 month", $month);
+				$row = $start_row+$ix;
+				$bulan_awal = 1;
+				$row_2 = ($start_row+$ix)-1;
+				// $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$start_row, '2020');
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$row, ''.$showMonth);
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$row, '=F'.$row_2);
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('D'.$row, '=('.$pat.')*(-1)');
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('E'.$row, '=(C'.$row.')*('.$effective_monthly_dr.')');
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('F'.$row, '=C'.$row.'-(D'.$row.'-E'.$row.')');
+
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('G'.$row, '=I'.$row_2.'');	
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('H'.$row, '=AF9');	
+				$spreadsheet->setActiveSheetIndex(0)->setCellValue('I'.$row, '=G'.$row.'+H'.$row.'');
+
+				// apply isian style
+				// $spreadsheet->getActiveSheet()->getStyle('A'.$row)->applyFromArray($style_row);
+				// $spreadsheet->getActiveSheet()->getStyle('B'.$row)->applyFromArray($style_row);
+				$spreadsheet->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+				$spreadsheet->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+				$spreadsheet->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-');
+				// $spreadsheet->getActiveSheet()->getStyle('F'.$row)->applyFromArray($style_row);
+				$spreadsheet->getActiveSheet()->getStyle('F'.$row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+				$spreadsheet->getActiveSheet()->getStyle('G'.$row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+				$spreadsheet->getActiveSheet()->getStyle('H'.$row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+				$spreadsheet->getActiveSheet()->getStyle('I'.$row)->getNumberFormat()->setFormatCode('_-* #,##0_-;-* #,##0_-;_-* "-"??_-;_-@_-');
+
+				$cell_f = $spreadsheet->getActiveSheet()->getCell('F'.$row)->getFormattedValue();
+				// $cell_f = $spreadsheet->getActiveSheet()->getCell('F'.$row)->getValue();
+				
+				$cell_f9 = $cell_f;
+
+				$replace1 = str_replace(',', '', $cell_f9);
+				$replace2 = str_replace('.', '', $replace1);
+
+				// $cell_f9_pos = (int)$replace2;
+				$cell_f9_pos = $replace2;
+				// if ($cell_f9_pos > 0) {
+				if ($cell_f9_pos > 0) {
+					$stop = 1;
+
+				}
+			$bulan_awal++;
+			$ix++;
+			}while ( $stop < 1 );
+
+			$highestRow = $spreadsheet->setActiveSheetindex(0)->getHighestRow();
+			// $spreadsheet->setActiveSheetIndex(0)->removeRow($highestRow);
+			// $spreadsheet->getActiveSheet()->setCellValue('J8', $highestRow);
+		// END ISI
+
+		// set column width to auto
+			foreach (range('A','I') as $columnIndex) {
+			  # code...
+			  $spreadsheet->getActiveSheet()->getColumnDimension($columnIndex)->setAutoSize(true);
+			}
 
 		// set row height to auto
 		$spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);

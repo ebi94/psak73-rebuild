@@ -7,8 +7,7 @@
 						class="fas fa-plus"> Tambah</span></button>
 			</div>
 			<div style="margin-bottom: 1%;margin-top: 1%;padding: 2%;" class="bg-light">
-				<label class="control-label" style="margin-bottom: 1%;">Filter List Aset:
-					<!-- <?php echo $this->session->userdata('ses_id'); ?> --></label>
+				<label class="control-label" style="margin-bottom: 1%;">Filter List Aset:</label>
 				<form class="form-inline container" style="width: 100%;">
 					<div class="row col-sm-12">
 						<div class="col-sm-6">

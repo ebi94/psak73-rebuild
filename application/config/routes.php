@@ -94,7 +94,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	// EXPORT XLSX
 		$route['export'] 				= 'export/ExportController';
 		$route['export/summary'] 		= 'export/ExportController/summary';
-		$route['export/kkp'] 		= 'export/ExportController/kkp';
+		$route['export/kkp'] 			= 'export/ExportController/kkp';
+		$route['export/calculation'] 	= 'export/ExportController/calculation';
+	// END
+
+	// SCHEDULE
+		$route['schedule'] 				= 'export/ScheduleController';
+		$route['schedule/list'] 		= 'export/ScheduleController/get_schedule_list';
+		
+		$route['schedule/export'] 		= 'export/ExportController/schedule';
 	// END
 
 // END PAGE
