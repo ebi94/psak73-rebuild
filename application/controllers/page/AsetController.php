@@ -55,6 +55,7 @@ class AsetController extends CI_Controller{
         }
         
         $query = $this->AsetModel->aset_get_all($param);
+        // var_dump($query);
 
         $data_aset = [];
         $i = 1;

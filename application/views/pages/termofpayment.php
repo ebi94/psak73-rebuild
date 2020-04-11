@@ -2,9 +2,9 @@
 <div class="col-6 col-sm-6 col-md-6">
   <div class="card">
     <div class="card-header bg-warning" style="height: 60px;">
-      <p class="h4">Term of Payment</p>
+      <p class="h4-responsive">Term of Payment</p>
       <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" style="margin-top: -56px;"><i class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" style="margin-top: -80px;"><i class="fas fa-minus"></i></button>
           <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button> -->
       </div>
     </div>

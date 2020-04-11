@@ -249,6 +249,8 @@
 	<script src="<?php echo base_url('assets/mdb'); ?>/mdb.js"></script>
 
 	<script type="text/javascript">
+	// The Calender
+		
 	// Material Select Initialization
 		$(document).ready(function() {
 			$('.mdb-select').materialSelect({selectAll: false});
@@ -320,6 +322,11 @@
 								vendor:vendor,
 								dibuat_oleh:dibuat_oleh
 							}
+						},
+						"drawCallback": function (settings) { 
+							// Here the response
+							var response = settings.json;
+							console.log(response);
 						},
 					});
 				}
@@ -650,6 +657,7 @@
 							"autoWidth"		: false,
 							"scrollX"		: true,
 							"scrollY"		: true,
+							"pageLength"	: 5,
 							"ajax"			: {
 								url		: "<?php echo base_url('perusahaan/list') ?>",
 								type	: "GET",
@@ -657,6 +665,11 @@
 									pt:pt,
 									alamat:alamat
 								}
+							},
+							"drawCallback": function (settings) { 
+								// Here the response
+								var response = settings.json;
+								console.log(response);
 							},
 						});
 					}
