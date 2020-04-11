@@ -61,6 +61,12 @@
 				  	</ul>
 				  </li> -->
 				  <li class="nav-item">
+					<a href="<?php echo base_url('user'); ?>" class="nav-link <?php if($title == 'Users Management'): ?> active <?php endif; ?>">
+						<i class="nav-icon fas fa-user-cog fa-md"></i>
+						<p>User Management</p>
+					</a>
+				  </li>
+				  <li class="nav-item">
 				  	<a href="<?php echo base_url('config'); ?>" class="nav-link <?php if($title == 'Config'): ?> active <?php endif; ?>">
 				  		<i class="nav-icon fas fa-cog"></i>
 				  		<p>Config</p>
