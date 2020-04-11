@@ -58,6 +58,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // PAGE
 	$route['home'] 			= 'page/HomeController';
 
+	// USER
+	$route['user'] 			= 'page/UserController';
+	$route['user/list'] 	= 'page/UserController/get_user_list';
+	$route['user/do/add'] 	= 'page/UserController/user_do_add';
+	$route['user/do/edit'] 	= 'page/UserController/user_do_edit';
+	$route['user/do/delete'] 	= 'page/UserController/user_do_delete';
+	// END
+
 	// ASET
 	$route['aset'] 			= 'page/AsetController';
 	$route['aset/list'] 	= 'page/AsetController/get_aset_list';

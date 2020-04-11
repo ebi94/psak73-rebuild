@@ -641,6 +641,113 @@
 
 				// end
 		<?php endif; ?>
+
+		<?php if ($title == 'Users Management'): ?>
+			// Config User
+			fill_datatable_user();
+					function fill_datatable_user(){
+						$('#user_list').DataTable({
+							"paging"		: true,
+							"lengthChange"	: false,
+							"searching"		: false,
+							"ordering"		: false,
+							"info"			: true,
+							"autoWidth"		: false,
+							"scrollX"		: true,
+							"scrollY"		: true,
+							"ajax"			: {
+								url		: "<?php echo base_url('user/list') ?>",
+								type	: "GET"
+							},
+							"drawCallback": function (settings) {
+								var response = settings.json;
+								console.log(response);
+							},
+						});
+					}
+
+					// ADD User
+						$('#add_perusahaan_modal').submit(function(e){
+						//   if(!validateFormWajib()) return false;
+						//   alert('tambah');
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('user/do/add')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("add_user_modal").reset();
+							      	$('#addUserModal').modal("hide");
+							      	toastFire('success','Berhasil Tambah User');
+							      	fill_datatable_user();
+						      },
+						  });
+						  return false;
+						});
+
+						// Edit User
+						$(document).on("click", ".edit_user", function () {
+							var idUser = $(this).data('idu');
+							var namaUser = $(this).data('namau');
+							var emailUser = $(this).data('emailu');
+
+							$('#edit_id_user').val(idUser);
+							$('#edit_nama_user').val(namaUser);
+							$('#edit_email').val(emailUser);
+							
+						});
+
+						$('#edit_user_modal').submit(function(e){
+						  var formData = new FormData(this);
+						  e.preventDefault();
+						  $.ajax({
+						      type : "POST",
+						      url  : "<?php echo site_url('user/do/edit')?>",
+						      data : formData,
+						      processData:false,
+						      contentType:false,
+						      cache:false,
+						      async:false,
+						      success: function(data){
+							      	document.getElementById("edit_user_modal").reset();
+							      	$('#editUserModal').modal("hide");
+									toastFire('success','Berhasil Ubah Data User');
+									$('#user_list').DataTable().destroy();
+							      	fill_datatable_user();
+						      },
+						  });
+						  return false;
+						});
+
+						// Delete User 
+						$(document).on("click", ".delete_user", function () {
+							var id = $(this).data('idp');
+							$('#delete_id_user').val(id);
+						});
+
+							$('#deletePerusahaan').on('click', function(){
+							var id = $('#delete_id_perusahaan').val();
+							$.ajax({
+								type : "POST",
+								url  : "<?php echo site_url('perusahaan/do/delete')?>",
+								dataType: "JSON",
+								data: {
+									id: id
+								},
+								success: function(data){
+										$('#deletePerusahaanModal').modal("hide");
+										toastFire('success','Data Berhasil di Hapus');
+										fill_datatable_user();
+								},
+							});
+							return false;
+						});
+		<?php endif; ?>
 		
 		<?php if ($title == 'Config'): ?>
 			// Halaman Config
