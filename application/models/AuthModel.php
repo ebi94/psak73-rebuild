@@ -52,9 +52,15 @@ class AuthModel extends CI_Model{
 
 	function auth_edit() {
 		$id_user = $this->input->post('edit_id_user');
+		if ($this->input->post('edit_password') == '' || $this->input->post('edit_password') == null) {
+			$password = $this->input->post('edit_password_old');
+		} else {
+			$password = do_hash($this->input->post('edit_password'));
+		}
 		$user_edit_data = array(
 			'name' => $this->input->post('edit_nama_user'),
 			'email' => $this->input->post('edit_email'),
+			'password' => $password,
 		);
 		$this->db->where('id',$id_user);
 		$result = $this->db->update('users',$user_edit_data);
@@ -70,6 +76,28 @@ class AuthModel extends CI_Model{
 		);	
 		$this->db->where('id',$id);
 		$result = $this->db->update('users', $auth_delete_data);
+		return $result;
+	}
+
+	function auth_profile_edit() {
+		$id_user = $this->input->post('edit_id_profile');
+		if ($this->input->post('edit_password_profile') == '' || $this->input->post('edit_password_profile') == null) {
+			$password = $this->input->post('edit_password_profile_old');
+		} else {
+			$password = do_hash($this->input->post('edit_password_profile'));
+		}
+		$user_edit_data = array(
+			'name' => $this->input->post('edit_nama_profile'),
+			'email' => $this->input->post('edit_email_profile'),
+			'password' => $password,
+		);
+		$this->db->where('id',$id_user);
+		$result = $this->db->update('users',$user_edit_data);
+		
+		$this->session->set_userdata('ses_nama',$this->input->post('edit_nama_profile'));
+		$this->session->set_userdata('ses_email',$this->input->post('edit_email_profile'));
+		$this->session->set_userdata('ses_username',$this->input->post('edit_email_profile'));
+		$this->session->set_userdata('ses_password',$password);
 		return $result;
 	}
 }

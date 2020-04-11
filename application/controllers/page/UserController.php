@@ -52,6 +52,7 @@ class UserController extends CI_Controller{
         		data-keyboard="false"
         		data-idu="'.$key_user->id.'"
         		data-namau="'.$key_user->name.'"
+                data-passwordu="'.$key_user->password.'"
         		data-emailu="'.$key_user->email.'">
         		<i class="fas fa-edit"></i>
 				</button>
@@ -93,4 +94,10 @@ class UserController extends CI_Controller{
 		$data=$this->AuthModel->auth_delete();
 		echo $data;
 	}
+
+    function profile_do_edit() {
+        $data=$this->AuthModel->auth_profile_edit();
+        echo $data;
+        exit();
+    }
 }

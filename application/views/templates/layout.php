@@ -148,12 +148,6 @@
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 						<span class="dropdown-item dropdown-header">Hello <?php echo $this->session->userdata('ses_nama');?></span>
 						<div class="dropdown-divider"></div>
-						<?php if($this->session->userdata('level') == 0) { ?>
-						  <a href="<?php echo base_url('admin/users') ?>" class="dropdown-item">
-						    <i class="fas fa-users mr-2"></i> Users
-						  </a>
-						<?php } ?>
-						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item" id="add_user" type="button" data-toggle="modal" data-target="#editProfileModal">
 						  <i class="fas fa-user-edit mr-2"></i> Edit Profil
 						</a>
@@ -293,10 +287,25 @@
 	    	toastr.error(message);
 	    }
 		// $('#aset_list').hide();
-
-		// USER MANAGEMENT
-			
-		// End
+		// EDIT PROFILE
+		$('#edit_profile_modal').submit(function(e){
+		  var formData = new FormData(this);
+		  e.preventDefault();
+		  $.ajax({
+		      type : "POST",
+		      url  : "<?php echo site_url('profile/do/edit')?>",
+		      data : formData,
+		      processData:false,
+		      contentType:false,
+		      cache:false,
+		      async:false,
+		      success: function(data){
+			      	toastFire('success','Berhasil Ubah Data Profile');
+			      	// location.reload(true);
+		      },
+		  });
+		  return false;
+		});
 	
 		<?php if ($title == 'List Aset'):?>
 			// Halaman List Aset
@@ -693,15 +702,17 @@
 						  return false;
 						});
 
-						// Edit User
+					// Edit User
 						$(document).on("click", ".edit_user", function () {
 							var idUser = $(this).data('idu');
 							var namaUser = $(this).data('namau');
 							var emailUser = $(this).data('emailu');
+							var passwordUser = $(this).data('passwordu');
 
 							$('#edit_id_user').val(idUser);
 							$('#edit_nama_user').val(namaUser);
 							$('#edit_email').val(emailUser);
+							$('#edit_password_old').val(passwordUser);
 							
 						});
 
@@ -727,13 +738,13 @@
 						  return false;
 						});
 
-						// Delete User 
+					// Delete User 
 						$(document).on("click", ".delete_user", function () {
 							var id = $(this).data('idu');
 							$('#delete_id').val(id);
 						});
 
-							$('#delete_user_modal').submit(function(e){
+						$('#delete_user_modal').submit(function(e){
 							var formData = new FormData(this);
 							e.preventDefault();
 							$.ajax({
@@ -753,6 +764,7 @@
 							});
 							return false;
 						});
+
 		<?php endif; ?>
 		
 		<?php if ($title == 'Config'): ?>
