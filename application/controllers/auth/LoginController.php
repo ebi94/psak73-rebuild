@@ -40,6 +40,7 @@ class LoginController extends CI_Controller {
 			    $this->session->set_userdata('ses_nama',$auth->name);
 			    $this->session->set_userdata('ses_email',$auth->email);
 			    $this->session->set_userdata('ses_username',$auth->email);
+			    $this->session->set_userdata('ses_password',$auth->password);
 			    $this->AuthModel->auth_up_login();
 			    redirect('home');
 			} else {

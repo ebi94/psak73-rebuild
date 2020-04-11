@@ -64,6 +64,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$route['user/do/add'] 	= 'page/UserController/user_do_add';
 	$route['user/do/edit'] 	= 'page/UserController/user_do_edit';
 	$route['user/do/delete'] 	= 'page/UserController/user_do_delete';
+
+	$route['profile/do/edit'] 	= 'page/UserController/profile_do_edit';
 	// END
 
 	// ASET

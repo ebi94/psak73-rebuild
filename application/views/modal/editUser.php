@@ -28,6 +28,15 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input class="form-control" id="edit_password" type="password" name="edit_password">
+                      <input class="form-control" id="edit_password_old" type="hidden" name="edit_password_old">
+                    </div>
+                  </div>
+                </div>
             </div>
           </section>
         </div>
