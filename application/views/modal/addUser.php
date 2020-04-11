@@ -30,6 +30,17 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
+                    <label>Level</label>
+                    <select id="level_user" name="level_user" class="form-control select2" style="width: 100%;">
+                      <option value="1">User</option>
+                      <option value="0">Super Admin</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
                     <label>Password</label>
                     <input class="form-control wajib_isi" id="password_user" type="password" name="password_user" placeholder="Password" oninput="this.className = 'form-control wajib_isi'">
                   </div>

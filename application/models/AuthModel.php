@@ -32,17 +32,17 @@ class AuthModel extends CI_Model{
 	}
 
 	function auth_get_all() {
-		$query = $this->db->query("SELECT * FROM users ORDER BY name ASC");
+		$query = $this->db->query("SELECT * FROM users WHERE active = 1 ORDER BY name ASC");
 		return $query;
 	}
 
 	function auth_add() {
 		$id = $this->session->userdata('ses_id');
 		$auth_add_data = array(
-			'name' => $this->input->post('add_nama_user'),
-			'email' => $this->input->post('add_email'),
-			'level' => $this->input->post('add_level'),
-			'password' => do_hash($this->input->post('auth_password')),
+			'name' => $this->input->post('nama_user'),
+			'email' => $this->input->post('email_user'),
+			'level' => $this->input->post('level_user'),
+			'password' => do_hash($this->input->post('password_user')),
 			'created_by' => $id,
 		);
 
@@ -67,9 +67,8 @@ class AuthModel extends CI_Model{
 		$auth_delete_data = array(
 			'active' => 0,
 			'updated_at' => $update_date,
-		);
-
-		$this->db->where('id', $id);
+		);	
+		$this->db->where('id',$id);
 		$result = $this->db->update('users', $auth_delete_data);
 		return $result;
 	}
