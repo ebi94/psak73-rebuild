@@ -337,6 +337,8 @@
 					var vendor = $('#searchVendor').val();
 					var dibuat_oleh = $('#dibuat_oleh').val();
 
+					console.log(pt);
+					console.log(dibuat_oleh);
 					// alert(dibuat_oleh);
 
 					$('#aset_list').DataTable().destroy();
@@ -986,7 +988,7 @@
 		<?php endif;?>
 		
 		<?php if ($title == 'Export'): ?>
-			$('#loading').modal('hide');
+			// $('#loading').modal('hide');
 			// Halaman Export .xls
 				// Summary
 					$(document).on("click", ".export_summary", function () {
@@ -1019,8 +1021,71 @@
 					  }
 					  
 					});
+
+				// CALCULATION
+					$(document).on("click", ".export_calculation", function () {
+					  var pt = $('#nama_pt_export').val();
+					  var user = $('#dibuat_oleh_export').val();
+
+					  console.log(pt);
+					  console.log(user);
+
+					  if (pt.length != 0) {
+					  	window.open('export/calculation?pt='+pt+'&user='+user);
+					  } else {
+					  	alerttoast('Isi Nama PT');
+					  }
+					  
+					});
 			// End
 		<?php endif ?>
+
+		<?php if($title == 'Schedule'): ?>
+			// Halaman List Schedule
+				var pt_schedule = '';
+				var dibuat_oleh_schedule = '';
+				fill_datatable_schedule(pt_schedule,dibuat_oleh_schedule);
+				function fill_datatable_schedule(pt = '', dibuat_oleh = ''){
+					$('#schedule_list').DataTable({
+						"paging"		: true,
+						"lengthChange"	: false,
+						"searching"		: false,
+						"ordering"		: false,
+						"info"			: true,
+						"autoWidth"		: false,
+						"scrollX"		: true,
+						"scrollY"		: true,
+						"ajax"			: {
+							url		: "<?php echo base_url('schedule/list') ?>",
+							type	: "GET",
+							data	: {
+								pt:pt,
+								dibuat_oleh:dibuat_oleh
+							}
+						},
+					});
+				}
+
+				$('#search_schedule').on('click',function(){
+					// alert('click');
+					var pt = $('#nama_pt_schedule').val();
+					var dibuat_oleh = $('#dibuat_oleh_schedule').val();
+
+					console.log(pt);
+					console.log(dibuat_oleh);
+					
+					$('#schedule_list').DataTable().destroy();
+					
+					fill_datatable_schedule(pt,dibuat_oleh);
+				});
+
+				// Export
+					$(document).on("click", ".export_schedule", function () {
+						var id_sum = $(this).data('idsummary');
+						// alert(id_sum);
+						window.open('schedule/export?id_summary=' + id_sum);
+					});
+		<?php endif; ?>
 		
 	</script>
 	<script type="text/javascript">

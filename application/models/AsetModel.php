@@ -21,10 +21,9 @@ class AsetModel extends CI_Model{
 
         $nama_pt = '';
         if (isset($param['nama_pt']) && ($param['nama_pt'] != '' || $param['nama_pt'] != null)) {
-        // if ($param['nama_pt'] != '' || $param['nama_pt'] != null) {
-            $arrays = explode(',',$param['nama_pt']);
-            $array = implode("|",$arrays);
-            $nama_pt = "AND k.nama_pt REGEXP '".$array."'";
+          $array = explode(',', $param['nama_pt']);
+          $array = implode("|",$array);
+          $nama_pt = "AND k.nama_pt REGEXP '".$array."'";
         }
 
         $kontrak = "";
@@ -36,6 +35,11 @@ class AsetModel extends CI_Model{
         if (isset($param['vendor']) && ($param['vendor'] != '' || $param['vendor'] != null)) {
         // if ($param['vendor'] != '' || $param['vendor'] != null) {
             $vendor = "AND k.vendor LIKE '%".$param['vendor']."%'";
+        }
+
+        $schedule = "";
+        if (isset($param['schedule'])) {
+          $schedule = "AND (DATEDIFF(c.tgl_perpanjangan,'2019-12-31') / 30) > 12";
         }
         
         $query = $this->db->query("
@@ -87,13 +91,15 @@ class AsetModel extends CI_Model{
                     c.jumlah_unit AS jumlah_unit,
                     c.satuan AS satuan,
                     c.nilai_asumsi_perpanjangan AS nilai_asumsi_perpanjangan,
-                    c.tgl_perpanjangan AS tgl_perpanjangan
+                    c.tgl_perpanjangan AS tgl_perpanjangan,
+                    (DATEDIFF(c.tgl_perpanjangan,'2019-12-31') / 30) As lease
               FROM
                     abm_summary sum
                     LEFT JOIN t_kontrak k ON sum.id_kontrak = k.id
                     LEFT JOIN t_calculation c ON c.id_summary = sum.id
                     $user
                     $nama_pt
+                    $schedule
                     $kontrak
                     $vendor
                     ORDER BY k.created_at ASC
