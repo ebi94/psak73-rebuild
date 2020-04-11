@@ -211,6 +211,8 @@
 		<!--/ .Content Wrapper. Contains page content -->
 	</div>
 
+	<?php $this->load->view('modal/editProfile');?>
+
 
 	<!-- REQUIRED SCRIPTS -->
 	<!-- jQuery -->

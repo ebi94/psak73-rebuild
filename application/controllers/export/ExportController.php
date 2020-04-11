@@ -34,7 +34,12 @@ class ExportController extends CI_Controller{
 		$pt = $this->input->get('pt');
 		$user = $this->input->get('user');
 
-		$param = array('nama_pt'=>$pt, 'user' => $user);
+		if ($this->session->userdata('level') == 0) {
+			$param = array('nama_pt'=>$pt, 'user' => $user);
+		} else {
+			$param = array('nama_pt'=>$pt, 'user' => $this->session->userdata('ses_id'));
+		}
+		
 		$data_summary = $this->ExportModel->summary_export($param);
 
 		$spreadsheet = new Spreadsheet();
@@ -234,7 +239,12 @@ class ExportController extends CI_Controller{
 		for ($i=0; $i < $jumlah_pt; $i++) {
 			$spreadsheet->createSheet($i);
 
-			$param = array('nama_pt'=>$array_pt[$i], 'user' => $user);
+			if ($this->session->userdata('level') == 0) {
+				$param = array('nama_pt'=>$array_pt[$i], 'user' => $user);
+			} else {
+				$param = array('nama_pt'=>$array_pt[$i], 'user' => $this->session->userdata('ses_id'));
+			}
+
 			$data_kkp = $this->ExportModel->kkp_export($param);
 
 			$creator = $this->session->userdata('ses_nama');
@@ -458,7 +468,12 @@ class ExportController extends CI_Controller{
 		for ($i=0; $i < $jumlah_pt; $i++) {
 			$spreadsheet->createSheet($i);
 
-			$param = array('nama_pt'=>$array_pt[$i], 'user' => $user);
+			if ($this->session->userdata('level') == 0) {
+				$param = array('nama_pt'=>$array_pt[$i], 'user' => $user);
+			} else {
+				$param = array('nama_pt'=>$array_pt[$i], 'user' => $this->session->userdata('ses_id'));
+			}
+			
 			$data_calculation = $this->ExportModel->calculation_export($param);
 
 			$creator = $this->session->userdata('ses_nama');
@@ -680,7 +695,7 @@ class ExportController extends CI_Controller{
 
 	function schedule() {
 		$id_summary = $this->input->get('id_summary');
-
+		
 		$param = array('id_summary'=>$id_summary);
 		$data_calculation = $this->ExportModel->schedule_export($param);
 
@@ -895,7 +910,7 @@ class ExportController extends CI_Controller{
 			$ix++;
 			}while ( $stop < 1 );
 
-			$highestRow = $spreadsheet->setActiveSheetindex(0)->getHighestRow();
+			$highestRow = $spreadsheet->getActiveSheet()->getHighestRow();
 			// $spreadsheet->setActiveSheetIndex(0)->removeRow($highestRow);
 			// $spreadsheet->getActiveSheet()->setCellValue('J8', $highestRow);
 		// END ISI
