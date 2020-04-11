@@ -2,7 +2,7 @@
 	<div class="col-12 col-sm-12 col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<div style="margin-bottom: 1%;margin-top: 1%;padding: 2%;" class="bg-light">
+				<div style="margin-bottom: 1%;margin-top: 1%;padding: 2%; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 2px 10px 0 rgba(0, 0, 0, 0);" class="bg-light">
 					<label class="control-label" style="margin-bottom: 1%;">Filter Export: </label>
 					<form class="form-inline container" style="width: 100%;">
 						<div class="col">

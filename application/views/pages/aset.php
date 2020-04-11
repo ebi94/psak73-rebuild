@@ -6,7 +6,7 @@
 					data-target="#addAsetModal" data-backdrop="static" data-keyboard="false" style="margin-bottom: 1%;"><span
 						class="fas fa-plus"> Tambah</span></button>
 			</div>
-			<div style="margin-bottom: 1%;margin-top: 1%;padding: 2%;" class="bg-light">
+			<div style="margin-bottom: 1%;margin-top: 1%;padding: 2%; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 2px 10px 0 rgba(0, 0, 0, 0);" class="bg-light">
 				<label class="control-label" style="margin-bottom: 1%;">Filter List Aset:
 					<!-- <?php echo $this->session->userdata('ses_id'); ?> --></label>
 				<form class="form-inline container" style="width: 100%;">
@@ -64,7 +64,7 @@
 						<th style="vertical-align: top; text-align: center; font-size: 14px;">End Date</th>
 						<th style="vertical-align: top; text-align: center; font-size: 14px;">Nilai Kontrak</th>
 						<th style="vertical-align: top; text-align: center; font-size: 14px;">Dibuat Oleh</th>
-						<th style="vertical-align: top; text-align: center; font-size: 14px;"></th>
+						<th style="vertical-align: top; text-align: center; font-size: 14px;">Action</th>
 					</tr>
 				</thead>
 				<tbody>

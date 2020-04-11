@@ -19,6 +19,7 @@ class HomeController extends CI_Controller{
 		$data['jumlah_asset'] = $this->db->query('SELECT COUNT(id) AS jumlah_asset FROM abm_summary')->row();
 		$data['jumlah_kontrak'] = $this->db->query('SELECT COUNT(nomor_kontrak) AS jumlah_kontrak FROM t_kontrak')->row();
 		$data['jumlah_nilai_kontrak'] = $this->db->query('SELECT SUM(nilai_kontrak) AS jumlah_nilai_kontrak FROM abm_summary')->row();
+		$data['jumlah_user'] = $this->db->query('SELECT COUNT(id) AS jumlah_user FROM users')->row();
 		$this->load->view('templates/layout', $data);
 	}
 }
