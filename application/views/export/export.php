@@ -10,27 +10,26 @@
 								<label class="pb-md-3">Nama PT/Perusahaan</label>
 							</div>
 							<div class="col-sm-12">
-								<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="nama_pt_export[]"
-									id="nama_pt_export">
-                  <option value="" disabled selected>Pilih salah satu</option>
+								<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="nama_pt_export[]" id="nama_pt_export">
+					                <option value="" disabled selected>Pilih salah satu</option>
 									<?php foreach($perusahaan as $p):?>
 									<option value="<?php echo $p->nama_perusahaan;?>"><?php echo $p->nama_perusahaan;?></option>
 									<?php endforeach;?>
 								</select>
 							</div>
+							<?php if($this->session->userdata('level') == 0):?>
 							<div class="form-group col-md-12">
 								<label class="pb-md-3 pt-md-3">Nama User</label>
 							</div>
 							<div class="col-md-12">
-								<?php if($this->session->userdata('level') == 0):?>
 								<select class="mdb-select form-control dibuat_oleh_export" multiple searchable="Ketik disini.." name="dibuat_oleh_export[]" id="dibuat_oleh_export">
-                  <option value="" disabled selected>Pilih salah satu</option>
+					                <option value="" disabled selected>Pilih salah satu</option>
 									<?php foreach($user as $u):?>
 									<option value="<?php echo $u->id;?>"><?php echo auth_name($u->id);?></option>
 									<?php endforeach; ?>
 								</select>
-								<?php endif; ?>
 							</div>
+							<?php endif; ?>
 						</div>
 					</form>
 					<form class="form-inline container" style="width: 100%;margin-top: 1%;">
