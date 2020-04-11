@@ -6,13 +6,14 @@
 					data-target="#addAsetModal" data-backdrop="static" data-keyboard="false" style="margin-bottom: 1%;"><span
 						class="fas fa-plus"> Tambah</span></button>
 			</div>
-			<div style="margin-bottom: 1%;margin-top: 1%;padding: 2%;" class="bg-light">
-				<label class="control-label" style="margin-bottom: 1%;">Filter List Aset:</label>
+			<div style="margin-bottom: 1%;margin-top: 1%;padding: 2%; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 2px 10px 0 rgba(0, 0, 0, 0);" class="bg-light">
+				<label class="control-label" style="margin-bottom: 1%;">Filter List Aset:
+					<!-- <?php //echo $this->session->userdata('ses_id'); ?> --></label>
 				<form class="form-inline container" style="width: 100%;">
 					<div class="row col-sm-12">
 						<div class="col-sm-6">
 							<label class="pb-md-1"  style=" justify-content: flex-start;">Nama PT/Perusahaan</label>
-							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="pt" id="pt">
+							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="pt[]" id="pt">
 								<option value="" disabled selected>Silahkan pilih</option>
 								<?php foreach($perusahaan as $p):?>
 								<option value="<?php echo $p->nama_perusahaan;?>"><?php echo $p->nama_perusahaan;?></option>
@@ -32,7 +33,7 @@
 						<div class="col-sm-6">
 							<?php if($this->session->userdata('level') == 0):?>
 							<label class="form-group pb-md-1 pt-md-3" style=" justify-content: flex-start;">User</label>
-							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="dibuat_oleh"
+							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="dibuat_oleh[]"
 								id="dibuat_oleh">
 								<option value="" disabled selected>Pilih salah satu</option>
 								<?php foreach($user as $u):?>
@@ -63,7 +64,7 @@
 						<th style="vertical-align: top; text-align: center; font-size: 14px;">End Date</th>
 						<th style="vertical-align: top; text-align: center; font-size: 14px;">Nilai Kontrak</th>
 						<th style="vertical-align: top; text-align: center; font-size: 14px;">Dibuat Oleh</th>
-						<th style="vertical-align: top; text-align: center; font-size: 14px;"></th>
+						<th style="vertical-align: top; text-align: center; font-size: 14px;">Action</th>
 					</tr>
 				</thead>
 				<tbody>

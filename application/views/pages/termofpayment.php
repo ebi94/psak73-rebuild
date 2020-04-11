@@ -1,10 +1,10 @@
 
 <div class="col-6 col-sm-6 col-md-6">
   <div class="card">
-    <div class="card-header bg-warning">
-      TERM OF PAYMENT
+    <div class="card-header bg-warning" style="height: 60px;">
+      <p class="h4-responsive">Term of Payment</p>
       <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" style="margin-top: -80px;"><i class="fas fa-minus"></i></button>
           <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button> -->
       </div>
     </div>
@@ -16,9 +16,9 @@
       </div>
       <table id="top_list" class="table table-bordered table-striped table-hover top_list" cellspacing="0" style="width: 100%;">
         <thead class="thead-light">
-          <tr >
-            <th style="vertical-align: top; text-align: center; font-size: 14px; width: 70% !important">No.</th>
-            <th style="vertical-align: top; text-align: center; font-size: 14px; width: 70% !important">TOP (Keterangan)</th>
+          <tr>
+            <th style="vertical-align: top; text-align: center; font-size: 14px; width: 10% !important">No.</th>
+            <th style="vertical-align: top; text-align: center; font-size: 14px; width: 60% !important">TOP (Keterangan)</th>
             <th style="vertical-align: top; text-align: center; font-size: 14px; width: 30% !important">Action</th>
           </tr>
         </thead>

@@ -251,6 +251,8 @@
 	<script src="<?php echo base_url('assets/mdb'); ?>/mdb.js"></script>
 
 	<script type="text/javascript">
+	// The Calender
+		
 	// Material Select Initialization
 		$(document).ready(function() {
 			$('.mdb-select').materialSelect({selectAll: false});
@@ -322,6 +324,11 @@
 								vendor:vendor,
 								dibuat_oleh:dibuat_oleh
 							}
+						},
+						"drawCallback": function (settings) { 
+							// Here the response
+							var response = settings.json;
+							console.log(response);
 						},
 					});
 				}
@@ -628,6 +635,7 @@
 							success: function(data){
 									$('#deleteAsetModal').modal("hide");
 									toastFire('success','Data Berhasil di Hapus');
+									$('#search_aset').click();
 							},
 						});
 						return false;
@@ -651,6 +659,7 @@
 							"autoWidth"		: false,
 							"scrollX"		: true,
 							"scrollY"		: true,
+							"pageLength"	: 5,
 							"ajax"			: {
 								url		: "<?php echo base_url('perusahaan/list') ?>",
 								type	: "GET",
@@ -658,6 +667,11 @@
 									pt:pt,
 									alamat:alamat
 								}
+							},
+							"drawCallback": function (settings) { 
+								// Here the response
+								var response = settings.json;
+								console.log(response);
 							},
 						});
 					}
@@ -703,7 +717,6 @@
 
 							$('#deletePerusahaan').on('click', function(){
 							var id = $('#delete_id_perusahaan').val();
-							alert(id);
 							$.ajax({
 								type : "POST",
 								url  : "<?php echo site_url('perusahaan/do/delete')?>",
@@ -714,25 +727,23 @@
 								success: function(data){
 										$('#deletePerusahaanModal').modal("hide");
 										toastFire('success','Data Berhasil di Hapus');
+										$('#search_perusahaan').click();
 								},
 							});
 							return false;
 						});
 
 						// Delete Tanggal Acuan
-
-						// Delete Perusahaan 
 						$(document).on("click", ".delete_tanggalacuan", function () {
 							var id = $(this).data('idp');
 							$('#delete_id_tanggalacuan').val(id);
 						});
 
-							$('#deleteTanggalAcuan').on('click', function(){
+						$('#deleteTanggalAcuan').on('click', function(){
 							var id = $('#delete_id_tanggalacuan').val();
-							alert(id);
 							$.ajax({
 								type : "POST",
-								url  : "<?php echo site_url('tanggalacuan/do/delete')?>",
+								url  : "<?php echo site_url('tanggal-acuan/do/delete')?>",
 								dataType: "JSON",
 								data: {
 									id: id
@@ -740,6 +751,34 @@
 								success: function(data){
 										$('#deleteTanggalAcuanModal').modal("hide");
 										toastFire('success','Data Berhasil di Hapus');
+										$('#tanggal_acuan_list').DataTable().destroy();
+										fill_datatable_tanggal_acuan();
+								},
+							});
+							return false;
+						});
+					// END
+
+					// Delete Term of Payment
+						$(document).on("click", ".delete_top", function () {
+							var id = $(this).data('idp');
+							$('#delete_id_top').val(id);
+						});
+
+						$('#deleteTop').on('click', function(){
+							var id = $('#delete_id_top').val();
+							$.ajax({
+								type : "POST",
+								url  : "<?php echo site_url('top/do/delete')?>",
+								dataType: "JSON",
+								data: {
+									id: id
+								},
+								success: function(data){
+										$('#deleteTopModal').modal("hide");
+										toastFire('success','Data Berhasil di Hapus');
+										$('#top_list').DataTable().destroy();
+										fill_datatable_top();
 								},
 							});
 							return false;
@@ -793,7 +832,7 @@
 					fill_datatable_top();
 					function fill_datatable_top(){
 						$('#top_list').DataTable({
-							"paging"		: true,
+							"paging"		: false,
 							"lengthChange"	: false,
 							"searching"		: false,
 							"ordering"		: false,
@@ -872,12 +911,12 @@
 					fill_datatable_tanggal_acuan();
 					function fill_datatable_tanggal_acuan(){
 						$('#tanggal_acuan_list').DataTable({
-							"paging"		: true,
+							"paging"		: false,
 							"lengthChange"	: false,
 							"searching"		: false,
 							"ordering"		: false,
 							"info"			: true,
-							"autoWidth"		: false,
+							"autoWidth"		: true,
 							"scrollX"		: true,
 							"scrollY"		: true,
 							"ajax"			: {

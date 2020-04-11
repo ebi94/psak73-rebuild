@@ -48,11 +48,18 @@
 
 			<div class="info-box-content">
 				<span class="info-box-text">Jumlah User</span>
-				<span class="info-box-number"><?php echo '10';?></span>
+				<span class="info-box-number"><?php echo $jumlah_user->jumlah_user;?></span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>
 		<!-- /.info-box -->
 	</div>
 	<!-- /.col -->
+</div>
+<div class="row">
+	<div class="col-12 col-sm-6 col-md-12">
+		<div class="mt-2">
+			<!-- <p class="h1-responsive">Selamat Datang, <?php echo $this->session->userdata('ses_nama');?></p> -->
+		</div>
+	</div>
 </div>

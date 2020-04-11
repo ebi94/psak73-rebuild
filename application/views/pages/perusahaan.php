@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-12 col-sm-12 col-md-12">
     <div class="card">
-      <div class="card-header bg-warning">
-        PERUSAHAAN
+      <div class="card-header bg-warning" style="height: 60px;">
+        <p class="h4-responsive">Perusahaan</p>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" style="margin-top: -80px;"><i class="fas fa-minus"></i></button>
             <!-- <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button> -->
         </div>
       </div>
