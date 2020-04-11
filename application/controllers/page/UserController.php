@@ -31,11 +31,18 @@ class UserController extends CI_Controller{
         $i = 1;
 
         foreach ($query->result() as $key_user) {
+            // $userActive = '';
+            if ($key_user->active == 1){
+                $userActive = 'Active';
+            } else {
+                $userActive = 'Not Active';
+            }
+
         	$data_user[] = array(
         		$i++,
         		$key_user->name,
                 $key_user->email,
-        		$key_user->active,
+        		$userActive,
         		'<button
         		type="button" 
         		class="edit_user btn btn-outline-warning px-3" 
@@ -55,7 +62,7 @@ class UserController extends CI_Controller{
         		data-target="#deleteUserModal" 
         		data-backdrop="static"
         		data-keyboard="false"
-        		data-idp="'.$key_user->id.'">
+        		data-idu="'.$key_user->id.'">
         		<i class="fas fa-trash-alt"></i>
 				</button>'
         	);
@@ -84,6 +91,6 @@ class UserController extends CI_Controller{
 
 	function user_do_delete() {
 		$data=$this->AuthModel->auth_delete();
-		echo json_encode($data);
+		echo $data;
 	}
 }

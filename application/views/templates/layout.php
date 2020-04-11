@@ -667,7 +667,7 @@
 					}
 
 					// ADD User
-						$('#add_perusahaan_modal').submit(function(e){
+						$('#add_user_modal').submit(function(e){
 						//   if(!validateFormWajib()) return false;
 						//   alert('tambah');
 						  var formData = new FormData(this);
@@ -683,7 +683,8 @@
 						      success: function(data){
 							      	document.getElementById("add_user_modal").reset();
 							      	$('#addUserModal').modal("hide");
-							      	toastFire('success','Berhasil Tambah User');
+									toastFire('success','Berhasil Tambah User');
+									$('#user_list').DataTable().destroy();
 							      	fill_datatable_user();
 						      },
 						  });
@@ -726,22 +727,25 @@
 
 						// Delete User 
 						$(document).on("click", ".delete_user", function () {
-							var id = $(this).data('idp');
-							$('#delete_id_user').val(id);
+							var id = $(this).data('idu');
+							$('#delete_id').val(id);
 						});
 
-							$('#deletePerusahaan').on('click', function(){
-							var id = $('#delete_id_perusahaan').val();
+							$('#delete_user_modal').submit(function(e){
+							var formData = new FormData(this);
+							e.preventDefault();
 							$.ajax({
 								type : "POST",
-								url  : "<?php echo site_url('perusahaan/do/delete')?>",
-								dataType: "JSON",
-								data: {
-									id: id
-								},
+								url  : "<?php echo site_url('user/do/delete')?>",
+								data : formData,
+								processData:false,
+								contentType:false,
+								cache:false,
+								async:false,
 								success: function(data){
-										$('#deletePerusahaanModal').modal("hide");
+										$('#deleteUserModal').modal("hide");
 										toastFire('success','Data Berhasil di Hapus');
+										$('#user_list').DataTable().destroy();
 										fill_datatable_user();
 								},
 							});
