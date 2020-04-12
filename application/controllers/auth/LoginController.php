@@ -72,7 +72,7 @@ class LoginController extends CI_Controller {
 
 			if ($auth->active == 0) {
 				$err = 0;
-				echo json_encode($err);
+				echo $err;
 				exit();
 			} else {
 				$this->session->set_userdata('masuk',TRUE);
@@ -83,12 +83,13 @@ class LoginController extends CI_Controller {
 			    $this->session->set_userdata('ses_username',$auth->email);
 			    $this->session->set_userdata('ses_password',$auth->password);
 			    $this->AuthModel->auth_up_login();
-			    echo json_encode(base_url('home'));
+			    $err = 'home';
+			    echo $err;
 			    exit();
 			}
 		} else {
 			$err = 0;
-			echo json_encode($err);
+			echo $err;
 			exit();
 		}
 	}
