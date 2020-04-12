@@ -12,11 +12,11 @@
 				<form class="form-inline container" style="width: 100%;">
 					<div class="row col-sm-12">
 						<div class="col-sm-6">
-							<label class="pb-md-1"  style=" justify-content: flex-start;">Nama PT/Perusahaan</label>
+							<label class="pb-md-1" style="justify-content: flex-start;">Nama PT/Perusahaan</label>
 							<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="pt[]" id="pt">
 								<option value="" disabled selected>Silahkan pilih</option>
 								<?php foreach($perusahaan as $p):?>
-								<option value="<?php echo $p->nama_perusahaan;?>"><?php echo $p->nama_perusahaan;?></option>
+								<option value="<?php echo $p->id;?>"><?php echo $p->nama_perusahaan;?></option>
 								<?php endforeach;?>
 							</select>
 						</div>

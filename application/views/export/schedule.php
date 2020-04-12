@@ -13,7 +13,7 @@
 								<select class="mdb-select form-control" multiple searchable="Ketik disini.." name="nama_pt_schedule[]" id="nama_pt_schedule">
 									<option value="" disabled selected>Pilih salah satu</option>
 									<?php foreach($perusahaan as $p):?>
-									<option value="<?php echo $p->nama_perusahaan;?>"><?php echo $p->nama_perusahaan;?></option>
+									<option value="<?php echo $p->id;?>"><?php echo $p->nama_perusahaan;?></option>
 									<?php endforeach;?>
 								</select>
 							</div>

@@ -29,7 +29,7 @@
 											<select class="form-control" name="nama_pt" id="namapt" >
 												<option disabled selected="selected">Silahkan pilih salah satu</option>
 												<?php foreach($perusahaan as $p):?>
-												<option value="<?php echo $p->nama_perusahaan;?>"><?php echo $p->nama_perusahaan;?></option>
+												<option value="<?php echo $p->id;?>"><?php echo $p->nama_perusahaan;?></option>
 												<?php endforeach;?>
 											</select>
 					 	                </div>
