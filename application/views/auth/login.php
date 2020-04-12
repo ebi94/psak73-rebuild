@@ -105,24 +105,25 @@
 					<b><h1>PSAK73</h1></b>
 				</div>
 				<div class="d-flex justify-content-center">
-					<?php if(isset($error)) { echo $error; }; ?>
+					<div class="alert alert-danger" id="error_alert" role="alert" style="display: none;">
+						<button type="button" class="close" data-dismiss="alert">x</button>
+						<strong><i class="fas fa-exclamation-circle"></i> Username / Password Salah!</strong>
+					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
-					<form action="<?php echo base_url('log/do/login') ?>" method="post">
+					<form enctype="multipart/form-data" name="form" role="form" id="login_form">
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<div class="input-group-text"><span class="fas fa-user"></span></div>
 							</div>
-							<input type="email" name="username" class="form-control input_user" placeholder="username">
+							<input type="email" name="username" class="form-control wajib_isi" placeholder="username" oninput="this.className = 'form-control wajib_isi'">
 						</div>
-						<?php echo form_error('username'); ?>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<div class="input-group-text"><span class="fas fa-key"></span></div>
 							</div>
-							<input type="password" name="password" class="form-control input_pass" placeholder="password">
+							<input type="password" name="password" class="form-control wajib_isi" placeholder="password" oninput="this.className = 'form-control wajib_isi'">
 						</div>
-						<?php echo form_error('password'); ?>
 						<div class="d-flex justify-content-center mt-3 login_container">
 							<button type="submit" name="button" class="btn login_btn">Login</button>
 						</div>
@@ -137,5 +138,47 @@
 	<script src="<?php echo base_url('assets/AdminLTE'); ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="<?php echo base_url('assets/AdminLTE'); ?>/dist/js/adminlte.min.js"></script>
+
+	<script type="text/javascript">
+		function validateFormWajib() {
+		  // This function deals with validation of the form fields
+		  var y, i, valid = true;
+		  y = document.getElementsByClassName("wajib_isi");		  // A loop that checks every input field in the current tab:
+		  for (i = 0; i < y.length; i++) {
+		    // If a field is empty...
+		    if (y[i].value == "" || y[i].value == null) {
+		      // add an "invalid" class to the field:
+		      y[i].className += " is-invalid";
+		      // and set the current valid status to false:
+		      valid = false;
+		    }
+		  }
+		  return valid; // return the valid status
+		}
+
+		$('#login_form').submit(function(e){
+		  if(!validateFormWajib()) return false;
+		  var formData = new FormData(this);
+		  e.preventDefault();
+		  $.ajax({
+		      type : "POST",
+		      url  : "<?php echo site_url('log/do/login')?>",
+		      data : formData,
+		      processData:false,
+		      contentType:false,
+		      cache:false,
+		      async:false,
+		      success: function(data){
+			      	if (data != 0) {
+			      		window.location.replace(data);
+			      	} else {
+			      		// alert(data);
+			      		$('#error_alert').show()
+			      	}
+		      },
+		  });
+		  return false;
+		});
+	</script>
 </body>
 </html>
