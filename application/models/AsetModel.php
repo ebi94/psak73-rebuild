@@ -274,7 +274,7 @@ class AsetModel extends CI_Model{
                     'id_pt' => $nama_pt,
                     'nomor_kontrak' => $nomor_kontrak,
                     'vendor' => $vendor,
-                    'created_by' => $this->session->userdata('ses_id')
+                    'updated_by' => $this->session->userdata('ses_id')
               );
               $this->KontrakModel->kontrak_edit($idKontrak, $kontrak_edit_data);
 
@@ -311,7 +311,11 @@ class AsetModel extends CI_Model{
               $this->aset_edit($idSummary, $aset_edit_data);
 
               // edit calculation
-              $calculaion_edit_data = array(
+              var_dump($idSummary);
+              var_dump($idCalculation);
+              // Check have calculation
+            if($idCalculation !== ''){
+                $calculaion_edit_data = array(
                     'dr' => $dr,
                     'pat' => $pat,
                     'top' => $top,
@@ -325,8 +329,28 @@ class AsetModel extends CI_Model{
                     'nilai_asumsi_perpanjangan' => $nilai_asumsi_perpanjangan,
                     'tgl_perpanjangan' => $tgl_perpanjangan,
                     'frekuensi_pembayaran' => $frekuensi_pembayaran
-              );
-              $this->CalculationModel->calculation_edit($idCalculation, $calculaion_edit_data);
+                );
+                $this->CalculationModel->calculation_edit($idCalculation, $calculaion_edit_data);
+            } else {
+                $calculaion_add_data = array(
+                    'dr' => $dr,
+                    'pat' => $pat,
+                    'top' => $top,
+                    'awak' => $awak,
+                    'id_summary' => $idSummary,
+                    'pd' => $pd,
+                    'prepaid' => $prepaid,
+                    'status_ppn' => $status_ppn,
+                    'ppn' => $ppn,
+                    'jumlah_unit' => $jumlah_unit,
+                    'satuan' => $satuan,
+                    'nilai_asumsi_perpanjangan' => $nilai_asumsi_perpanjangan,
+                    'tgl_perpanjangan' => $tgl_perpanjangan,
+                    'frekuensi_pembayaran' => $frekuensi_pembayaran
+                );
+                $this->CalculationModel->calculation_add($calculaion_add_data);
+              }
+            //   End Edit calculation
 
               if ($this->db->trans_status() === FALSE)
               {
