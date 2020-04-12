@@ -221,9 +221,9 @@ class AsetController extends CI_Controller{
         	$action = '';
 
         	if ($this->session->userdata('level') == 0) {
-        		$action = $action_lihat.$action_edit.$action_export.$action_hapus;
+        		$action = $action_lihat.$action_edit.$action_hapus;
         	} else {
-        		$action = $action_lihat.$action_export;
+        		$action = $action_lihat.$action_edit;
         	}
 
         	$data_aset[] = array(
