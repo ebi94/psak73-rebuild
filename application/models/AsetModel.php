@@ -9,6 +9,7 @@ class AsetModel extends CI_Model{
         // Load Models - Model_1 and Model_2
         $this->load->model('KontrakModel');
         $this->load->model('CalculationModel');
+        $this->load->model('PerusahaanModel');
     }
 
     function aset_get_all($param= array()) {
@@ -21,9 +22,10 @@ class AsetModel extends CI_Model{
 
         $nama_pt = '';
         if (isset($param['nama_pt']) && ($param['nama_pt'] != '' || $param['nama_pt'] != null)) {
-          $array = explode(',', $param['nama_pt']);
-          $array = implode("|",$array);
-          $nama_pt = "AND k.nama_pt REGEXP '".$array."'";
+          // $array = explode(',', $param['nama_pt']);
+          // $array = implode("|",$array);
+          // $nama_pt = "AND k.nama_pt REGEXP '".$array."'";
+          $nama_pt = "AND k.id_pt IN (".$param['nama_pt'].")";
         }
 
         $kontrak = "";
@@ -46,6 +48,7 @@ class AsetModel extends CI_Model{
               SELECT
                     k.id AS id_id_kontrak,
                     k.nama_pt AS nama_pt,
+                    k.id_pt AS id_pt,
                     k.nomor_kontrak AS nomor_kontrak,
                     k.vendor AS vendor,
                     k.pdf_url AS pdf_url,
@@ -178,11 +181,14 @@ class AsetModel extends CI_Model{
         } else {
               // $result_kontrak = $this->db->insert('t_kontrak',$kontrak_add_data);
               // $result = $this->db->insert('abm_summary',$aset_add_data);
-
+              $param_pt = array('id_nya' => $nama_pt);
+              $pt_pt_get = $this->PerusahaanModel->perusahaan_get_all($param_pt);
+              $pt_nya = $pt_pt_get->row();
               $this->db->trans_begin();
               // insert kontrak
               $kontrak_add_data = array(
-                    'nama_pt' => $nama_pt,
+                    'nama_pt' => $pt_nya->nama_perusahaan,
+                    'id_pt' => $nama_pt,
                     'nomor_kontrak' => $nomor_kontrak,
                     'vendor' => $vendor,
                     'created_by' => $this->session->userdata('ses_id'),
@@ -258,10 +264,14 @@ class AsetModel extends CI_Model{
 
     function aset_edit_batch($diff,$nama_pt,$nomor_kontrak,$vendor,$created_by,$pageinpdf,$jenis_sewa,$serialnumber,$ns_a,$ns_a1,$ns_b,$ns_c1,$ns_c2,$ns_d1,$ns_d2,$is_1,$is_2,$is_3,$is_4,$is_5,$is_6,$is_7,$k_1,$k_2,$k_3,$k_4,$k_5,$lokasi,$start_date,$end_date,$kontrak_int,$dr,$pat,$top,$awak,$pd,$prepaid,$status_ppn,$ppn,$jumlah_unit,$satuan,$nilai_asumsi_perpanjangan,$tgl_perpanjangan,$frekuensi_pembayaran,$idCalculation,$idSummary,$idKontrak) {
 
+              $param_pt = array('id_nya' => $nama_pt);
+              $pt_pt_get = $this->PerusahaanModel->perusahaan_get_all($param_pt);
+              $pt_nya = $pt_pt_get->row();
               $this->db->trans_begin();
               // edit kontrak
               $kontrak_edit_data = array(
-                    'nama_pt' => $nama_pt,
+                    'nama_pt' => $pt_nya->nama_perusahaan,
+                    'id_pt' => $nama_pt,
                     'nomor_kontrak' => $nomor_kontrak,
                     'vendor' => $vendor,
                     'updated_by' => $this->session->userdata('ses_id')

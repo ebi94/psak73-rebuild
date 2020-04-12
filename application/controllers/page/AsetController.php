@@ -35,17 +35,12 @@ class AsetController extends CI_Controller{
         $length = intval($this->input->get("length"));
 
         if ($pt != '') {
-            $pt = implode(",", $pt);
+            $pt = implode(",",$pt);
         }
         
         if ($dibuat_oleh != '') {
             // $dibuat_oleh = array_map('intval', explode(',', $dibuat_oleh));
             $dibuat_oleh = implode(",",$dibuat_oleh);
-        }
-
-        if ($pt != '') {
-            // $dibuat_oleh = array_map('intval', explode(',', $dibuat_oleh));
-            $pt = implode(",",$pt);
         }
 
         if ($this->session->userdata('level') == 0) {
@@ -152,7 +147,7 @@ class AsetController extends CI_Controller{
                     data-idkontrak="'.$key_aset->id_id_kontrak.'"
                     data-idcalculation="'.$key_aset->id_calculation.'"
         			data-idsummary="'.$key_aset->id_summary.'"
-        			data-namapt="'.$key_aset->nama_pt.'" 
+        			data-namapt="'.$key_aset->id_pt.'" 
         			data-nomorkontrak="'.$key_aset->nomor_kontrak.'"
         			data-vendor="'.$key_aset->vendor.'"
 					data-jenissewa="'.$key_aset->jenis_sewa.'"

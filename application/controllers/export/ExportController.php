@@ -33,7 +33,14 @@ class ExportController extends CI_Controller{
 	function summary() {
 		$pt = $this->input->get('pt');
 		$user = $this->input->get('user');
-
+		// if ($pt != '') {
+		//     $pt = implode(",",$pt);
+		// }
+		
+		// if ($user != '') {
+		//     $user = implode(",",$user);
+		// }
+		
 		if ($this->session->userdata('level') == 0) {
 			$param = array('nama_pt'=>$pt, 'user' => $user);
 		} else {

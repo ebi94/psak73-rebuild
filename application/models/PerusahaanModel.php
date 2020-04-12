@@ -20,12 +20,18 @@ class PerusahaanModel extends CI_Model{
     	    $alamat = "AND alamat LIKE'%".$param['alamat']."%'";
     	}
 
+        $id_nya = "";
+        if (isset($param['id_nya']) && ($param['id_nya'] != '' || $param['id_nya'] != null)) {
+            $id_nya = "AND id = ".$param['id_nya']."";
+        }
+
     	$query = $this->db->query("
     		SELECT *
     		FROM t_perusahaan
     		$where
     		$pt
     		$alamat
+            $id_nya
     	");
 
     	return $query;

@@ -22,15 +22,13 @@ class ExportModel extends CI_Model{
         }
         $where_pt = '';
         if (isset($param['nama_pt']) && ($param['nama_pt'] != '' || $param['nama_pt'] != null)) {
-            $array = explode(',', $param['nama_pt']);
-            $array = implode("|",$array);
-            // $where_pt = "AND kon.nama_pt IN (".$param['nama_pt'].")";
-            $where_pt = "AND kon.nama_pt REGEXP '".$array."'";
+            $where_pt = "AND kon.id_pt IN (".$param['nama_pt'].")";
         }
 
         $query = $this->db->query(
             "SELECT
                 kon.nama_pt AS kon_nama_pt,
+                kon.id_pt AS id_pt,
                 kon.nomor_kontrak AS kon_nomor_kontrak,
                 kon.vendor AS kon_vendor,
                 sum.jenis_sewa AS sum_jenis_sewa,
@@ -143,13 +141,14 @@ class ExportModel extends CI_Model{
         if (isset($param['nama_pt']) && ($param['nama_pt'] != '' || $param['nama_pt'] != null)) {
             // $array = explode(',', $param['nama_pt']);
             // $array = implode("|",$array);
-            $where_pt = "AND kon.nama_pt LIKE '%".$param['nama_pt']."%'";
-            // $where_pt = "AND kon.nama_pt REGEXP '".$array."'";
+            // $where_pt = "AND kon.nama_pt LIKE '%".$param['nama_pt']."%'";
+            $where_pt = "AND kon.id_pt IN (".$param['nama_pt'].")";
         }
 
         $query = $this->db->query(
             "SELECT
                 kon.nama_pt AS nama_pt,
+                kon.id_pt AS id_pt,
                 kon.nomor_kontrak AS no_kontrak,
                 kon.vendor AS nama_vendor,
                 sum.jenis_sewa AS underlying_asset,
@@ -206,13 +205,14 @@ class ExportModel extends CI_Model{
         if (isset($param['nama_pt']) && ($param['nama_pt'] != '' || $param['nama_pt'] != null)) {
             // $array = explode(',', $param['nama_pt']);
             // $array = implode("|",$array);
-            $where_pt = "AND kon.nama_pt LIKE '%".$param['nama_pt']."%'";
-            // $where_pt = "AND kon.nama_pt REGEXP '".$array."'";
+            // $where_pt = "AND kon.nama_pt LIKE '%".$param['nama_pt']."%'";
+            $where_pt = "AND kon.id_pt IN (".$param['nama_pt'].")";
         }
 
         $query = $this->db->query(
             "SELECT
                 kon.nama_pt AS nama_pt,
+                kon.id_pt AS id_pt,
                 sum.serialnumber AS serial_number,
                 sum.jenis_sewa AS jenis_sewa,
                 kon.vendor AS vendor,
