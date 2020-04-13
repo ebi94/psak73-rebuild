@@ -27,7 +27,6 @@
 					 	                    <label>Nama Perusahaan / PT *</label>
 					 	                    <!-- <input class="form-control wajib read-only" type="text" name="nama_pt" id="namapt" oninput="this.className = 'form-control wajib'"> -->
 											<select class="form-control" name="nama_pt" id="namapt" >
-												<option disabled selected="selected">Silahkan pilih salah satu</option>
 												<?php foreach($perusahaan as $p):?>
 												<option value="<?php echo $p->id;?>"><?php echo $p->nama_perusahaan;?></option>
 												<?php endforeach;?>

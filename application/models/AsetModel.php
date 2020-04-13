@@ -311,8 +311,6 @@ class AsetModel extends CI_Model{
               $this->aset_edit($idSummary, $aset_edit_data);
 
               // edit calculation
-              var_dump($idSummary);
-              var_dump($idCalculation);
               // Check have calculation
             if($idCalculation !== ''){
                 $calculaion_edit_data = array(
