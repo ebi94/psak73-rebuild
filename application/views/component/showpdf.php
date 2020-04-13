@@ -2,8 +2,8 @@
     <?php $id_kontrak = '1';?>
     <input type="hidden" id="urlpdf">
 <div id="<?php echo $id_kontrak?>-pdf" class=" pdfobject-container">
-    <embed id="pdfobject" class="pdfobject" src="assets/pdf/6caa04b7cfb9864988bcfcc8fcb364ae.pdf" type="application/pdf" style="overflow: auto; width: 100%; height: 1900px;">
-    </embed>
+    <iframe id="pdfobject" class="pdfobject" src="" type="application/pdf" style="overflow: auto; width: 100%; height: 1900px;">
+    </iframe>
 </div>
 </section>
 <!-- insert just before the closing body tag </body> -->

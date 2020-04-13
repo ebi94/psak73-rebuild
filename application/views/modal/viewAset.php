@@ -13,16 +13,13 @@
 			</div>
 			<div class="modal-footer justify-content-between">
 				<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button> -->
-				<a href="" id="addmoreasset">
 					<input type="hidden" id="vIdSum">
 					<input type="hidden" id="vIdCal">
 					<input type="hidden" id="vIdKon">
 					<input type="hidden" id="vNamapt">
 					<input type="hidden" id="vNomorKontrak">
 					<input type="hidden" id="vVendor">
-					<button type="button" class="btn btn-primary float-right" data-backdrop="static"
-						data-keyboard="false" id="btnPlusAset">Tambah Aset</button>
-				</a>
+					<button type="button" class="btn btn-primary float-right" id="btnPlusAset">Tambah Aset</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->

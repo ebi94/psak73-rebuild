@@ -533,9 +533,8 @@
 						      	document.getElementById("add_modal_aset").reset();
 						      	$('#addAsetModal').modal('hide');
 						      	$('.inputan').html(data);
-						      	// $('#addPlusAsetModal').modal({backdrop: 'static', keyboard: false});
-						      	// document.getElementById("no_kontrak_plus").innerHTML = data;
 						      	$('#addPlusAsetModal').modal('show');
+								$('#search_aset').click();
 					      },
 					  });
 					  return false;
@@ -547,12 +546,12 @@
 						var nomorkontrak = $("#vNomorKontrak").val();
 						var vendor = $("#vVendor").val();
 						$('#viewAsetModal').modal('hide');
-						$('#addAsetModal').modal('show');
 						$("#title_add_aset").val("Add Plus New Aset");
 						$("#id_kontrak").val(idKontrak);
 						$("#namapt").val(namapt);
 						$("#nomorkontrak").val(nomorkontrak);
 						$("#vendor").val(vendor);
+						$('#addAsetModal').modal('show');
 						document.getElementById("namapt").disabled = true;
 						document.getElementById("nomorkontrak").disabled = true;
 						document.getElementById("vendor").disabled = true;
@@ -577,10 +576,6 @@
 						      	$('#editAsetModal').modal("hide");
 								$('#search_aset').click();
 								toastFire('success','Data Berhasil di Ubah');
-						      	// $('.inputan').html(data);
-						      	// $('#editPlusAsetModal').modal({backdrop: 'static', keyboard: false});
-						      	// document.getElementById("no_kontrak_plus").innerHTML = data;
-						      	// $('#addPlusAsetModal').modal('show');
 					      },
 					  });
 					  return false;
@@ -783,7 +778,7 @@
 							"autoWidth"		: false,
 							"scrollX"		: true,
 							"scrollY"		: true,
-							"pageLength"	: 5,
+							"pageLength"	: 10,
 							"ajax"			: {
 								url		: "<?php echo base_url('perusahaan/list') ?>",
 								type	: "GET",
@@ -1395,16 +1390,16 @@
 			$("#vsatuan").html(satuan);
 			$("#vnilai_asumsi_perpanjangan").html(nilai_asumsi_perpanjangan);
 			$("#vtgl_perpanjangan").html(tgl_perpanjangan);
-			$("embed#pdfobject").attr('src' , 'assets/pdf/'+pdfurl);
+			$("iframe#pdfobject").attr('src' , 'assets/pdf/'+pdfurl);
 			// Data on Add Plus Aset Button
 			$("#vNamapt").val(namapt);
 			$("#vNomorKontrak").val(nomorkontrak);
 			$("#vVendor").val(vendor);
 		});	
 
-		$(document).on("click", "#close-modal-lihat", function() {
-			location.reload();
-		});
+		// $(document).on("click", "#close-modal-lihat", function() {
+			// location.reload();
+		// });
 
 		$(document).on("click", ".btnDeleteAset", function () {
 			var idSummary = $(this).data('deleteid');
