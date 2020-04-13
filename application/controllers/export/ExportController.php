@@ -484,7 +484,7 @@ class ExportController extends CI_Controller{
 			$data_calculation = $this->ExportModel->calculation_export($param);
 
 			$creator = $this->session->userdata('ses_nama');
-			$title_excel = "Calculation IFRS16 - PSAK73";
+			$title_excel = "Calculation IFRS16";
 			$date_export = date('d/m/Y');
 
 			$nomor = 1;
