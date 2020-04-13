@@ -324,6 +324,7 @@
 						"autoWidth"		: false,
 						"scrollX"		: true,
 						"scrollY"		: true,
+						"dom"			: '<"top"ip<"clear">>rt<"bottom"ip<"clear">>',
 						"ajax"			: {
 							url		: "<?php echo base_url('aset/list') ?>",
 							type	: "GET",
