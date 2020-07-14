@@ -75,6 +75,10 @@ class AsetController extends CI_Controller{
             $setNap = strtr($key_aset->nilai_asumsi_perpanjangan, $replacements);
             $nap = (int)$setNap;
             $format_nap = rupiah($nap);
+
+            $setPat = strtr($key_aset->pat, $replacements);
+            $pat = (int)$setPat;
+            $format_pat = rupiah($pat);
             
         	// end
 
@@ -89,7 +93,7 @@ class AsetController extends CI_Controller{
 					data-idkontrak="'.$key_aset->id_id_kontrak.'"
                     data-idcalculation="'.$key_aset->id_calculation.'"
         			data-idsummary="'.$key_aset->id_summary.'"
-        			data-namapt="'.$key_aset->id_pt.'" 
+        			data-namapt="'.$key_aset->nama_pt.'" 
         			data-nomorkontrak="'.$key_aset->nomor_kontrak.'"
         			data-vendor="'.$key_aset->vendor.'"
 					data-jenissewa="'.$key_aset->jenis_sewa.'"
@@ -118,7 +122,7 @@ class AsetController extends CI_Controller{
         			data-enddate="'.$key_aset->end_date.'"
         			data-nilaikontrak="'.$format_nilai_kontrak.'"
         			data-dr="'.$key_aset->dr.'"
-        			data-pat="'.$key_aset->pat.'"
+        			data-pat="'.$format_pat.'"
         			data-top="'.$key_aset->top.'"
         			data-awak="'.$key_aset->awak.'"
         			data-frekuensi_pembayaran="'.$key_aset->frekuensi_pembayaran.'"
