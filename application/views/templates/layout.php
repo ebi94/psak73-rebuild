@@ -136,7 +136,7 @@
 			<!-- Left Navbar Links -->
 			<ul class="navbar-nav">
 				<li class="nav-item">
-				  <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+					<a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
 				</li>
 			</ul>
 			<!-- Right Navbar Links -->
@@ -146,14 +146,16 @@
 						<i class="fas fa-user-cog fa-md" style="color: black;"></i>
 					</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-						<span class="dropdown-item dropdown-header">Hello <?php echo $this->session->userdata('ses_nama');?></span>
+						<span class="dropdown-item dropdown-header">Hello
+							<?php echo $this->session->userdata('ses_nama');?></span>
 						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item" id="add_user" type="button" data-toggle="modal" data-target="#editProfileModal">
-						  <i class="fas fa-user-edit mr-2"></i> Edit Profil
+						<a href="#" class="dropdown-item" id="add_user" type="button" data-toggle="modal"
+							data-target="#editProfileModal">
+							<i class="fas fa-user-edit mr-2"></i> Edit Profil
 						</a>
 						<div class="dropdown-divider"></div>
 						<a href="<?php echo base_url('log/out'); ?>" class="dropdown-item" id="log_out" type="button">
-						  <i class="fas fa-power-off mr-2"></i> Log Out
+							<i class="fas fa-power-off mr-2"></i> Log Out
 						</a>
 					</div>
 				</li>
@@ -181,7 +183,7 @@
 									<a href="<?php echo base_url(''); ?>">Dashboard</a>
 								</li>
 								<?php if($title != 'Dashboard'): ?>
-									<li class="breadcrumb-item active"><?php echo $title; ?></li>
+								<li class="breadcrumb-item active"><?php echo $title; ?></li>
 								<?php endif; ?>
 							</ol>
 						</div>
@@ -201,6 +203,9 @@
 				<!--/ .container-fluid-->
 			</section>
 			<!--/ .Main Content -->
+		</div>
+		<div class="loading-page">
+			<img src="<?php echo base_url('assets/image/loading.gif'); ?>" alt="Loading" height="100" width="100">
 		</div>
 		<!--/ .Content Wrapper. Contains page content -->
 	</div>
@@ -224,9 +229,12 @@
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/toastr/toastr.min.js"></script>
 	<!-- Input Mask -->
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/moment/moment.min.js"></script>
-	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/inputmask/min/jquery.inputmask.bundle.min.js">
+	</script>
 	<!-- overlayScrollbars -->
-	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+	<script
+		src="<?php echo base_url('assets/adminLTE'); ?>/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js">
+	</script>
 	<!-- AdminLTE App -->
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/dist/js/adminlte.js"></script>
 	<!-- ChartJS -->
@@ -235,11 +243,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 	<!-- DataTables -->
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/datatables/jquery.dataTables.js"></script>
-	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js">
+	</script>
 	<!-- DateRangePicker -->
 	<script src="<?php echo base_url('assets/adminLTE'); ?>/plugins/daterangepicker/daterangepicker.js"></script>
 	<!-- Popper.JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+	</script>
 
 	<!-- MDB -->
 	<script src="<?php echo base_url('assets/mdb'); ?>/mdb.js"></script>
@@ -519,17 +530,20 @@
 					});
 
 					$('#add_modal_aset').submit(function(e){
-					  var formData = new FormData(this);
-					  e.preventDefault();
-					  $.ajax({
-					      type : "POST",
-					      url  : "<?php echo site_url('aset/do/add')?>",
-					      data : formData,
-					      processData:false,
-					      contentType:false,
-					      cache:false,
-					      async:false,
-					      success: function(data){
+					  	var formData = new FormData(this);
+						//  Start Loading Button
+						console.log('start');
+					  	e.preventDefault();
+					  	$.ajax({
+							type : "POST",
+							url  : "<?php echo site_url('aset/do/add')?>",
+							data : formData,
+							processData:false,
+							contentType:false,
+							cache:false,
+							async:false,
+							success: function(data){
+								console.log('stop');
 						      	document.getElementById("add_modal_aset").reset();
 						      	$('#addAsetModal').modal('hide');
 						      	$('.inputan').html(data);
@@ -543,12 +557,13 @@
 					$('#btnPlusAset').on('click', function(){
 						var idKontrak = $("#vIdKon").val();
 						var namapt = $("#vNamapt").val();
+						var idpt = $("#vIdpt").val();
 						var nomorkontrak = $("#vNomorKontrak").val();
 						var vendor = $("#vVendor").val();
 						$('#viewAsetModal').modal('hide');
 						$("#title_add_aset").val("Add Plus New Aset");
 						$("#id_kontrak").val(idKontrak);
-						$("#namapt").val(namapt);
+						$("#namapt").val(idpt);
 						$("#nomorkontrak").val(nomorkontrak);
 						$("#vendor").val(vendor);
 						$('#addAsetModal').modal('show');
@@ -1304,6 +1319,7 @@
 		$(document).on("click", ".btnViewAset", function () {
 			var idkontrak = $(this).data('idkontrak');
 			var idsummary = $(this).data('idsummary');
+			var idpt = $(this).data('idpt');
 			var namapt = $(this).data('namapt');
 			var nomorkontrak = $(this).data('nomorkontrak');
 			var vendor = $(this).data('vendor');
@@ -1393,6 +1409,7 @@
 			$("iframe#pdfobject").attr('src' , 'assets/pdf/'+pdfurl);
 			// Data on Add Plus Aset Button
 			$("#vNamapt").val(namapt);
+			$("#vIdpt").val(idpt);
 			$("#vNomorKontrak").val(nomorkontrak);
 			$("#vVendor").val(vendor);
 		});	
