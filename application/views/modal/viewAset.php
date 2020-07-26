@@ -16,6 +16,7 @@
 					<input type="hidden" id="vIdSum">
 					<input type="hidden" id="vIdCal">
 					<input type="hidden" id="vIdKon">
+					<input type="hidden" id="vIdpt">
 					<input type="hidden" id="vNamapt">
 					<input type="hidden" id="vNomorKontrak">
 					<input type="hidden" id="vVendor">
