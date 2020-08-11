@@ -598,16 +598,19 @@
 
 					$('#addPlusAset').on('click', function(){
 						// var idKontrak = document.getElementById("id_kontraks").val();
-						var idKontrak = $("#id_kontraks").val();
-						var namapt = $("#a_namapt").val();
-						var nomorkontrak = $("#a_nomorkontrak").val();
-						var vendor = $("#a_vendor").val();
-						$("#namapt").val(namapt);
-						$("#nomorkontrak").val(nomorkontrak);
-						$("#vendor").val(vendor);
-						document.getElementById("namapt").disabled = true;
-						document.getElementById("nomorkontrak").disabled = true;
-						document.getElementById("vendor").disabled = true;
+						var idKontrak = document.getElementById("id_kontraks").value;
+						var namapt = document.getElementById("a_namapt").value;
+						var nomorkontrak = document.getElementById("a_nomorkontrak").value;
+						var vendor = document.getElementById("a_vendor").value;
+						// $("#namapt").val(namapt);
+						// $("#nomorkontrak").val(nomorkontrak);
+						// $("#vendor").val(vendor);
+						document.getElementById("namapt").value = namapt;
+						document.getElementById("nomorkontrak").value = nomorkontrak;
+						document.getElementById("vendor").value = vendor;
+						document.getElementById("namapt").readOnly = true;
+						document.getElementById("nomorkontrak").readOnly = true;
+						document.getElementById("vendor").readOnly = true;
 						document.getElementById("customFile").disabled = true;
 						$('#addPlusAsetModal').modal('hide');
 						$("#title_add_aset").val("Add Plus New Aset");
